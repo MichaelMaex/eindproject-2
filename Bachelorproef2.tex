@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc} %Input encoding
+
+\usepackage{amsmath} %Extra math symbols and operators
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{eufrak}
+
+\usepackage{bm} %Bold symbols
+
+\usepackage{graphicx} %Images
+
+\usepackage{tikz-cd} %Diagrams
+
+\usepackage{enumitem} %Enumerate Labels
+
+%\usepackage[margin=1in]{geometry} %Adjust Margins
+
+%\usepackage{fancyhdr} %Name on every page
+%\pagestyle{fancy}
+%\lhead{Rune Buckinx}
+
+\usepackage{mdframed}
+\newmdtheoremenv{definition}{Definition}[section]
+\newmdtheoremenv{question}{Question}[section]
+\newmdtheoremenv{lemma}{Lemma}[section]
+\newmdtheoremenv{proposition}{Proposition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+\newmdtheoremenv{theorem}{Theorem}[section]
+\newmdtheoremenv{exercise}{Exercise}
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{
+    \def\svgwidth{\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+%\tikzset{component/.style={draw,thick,circle,fill=white,minimum size =0.75cm,inner sep=0pt}}
+
+\title{Modeling of MHD waves in the solar corona}
+\author{Micha\"el Maex \and Rune Buckinx}
+\date{March 2020}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    This paper blablablablablabla
+\end{abstract}
+\tableofcontents
+\newpage
+\section{Introduction}
+\section{Magnetohydrodynamics}
+\section{Pluto Code}
+\subsection{Initial example}
+Task 1
+\section{Waves in magnetohydrodynamic fluids}
+Task 2
+\section{Interaction of MHD waves with large scale structures}
+Task 3
+\section{Optional: MHD waves in slab geometry}
+Task 4
+\end{document}
