@@ -14,7 +14,7 @@
 
 \usepackage{enumitem} %Enumerate Labels
 
-%\usepackage[margin=1in]{geometry} %Adjust Margins
+\usepackage[margin=1in]{geometry} %Adjust Margins
 
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
@@ -53,15 +53,24 @@
 \maketitle
 
 \begin{abstract}
-    This paper blablablablablabla
+    This paper presents a summary of research for a bachelor's thesis on the modelling of magnetohydrodynamic waves in the solar corona using numerical simulations via the open source code PLUTO. 
 \end{abstract}
 \tableofcontents
 \newpage
 \section{Introduction}
-\section{Magnetohydrodynamics}
+The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, which consists of fully ionized material due to it having very high temperatures compared to the surface of the sun. 
+\section{Magnetohydrodynamics and the solar corona}
+Conservation laws:
+\begin{alignat}{3}
+    &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho v) &&= 0\label{masscont}\\
+    &\frac{\partial m}{\partial t} &&+  \nabla \cdot \bigg[mv - BB+ I\bigg(p + \frac{B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi + \rho g\label{cauchymoment}\\
+    &\frac{\partial B}{\partial t} &&+ \nabla \times (cE) &&= 0\label{Faraday}\\
+    &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho v^2}{2} + \rho e + p + \rho \Phi\bigg)v + cE \times B\bigg] &&= m \cdot g \label{energy}
+\end{alignat}
+
 \section{Pluto Code}
 \subsection{Initial example}
-Task 1 - Soundwaves in hydrodynamic fluids
+Task 1
 \section{Waves in magnetohydrodynamic fluids}
 Task 2
 \section{Interaction of MHD waves with large scale structures}
