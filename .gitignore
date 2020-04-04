@@ -1,0 +1,19 @@
+*.aux
+*.bbl
+*.blg
+*.pdf
+Verslag/verslag.pdf
+Notities literatuur/notities_literatuur.pdf
+*.fdb_latexmk
+*.fls
+*.log
+*.run.xml
+*.synctex.gz
+*.bcf
+*.out
+*.dvi
+*.json
+*.swp
+*.toc
+*.dbl
+*.o
