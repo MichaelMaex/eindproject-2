@@ -16,6 +16,8 @@
 
 \usepackage[margin=1in]{geometry} %Adjust Margins
 
+\usepackage{siunitx} % easily format numbers with dimensions
+
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
 %\lhead{Rune Buckinx}
@@ -60,13 +62,27 @@
 \section{Introduction}
 The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, which consists of fully ionized material due to it having very high temperatures compared to the surface of the sun. 
 \section{Magnetohydrodynamics and the solar corona}
-Conservation laws:
+Magnetohydrodynamics can be described by a system of partial differential equations. 
+Just like ordinary fluid dynamics, these are derived from conservation laws. 
+In this report we will only consider the non-relativistic approximation. 
+The system of PDE's/conservations laws is the following:
 \begin{alignat}{3}
-    &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho v) &&= 0\label{masscont}\\
-    &\frac{\partial m}{\partial t} &&+  \nabla \cdot \bigg[mv - BB+ I\bigg(p + \frac{B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi + \rho g\label{cauchymoment}\\
-    &\frac{\partial B}{\partial t} &&+ \nabla \times (cE) &&= 0\label{Faraday}\\
-    &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho v^2}{2} + \rho e + p + \rho \Phi\bigg)v + cE \times B\bigg] &&= m \cdot g \label{energy}
+    &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho \mathbf v) &&= 0 \tag{mass}\label{masscont}\\
+    &\frac{\partial \mathbf m}{\partial t} &&+  \nabla \cdot \bigg[\mathbf{mv - BB+ I}\bigg(p + \frac{\mathbf B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi \tag{moment}\label{cauchymoment}\\
+    &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faraday}\\
+    &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= 0 \tag{energy}\label{energy}.
 \end{alignat}
+Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
+E_t, = \rho e \frac{m^2}{2\rho} + \frac{B^2}{2}
+.\]  
+The constants  $e, c$ are the elementary charge and the speed of light respectively.
+
+If the environment is one where the thermal pressure and density are small deviations of some constant background pressure and density, $p_0, \rho_0$. Then the speed of sound is given by \[
+c_s^2 = \gamma \frac{p_0}{\rho_0}
+,\]
+where $\gamma = \frac{f + 2}{f}, $ with $f$ the degrees of freedom of a particle. In a plasma $f$ is almost always $3$. 
+
+
 
 \section{Pluto Code}
 \subsection{Initial example}
