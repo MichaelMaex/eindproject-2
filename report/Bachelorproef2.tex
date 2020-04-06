@@ -14,7 +14,7 @@
 
 \usepackage{enumitem} %Enumerate Labels
 
-\usepackage[margin=1in]{geometry} %Adjust Margins
+\usepackage[margin=1.5in]{geometry} %Adjust Margins
 
 \usepackage{siunitx} % easily format numbers with dimensions
 
@@ -64,6 +64,10 @@ The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, w
 
 The differential/governing equations that make up the MHD model, are difficult to solve analytically. It is therefore favorable to use numerical computer modeling to study the equations, which is the main focus of this bachelor's project. The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}. 
 \section{Magnetohydrodynamics and the solar corona}
+The classic Navier-Stokes equations do not suffice to describe the movement in the solar corona due to the influence of strong magnetic fields on the ionized particles. This magnetic field stems from convection in the photosphere, which is a physical process that helps transport the nuclear energy created in the core of the sun \cite{brun2017magnetism}.\\
+
+The use of the magnetohydrodynamic model to describe the plasma depends on three main assumptions, namely, high collisionality, large scales and the assumption of ideal fluids. The last assumption implies that the dissipation of large scale variables is neglected \cite{goedbloed2004principles}. This model also does not take relativity into account, as opposed to the relativistic magnetohydrodynamic model, which will not be discussed further \footnote{More information about the relativistic MHD model can be found in \cite{karas2005introduction}}.
+
 Magnetohydrodynamics can be described by a system of partial differential equations. 
 Just like ordinary fluid dynamics, these are derived from conservation laws. 
 In this report we will only consider the non-relativistic approximation. 
