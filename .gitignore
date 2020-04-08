@@ -17,3 +17,8 @@ Notities literatuur/notities_literatuur.pdf
 *.toc
 *.dbl
 *.o
+*__pycache__
+*pluto
+*makefile
+*.ipynb_checkpoints
+report/.tex

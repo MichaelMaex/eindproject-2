@@ -17,6 +17,7 @@
 \usepackage[margin=1.5in]{geometry} %Adjust Margins
 
 \usepackage{siunitx} % easily format numbers with dimensions
+\usepackage{cleveref}
 
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
@@ -59,11 +60,11 @@
 \end{abstract}
 \tableofcontents
 \newpage
-\section{Introduction}
+\section{Introduction} \label{sec:introduction}
 The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, which consists of fully ionized material due to it having very high temperatures compared to the surface of the sun. The plasma in the solar corona can be described using magnetohydrodynamic (MHD) equations, which combine the Navier-Stokes equations from fluid dynamics with the Maxwell equations from electromagnetism. This approach to model the plasma treats it as a single fluid, as opposed to the two-fluid model, which describes the ions and electrons seperately. \\
 
 The differential/governing equations that make up the MHD model, are difficult to solve analytically. It is therefore favorable to use numerical computer modeling to study the equations, which is the main focus of this bachelor's project. The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}. 
-\section{Magnetohydrodynamics and the solar corona}
+\section{Magnetohydrodynamics and the solar corona} \label{sec:magnetohydrodynamics_and_the_solar_corona}
 The classic Navier-Stokes equations do not suffice to describe the movement in the solar corona due to the influence of strong magnetic fields on the ionized particles. This magnetic field stems from convection in the photosphere, which is a physical process that helps transport the nuclear energy created in the core of the sun \cite{brun2017magnetism}.\\
 
 The use of the magnetohydrodynamic model to describe the plasma depends on three main assumptions, namely, high collisionality, large scales and the assumption of ideal fluids. The last assumption implies that the dissipation of large scale variables is neglected \cite{goedbloed2004principles}. This model also does not take relativity into account, as opposed to the relativistic magnetohydrodynamic model, which will not be discussed further \footnote{More information about the relativistic MHD model can be found in \cite{karas2005introduction}}.
@@ -90,11 +91,18 @@ where $\gamma = \frac{f + 2}{f}, $ with $f$ the degrees of freedom of a particle
 
 
 
-\section{Pluto Code}
-\subsection{Initial example}
+\section{Pluto Code} \label{sec:pluto_code}
+\subsection{Initial example} \label{sec:initial_example}
 Task 1
-\section{Waves in magnetohydrodynamic fluids}
-Task 2
+\section{Waves in magnetohydrodynamic fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
+In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added.
+The parameter $\mu = \frac{B^2}{2\pi p}$ gives ratio of magnetic pressure over mechanical pressure. If $\mu = 0$ the magnetic field is $0$. If $\mu \gg 1$ the magnetic pressure dominates. \Cref{fig:blastwave_shape_mu} shows how the value of $\mu$ influences the shape of the blastwave.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = \linewidth]{figures/influence_mu.pdf}
+	\caption{}
+\label{fig:blastwave_shape_mu}
+\end{figure}
 \section{Interaction of MHD waves with large scale structures}
 Task 3
 \section{Optional: MHD waves in slab geometry}
