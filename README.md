@@ -1,2 +1,2 @@
 # eindproject-2
-Repo for the second bachelor proof
+Repo for the second bachelor project
