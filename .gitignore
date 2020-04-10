@@ -22,3 +22,4 @@ Notities literatuur/notities_literatuur.pdf
 *makefile
 *.ipynb_checkpoints
 report/.tex
+*.png
