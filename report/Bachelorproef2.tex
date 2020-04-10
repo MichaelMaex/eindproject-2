@@ -134,6 +134,21 @@ The following initial condition is used, a high-pressure region inside a circle 
 \end{figure}
 
 \Cref{fig:blastwave} shows pressure of the simulated fluid at multiple points in time. 
+The speed at which the wave front moves is the group speed. 
+Accoring to \cref{sec:magnetohydrodynamics_and_the_solar_corona} this is given by $c_s = \sqrt{\frac{5}{3} \frac{p_0}{\rho_0}} $. Hence the speed (in code units) is $\sqrt{\frac{5}{3}8} = 3.61$, which corresponds to \SI{3.61e5}{\centi\metre\per\second}.
+A comparison of the theoretical radius against the simulated radius can be found in \cref{fig:wave_front_speed}. 
+Note that the curve of the simulation is jagged because the grid on which the simulation is run is discreet. 
+Initially the simulated wave moves faster than the theoretical group speed. 
+This could be an result of the linear approximation used in determining the group speed.
+However for the remainder of the simulation the wave front matches the theoretical group speed quite well.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/wavefront_position}
+	\caption{The position of the simulated wave front compared to the theoretical speed}
+	\label{fig:wave_front_speed}
+\end{figure}
 
 
 \section{Waves in magnetohydrodynamic fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
