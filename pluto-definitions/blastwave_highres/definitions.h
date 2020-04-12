@@ -29,7 +29,7 @@
 #define  P_IN                           0
 #define  P_OUT                          1
 #define  GAMMA                          2
-#define  MU                             3
+#define  BETA                           3
 
 /* [Beg] user-defined constants (do not change this line) */
 

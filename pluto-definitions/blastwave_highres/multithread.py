@@ -145,7 +145,7 @@ def main():
     commands = []
     for mu in ["0", "0.5", "1", "2", "5", "10"]:
         for prs in ["low", "high"]:
-            commands.append(["./pluto", "-i", "mu{}-{}.ini".format(mu, prs)])
+            commands.append(["./pluto", "-i", "beta{}-{}.ini".format(mu, prs)])
     print("commands to run") 
     for cmd in commands:
         print(" ".join(cmd))
