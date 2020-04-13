@@ -143,8 +143,8 @@ def main():
     """Main program."""
     start = time.time()
     commands = []
-    for mu in ["0", "0.5", "1", "2", "5", "10"]:
-        for prs in ["low", "high"]:
+    for prs in ["low", "high"]:
+        for mu in ["0.1", "0.2", "0.5", "1", "2", "5", "10"]:
             commands.append(["./pluto", "-i", "beta{}-{}.ini".format(mu, prs)])
     print("commands to run") 
     for cmd in commands:
@@ -163,7 +163,7 @@ def main():
     # ]
 
     results = run_asyncio_commands(
-        tasks, max_concurrent_tasks = 4
+        tasks, max_concurrent_tasks = 3
     )  # At most 20 parallel tasks
     print("Results:")
     pprint(results)

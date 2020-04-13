@@ -176,9 +176,9 @@ Like in the previous setup the radius of the blast over time was compared to the
 
 \section{Waves in magnetohydrodynamic fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
 In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added.
-The parameter $\beta = \frac{B_0^2}{p}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
-If $\beta = 0$ the magnetic field is $0$. 
-If $\beta \gg 1$ the magnetic pressure dominates. 
+The parameter $\beta = \frac{2p}{B^2}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
+If $\beta = \infty$ the magnetic field is $0$. 
+If $\beta \ll 1$ the magnetic pressure dominates. 
 \Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave.
 \todo{Add what is plotted to figures (pressure)}
 \begin{figure}[H]

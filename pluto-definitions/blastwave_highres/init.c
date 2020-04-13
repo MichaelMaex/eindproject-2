@@ -58,7 +58,7 @@ void Init (double *v, double x1, double x2, double x3)
 
   #if PHYSICS == MHD || PHYSICS == RMHD
   double g_beta = g_inputParam[BETA];
-  v[BX1] = sqrt(g_beta*g_inputParam[P_OUT]*2.0);
+  v[BX1] = sqrt(g_inputParam[P_OUT]*2.0/g_beta);
   //v[BX1] = 30.0;
   v[BX2] = 0.0;
   v[BX3] = 0.0;
