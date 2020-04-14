@@ -41,10 +41,10 @@ void Init (double *v, double x1, double x2, double x3)
  *
  *********************************************************************** */
 {
-  g_gamma = g_inputParam[GAMMA];
   double r;
+  g_gamma = g_inputParam[GAMMA];
   r = x1*x1 + x2*x2;
-  r= sqrt(r);
+  r = sqrt(r);
 
   v[RHO] = 1.0;
   v[VX1] = 0.0;
@@ -53,12 +53,12 @@ void Init (double *v, double x1, double x2, double x3)
   #if HAVE_ENERGY
   v[PRS] = g_inputParam[P_OUT];
   #endif
+  if (r <= 0.3) v[PRS] = g_inputParam[P_IN];
   v[TRC] = 0.0;
-  if(r <= .3) v[PRS] = g_inputParam[P_IN];
 
   #if PHYSICS == MHD || PHYSICS == RMHD
   v[BX1] = 0.0;
-  v[BX2] = 3.0e2;
+  v[BX2] = 0.0;
   v[BX3] = 0.0;
 
   v[AX1] = 0.0;
