@@ -19,6 +19,7 @@
 \usepackage[margin=1.5in]{geometry} %Adjust Margins
 
 \usepackage{siunitx} % easily format numbers with dimensions
+\usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{todonotes}
 
@@ -62,26 +63,37 @@
     This paper presents a summary of research for a bachelor's thesis on the modelling of magnetohydrodynamic waves in the solar corona using numerical simulations via the open source code PLUTO. 
 \end{abstract}
 \tableofcontents
+
+\listoftodos
+
 \newpage
 \section{Introduction} \label{sec:introduction}
-The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, which consists of fully ionized material due to it having very high temperatures compared to the surface of the sun. The plasma in the solar corona can be described using magnetohydrodynamic (MHD) equations, which combine the Navier-Stokes equations from fluid dynamics with the Maxwell equations from electromagnetism. This approach to model the plasma treats it as a single fluid, as opposed to the two-fluid model, which describes the ions and electrons seperately. \\
+The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, which consists of fully ionized material due to it having very high temperatures compared to the surface of the sun. 
+As the particles of this fluid are charged the fluid interact with the magnetic field and electric currents in the fluid have to be taken into account.  
+The plasma in the solar corona can be described using magnetohydrodynamic (MHD) equations, which combine the Navier-Stokes equations from fluid dynamics with the Maxwell equations from electromagnetism. 
+This approach to model the plasma treats it as a single fluid, as opposed to the two-fluid model, which describes the ions and electrons seperately. \\
 
-The differential/governing equations that make up the MHD model, are difficult to solve analytically. It is therefore favorable to use numerical computer modeling to study the equations, which is the main focus of this bachelor's project. The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}. 
-\section{Magnetohydrodynamics and the solar corona} \label{sec:magnetohydrodynamics_and_the_solar_corona}
+The differential/governing equations that make up the MHD model, are difficult to solve analytically. 
+It is therefore favourable to use numerical computer modelling to study the equations, which is the main focus of this bachelor's project. 
+The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}. 
+
+\section{(M)HD Theory} \label{sec:(m)hd_theory}
+
+\subsection{Magnetohydrodynamics and the solar corona} \label{sec:magnetohydrodynamics_and_the_solar_corona}
 The classic Navier-Stokes equations do not suffice to describe the movement in the solar corona due to the influence of strong magnetic fields on the ionized particles. This magnetic field stems from convection in the photosphere, which is a physical process that helps transport the nuclear energy created in the core of the sun \cite{brun2017magnetism}.\\
 
 The use of the magnetohydrodynamic model to describe the plasma depends on three main assumptions, namely, high collisionality, large scales and the assumption of ideal fluids. The last assumption implies that the dissipation of large scale variables is neglected \cite{goedbloed2004principles}. This model also does not take relativity into account, as opposed to the relativistic magnetohydrodynamic model, which will not be discussed further \footnote{More information about the relativistic MHD model can be found in \cite{karas2005introduction}}.
 
 Magnetohydrodynamics can be described by a system of partial differential equations. 
 Just like ordinary fluid dynamics, these are derived from conservation laws. 
-In this report we will only consider the non-relativistic approximation. 
+In this report we will only consider the non-relativistic approximation. \todo{remove redundant information} 
 The system of PDE's/conservations laws is the following:
 \begin{alignat}{3}
     &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho \mathbf v) &&= 0 \tag{mass}\label{masscont}\\
     &\frac{\partial \mathbf m}{\partial t} &&+  \nabla \cdot \bigg[\mathbf{mv - BB+ I}\bigg(p + \frac{\mathbf B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi \tag{moment}\label{cauchymoment}\\
     &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faraday}\\
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= 0 \tag{energy}\label{energy}.
-\end{alignat}
+\end{alignat} \todo{Maybe start with the same system of equations as in \cite{FitzpatricknoteS}}.
 Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
 E_t, = \rho e \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\]  
@@ -92,11 +104,76 @@ c_s^2 = \gamma \frac{p_0}{\rho_0}
 ,\]
 where $\gamma = \frac{f + 2}{f}, $ with $f$ the degrees of freedom of a particle. In a plasma $f$ is almost always $3$. 
 
+\section{Linear Approximations} \label{sec:linear_approximations}
+
+To analyse small amplitude waves in the plasma, a linearised version of the magnetohydrodynamic equations is considered as in \cite{Fitzpatricknotes}, namely
+
+\begin{alignat}{3}
+    &\frac{\partial \rho_1}{\partial t} &&+ \nabla \rho_0 \cdot (\mathbf v_1) &&= 0 \tag{mass}\label{masslin}\\
+    \rho_0&\frac{\partial \mathbf v_1}{\partial t} &&+  \nabla p_1 - \frac{(\nabla \times \mathbf{B_1}) \times \mathbf{B_0}}{\mu} &&= 0 \tag{moment}\label{cauchymomentlin}\\
+    &\frac{\partial \mathbf B_1}{\partial t} &&+ \nabla \times (\mathbf{v_1} \times \mathbf{B_0}) &&= 0 \tag{charge}\label{Faradaylin}\\
+    &\frac{\partial}{\partial t}(\frac{p_1}{p_0} - \frac{\gamma\rho_1}{\rho_0}) && &&= 0 \tag{energy}\label{energylin}.
+\end{alignat}
+
+Where $\mu$ is the vacuum permeability constant, and initial flow velocity and plasma current are assumed to be zero. This linearisation is done by writing the physical quantities as
+\begin{equation*}
+    f(\mathbf{x},t) = f_0(\mathbf{x}) + f_1(\mathbf{x},t)
+\end{equation*}
+under the assumption that the perturbation ($f_1$) of the equilibrium ($f_0$) is small compared to this equilibrium.
+The further analysis is based on the online lecture notes by R. Fitzpatrick \cite{Fitzpatricknotes}.\\
+
+Consider perturbations of the following form, $\exp(i(\mathbf{kx} + \omega t))$, substituting this in the equations results in the following system of equations,
+
+\begin{alignat}{3}
+    &-\omega\rho_1 &&+  \rho_0 \mathbf{k}\cdot\mathbf v_1 &&= 0 \\
+    &-\omega\rho_0\mathbf v_1 &&+  \mathbf{k} p_1 - \frac{(\mathbf{k} \times \mathbf{B_1}) \times \mathbf{B_0}}{\mu} &&= 0 \\
+    &-\omega\mathbf B_1&&+ \mathbf{k} \times (\mathbf{v_1} \times \mathbf{B_0}) &&= 0 \\
+    &-\omega(\frac{p_1}{p_0} - \frac{\gamma\rho_1}{\rho_0}) && &&= 0 .
+\end{alignat}
+
+Rewriting these equations in function of the equilibrium states and $\mathbf{v_1}, \mathbf{k}$ and $\omega$ leads to,
+\begin{align*}
+    \rho_1 &= \rho_0 \frac{\mathbf{k} \cdot \mathbf{v_1}}{\omega}\\
+    p_1 &= \gamma p_0 \frac{\mathbf{k} \cdot \mathbf{v_1}}{\omega}\\
+    \mathbf{B_1} &= \frac{(\mathbf{k} \cdot \mathbf{v_1}) \cdot \mathbf{B_0} - (\mathbf{k} \cdot \mathbf{B_0})\cdot \mathbf{v_1}}{\omega}
+\end{align*}
+These values can now be subsituted in the linearised moment equation yielding the following,
+\begin{equation*}
+    -\omega\rho_0\mathbf{v_1} + \mathbf{k}\cdot \frac{\gamma p_0}{\omega}-\frac{(k\times \frac{(\mathbf{k} \cdot \mathbf{v_1}) \cdot \mathbf{B_0} - (\mathbf{k} \cdot \mathbf{B_0})\cdot \mathbf{v_1}}{\omega})\times \mathbf{B_0}}{\mu} = 0
+\end{equation*}
+Further rearranging of the terms gives,
+\begin{equation}
+    \bigg(\omega^2 - \frac{(\mathbf{k \cdot B_0)^2}}{\mu\rho_0}\bigg)\mathbf{v_1} = \bigg[\bigg(\frac{\gamma p_0}{\rho_0}- \frac{\mathbf{B_0}^2}{\mu\rho_0}\bigg)\mathbf{k} - \frac{(\mathbf{k \cdot B_0)}}{\mu\rho_0}\mathbf{B_0}\bigg](\mathbf{k\cdot v_1}) - \frac{(\mathbf{k \cdot B_0})(v_1\cdot B_0)}{\mu\rho_0}\mathbf{k}
+\end{equation}
+To simplify further notation, $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ will be used to represent the sound speed, and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ will be used to represent the ``Alfv\'en speed''. Under the assumption that the magnetic field lies in the $x$-direction, and the wave front vector $k$ lies in the $x,y$-plane this can be rewritten as follows, where $\theta$ represents the angle between $\mathbf{B_0}$ and $\mathbf{k}$.
+\begin{equation*}
+\begin{pmatrix}
+\omega^2 - \mathbf{k}^2c_s^2 - \mathbf{k}^2v_A^2 & - \mathbf{k}^2c_s^2& 0\\
+? & ? & 0\\
+0 & 0 & ?
+\end{pmatrix}
+\begin{pmatrix}
+v_x \\
+v_y \\
+v_z
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+0\\
+0
+\end{pmatrix}
+\end{equation*}
+\subsection{Alfv\'en Waves}
+The previous derivation led to two different types of waves, namely, Alfv\'en waves and sound waves. An Alfv\'en wave is a magnetic tension wave caused by a restoring force. 
+This force follows from Lenz's law, which states that the electrical currents caused by the motion of a conducting fluid in a magnetic field give rise to a force countering this motion, and Newton's second law for fluids \cite{Finlay2007}. 
+Properties of Alfv\'en waves are that they travel along the magnetic field lines and hence cannot propagate across field lines and that they do not perturb density \cite{mhdppt}.\\
+
 
 
 \section{Pluto Code} \label{sec:pluto_code}
 
-\textcolor{red}{Hier zou ik iets schrijven over hoe pluto werkt}
+\todo{Hier zou ik iets schrijven over hoe pluto werkt}
 
 \subsection{Units in Pluto} \label{sec:units_in_pluto}
 
@@ -120,11 +197,12 @@ Note that the unit for magnetic field is defined as $B_0 = v_0\sqrt{4\pi \rho_0}
 	\end{tabular}
 \end{table}
 
-\textcolor{red}{Hier iets schrijven over de units mss?}. 
-
-
 \subsection{Initial example} \label{sec:initial_example}
-The first problem that will be analysed is a simple hydrodynamic blastwave generated by a high-pressure region. The viscosity, heat conduction and dissipation of the fluid will be neglected. This problem is meant to be an initial example of how to set up a non-predefined simulation and is fully described in PLUTO's User Guide \cite{plutouserguide}. The blastwave is simulated in two dimensions and uses three user-defined parameters, namely, the ambient pressure, the pressure in the high-pressure region, and $\gamma$ which in this \textcolor{red}{paper/project?} will always be $5/3$. The domain goes from -10 to 10, in both the $x$ and the $y$ direction, with \textcolor{red}{200} points in both dimensions. 
+The first problem that will be analysed is a simple hydrodynamic blastwave generated by a high-pressure region. 
+The viscosity, heat conduction and dissipation of the fluid will be neglected. 
+This problem is meant to be an initial example of how to set up a non-predefined simulation and is a modified version of the initial example described in section 0.4 of PLUTO's User Guide \cite{plutouserguide}. 
+The blastwave is simulated in two dimensions and uses three user-defined parameters, namely, the ambient pressure, the pressure in the high-pressure region, and $\gamma$ which in this report will always be $5/3$. 
+The domain is a rectangle goin from -10 to 10 (code units), in both the $x$ and the $y$ direction, wich is represented by a $1024\times 1024$ grid. 
 
 The following initial condition is used, a high-pressure region inside a circle of radius 0.3 is surrounded by an ambient pressure region. The simulation is run for X units of time, and every Y units, a double-precision file is saved.\\
 
@@ -188,7 +266,7 @@ If $\beta \ll 1$ the magnetic pressure dominates.
 \label{fig:blastwave_shape_beta}
 \end{figure}
 
-When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en waves are clearly visible.
+When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en \todo{This is not an alv\'en wave} waves are clearly visible.
 
 \todo{comparison sound speed theoretical vs simulation}
 \begin{figure}[H]
@@ -198,68 +276,6 @@ When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en waves are clea
 	\label{fig:Alfven_wave}
 \end{figure}
 \todo{Derivation of sound wave speed and Alfven Wave speed}
-To analyse small amplitude waves in the plasma, a linearised version of the magnetohydrodynamic equations is considered as in \cite{Fitzpatricknotes}, namely
-
-\begin{alignat}{3}
-    &\frac{\partial \rho_1}{\partial t} &&+ \nabla \rho_0 \cdot (\mathbf v_1) &&= 0 \tag{mass}\label{masslin}\\
-    \rho_0&\frac{\partial \mathbf v_1}{\partial t} &&+  \nabla p_1 - \frac{(\nabla \times \mathbf{B_1}) \times \mathbf{B_0}}{\mu} &&= 0 \tag{moment}\label{cauchymomentlin}\\
-    &\frac{\partial \mathbf B_1}{\partial t} &&+ \nabla \times (\mathbf{v_1} \times \mathbf{B_0}) &&= 0 \tag{charge}\label{Faradaylin}\\
-    &\frac{\partial}{\partial t}(\frac{p_1}{p_0} - \frac{\gamma\rho_1}{\rho_0}) && &&= 0 \tag{energy}\label{energylin}.
-\end{alignat}
-
-Where $\mu$ is the vacuum permeability constant, and initial flow velocity and plasma current are assumed to be zero. This linearisation is done by writing the physical quantities as
-\begin{equation*}
-    f(\mathbf{x},t) = f_0(\mathbf{x}) + f_1(\mathbf{x},t)
-\end{equation*}
-under the assumption that the perturbation ($f_1$) of the equilibrium ($f_0$) is small compared to this equilibrium.
-The further analysis is based on the online lecture notes by R. Fitzpatrick \cite{Fitzpatricknotes}.\\
-
-Consider perturbations of the following form, $\exp(i(\mathbf{kx} + \omega t))$, substituting this in the equations results in the following system of equations,
-
-\begin{alignat}{3}
-    &-\omega\rho_1 &&+  \rho_0 \mathbf{k}\cdot\mathbf v_1 &&= 0 \\
-    &-\omega\rho_0\mathbf v_1 &&+  \mathbf{k} p_1 - \frac{(\mathbf{k} \times \mathbf{B_1}) \times \mathbf{B_0}}{\mu} &&= 0 \\
-    &-\omega\mathbf B_1&&+ \mathbf{k} \times (\mathbf{v_1} \times \mathbf{B_0}) &&= 0 \\
-    &-\omega(\frac{p_1}{p_0} - \frac{\gamma\rho_1}{\rho_0}) && &&= 0 .
-\end{alignat}
-
-Rewriting these equations in function of the equilibrium states and $\mathbf{v_1}, \mathbf{k}$ and $\omega$ leads to,
-\begin{align*}
-    \rho_1 &= \rho_0 \frac{\mathbf{k} \cdot \mathbf{v_1}}{\omega}\\
-    p_1 &= \gamma p_0 \frac{\mathbf{k} \cdot \mathbf{v_1}}{\omega}\\
-    \mathbf{B_1} &= \frac{(\mathbf{k} \cdot \mathbf{v_1}) \cdot \mathbf{B_0} - (\mathbf{k} \cdot \mathbf{B_0})\cdot \mathbf{v_1}}{\omega}
-\end{align*}
-These values can now be subsituted in the linearised moment equation yielding the following,
-\begin{equation*}
-    -\omega\rho_0\mathbf{v_1} + \mathbf{k}\cdot \frac{\gamma p_0}{\omega}-\frac{(k\times \frac{(\mathbf{k} \cdot \mathbf{v_1}) \cdot \mathbf{B_0} - (\mathbf{k} \cdot \mathbf{B_0})\cdot \mathbf{v_1}}{\omega})\times \mathbf{B_0}}{\mu} = 0
-\end{equation*}
-Further rearranging of the terms gives,
-\begin{equation}
-    \bigg(\omega^2 - \frac{(\mathbf{k \cdot B_0)^2}}{\mu\rho_0}\bigg)\mathbf{v_1} = \bigg[\bigg(\frac{\gamma p_0}{\rho_0}- \frac{\mathbf{B_0}^2}{\mu\rho_0}\bigg)\mathbf{k} - \frac{(\mathbf{k \cdot B_0)}}{\mu\rho_0}\mathbf{B_0}\bigg](\mathbf{k\cdot v_1}) - \frac{(\mathbf{k \cdot B_0})(v_1\cdot B_0)}{\mu\rho_0}\mathbf{k}
-\end{equation}
-To simplify further notation, $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ will be used to represent the sound speed, and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ will be used to represent the ``Alfv\'en speed''. Under the assumption that the magnetic field lies in the $x$-direction, and the wave front vector $k$ lies in the $x,y$-plane this can be rewritten as follows, where $\theta$ represents the angle between $\mathbf{B_0}$ and $\mathbf{k}$.
-\begin{equation*}
-\begin{pmatrix}
-\omega^2 - \mathbf{k}^2c_s^2 - \mathbf{k}^2v_A^2 & - \mathbf{k}^2c_s^2& 0\\
-? & ? & 0\\
-0 & 0 & ?
-\end{pmatrix}
-\begin{pmatrix}
-v_x \\
-v_y \\
-v_z
-\end{pmatrix}
-=
-\begin{pmatrix}
-0\\
-0\\
-0
-\end{pmatrix}
-\end{equation*}
-\subsection{Alfv\'en Waves}
-The previous derivation led to two different types of waves, namely, Alfv\'en waves and sound waves. An Alfv\'en wave is a magnetic tension wave caused by a restoring force. 
-This force follows from Lenz's law, which states that the electrical currents caused by the motion of a conducting fluid in a magnetic field give rise to a force countering this motion, and Newton's second law for fluids \cite{Finlay2007}. 
-Properties of Alfv\'en waves are that they travel along the magnetic field lines and hence cannot propagate across field lines and that they do not perturb density \cite{mhdppt}.\\
 
 In the simulation above \cref{fig:Alfven_wave}, the magnetic field lies in the $x$-direction, hence the Alfv\'en wave is a one-dimensional wave, also in the $x$-direction. 
 The theoretical speed of this wave is $v_A = \frac{B_0}{\sqrt{\rho_0}} = \sqrt{\frac{\beta p_0}{\rho_0}} = 8.94$ in code units. 
