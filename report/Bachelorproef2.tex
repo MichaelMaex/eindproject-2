@@ -291,7 +291,42 @@ This corresponds to a physical speed of \SI{8.94e5}{\centi\meter\per\second}.
 \todo{Compare Alfven wave speed theoretical and empirical}
 \subsection{Sound Waves}
 \section{Interaction of MHD waves with large scale structures}
-This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov. 
+This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov.  \cite{afanasyev2018propagation}\\
+
+The shock wave simulated in \cref{sec:waves_in_magnetorhydrodynamic_fluids} is a good description of a wave in a uniform plasma, however it does not account for various large scale non-uniformities, such as coronal holes and plumes. The interaction of coronal waves with these structures results in wave phenomena such as wave transmission and reflection, which have been observed in extreme ultraviolet images of the Sun (see for example \cite{gopalswamy2009euv}).
+\subsection{Coronal Hole Model}
+A coronal hole, is a region of lower temperature and density compared to the surrounding plasma. This results in a region of higher Alfv\'en speed. They occur when a magnetic field does not fall back, and is open to interplanetary space \todo{Degelijke bron nodig}.\\
+
+To simulate a coronal hole, the following initial conditions are used,
+\begin{align*}
+    n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]\\
+    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]
+\end{align*}
+Here $n$ denotes the plasma number density, $T$ denotes the temperature, and $r$ is the distance from the center. The parameter $d$ is used to describe the characteristic size of the non-uniformity and can hence be used to adjust the simulation to the correct order of magnitude. In this simulation $d$ will be equal to $150$ Mm (see also \cref{tab:coronal_hole}).\\
+
+The magnetic field in the simulation is directed in the $z$-direction while the simulation takes place in the $x,y$-plane. An initial equilibrium is achieved by keeping the total pressure constant, using the following equation,
+\begin{equation*}
+    p^t = p_{\text{gas}} + \frac{B^2}{8\pi} = \text{constant}.
+\end{equation*}
+Here $p^t$ represents the total pressure, which is the sum of the gas pressure and the magnetic pressure. \\
+
+The values that are used for the parameters are summarised in \cref{tab:coronal_hole}.
+\begin{table}[H]
+    \centering
+    \caption{Parameters used to simulate the coronal hole model}
+    \label{tab:coronal_hole}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Parameter}             & \textbf{Value}                                  & \textbf{Unit}              \\ \hline
+    d                              & 150                                             & Mm                         \\ \hline
+    $n_\text{out}$ & $1.0 \times 10^9$ & $\text{cm}^{-3}$ \\ \hline
+    $n_\text{in}$                              & $1.0 \times 10^8$                                               & $\text{cm}^{-3}$                          \\ \hline
+    $T_\text{out}$                              & 1.5                                               & MK                          \\ \hline
+    $T_\text{in}$                              & 1.0                                               & MK                          \\ \hline
+    $B_\text{out}$                              & 4.0                                               & G                          \\ \hline
+\end{tabular}
+\end{table}
+\subsection{Coronal Plume Model} 
 \section{Optional: MHD waves in slab geometry}
 Task 4
 \printbibliography
