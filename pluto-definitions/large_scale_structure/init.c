@@ -44,7 +44,7 @@ void Init (double *v, double x1, double x2, double x3)
   double d;
   double r;    
 
-  d = g_inputParam[D];
+  d = g_inputParam[DIAM];
   rho_out = g_inputParam[RHO_OUT];
   rho_ins = g_inputParam[RHO_INS];
   T_out = g_inputParam[T_OUT];   //Physical value (Kelvin)

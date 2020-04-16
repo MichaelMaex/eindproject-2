@@ -30,9 +30,9 @@
 #define  RHO_OUT                        1
 #define  T_INS                          2
 #define  T_OUT                          3
-#define  GAMMA                          4
-#define  D                              5
-#define  B_OUT                          6
+#define  DIAM                           4
+#define  B_OUT                          5
+#define  USER_PAR_06                    6
 
 /* [Beg] user-defined constants (do not change this line) */
 
