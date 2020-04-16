@@ -9,7 +9,7 @@
 #define  TIME_STEPPING                  RK2
 #define  DIMENSIONAL_SPLITTING          NO
 #define  NTRACER                        0
-#define  USER_DEF_PARAMETERS            7
+#define  USER_DEF_PARAMETERS            6
 
 /* -- physics dependent declarations -- */
 
