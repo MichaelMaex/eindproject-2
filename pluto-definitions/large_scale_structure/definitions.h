@@ -38,6 +38,6 @@
 
 #define  UNIT_DENSITY                   (1.e9*CONST_mp)
 #define  UNIT_LENGTH                    1.e8
-#define  UNIT_VELOCIYT                  1.e8
+#define  UNIT_VELOCITY                  1.e8
 
 /* [End] user-defined constants (do not change this line) */
