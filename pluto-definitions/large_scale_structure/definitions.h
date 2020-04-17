@@ -9,7 +9,7 @@
 #define  TIME_STEPPING                  RK2
 #define  DIMENSIONAL_SPLITTING          NO
 #define  NTRACER                        0
-#define  USER_DEF_PARAMETERS            6
+#define  USER_DEF_PARAMETERS            8
 
 /* -- physics dependent declarations -- */
 
@@ -32,7 +32,8 @@
 #define  T_OUT                          3
 #define  DIAM                           4
 #define  B_OUT                          5
-#define  USER_PAR_06                    6
+#define  WAVE_HEIGHT                    6
+#define  WAVE_DURATION                  7
 
 /* [Beg] user-defined constants (do not change this line) */
 

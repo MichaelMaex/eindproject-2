@@ -22,6 +22,7 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{todonotes}
+\usepackage{verbatim}
 
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
@@ -142,28 +143,54 @@ These values can now be subsituted in the linearised moment equation yielding th
     -\omega\rho_0\mathbf{v_1} + \mathbf{k}\cdot \frac{\gamma p_0}{\omega}-\frac{(k\times \frac{(\mathbf{k} \cdot \mathbf{v_1}) \cdot \mathbf{B_0} - (\mathbf{k} \cdot \mathbf{B_0})\cdot \mathbf{v_1}}{\omega})\times \mathbf{B_0}}{\mu} = 0
 \end{equation*}
 Further rearranging of the terms gives,
-\begin{equation}
-    \bigg(\omega^2 - \frac{(\mathbf{k \cdot B_0)^2}}{\mu\rho_0}\bigg)\mathbf{v_1} = \bigg[\bigg(\frac{\gamma p_0}{\rho_0}- \frac{\mathbf{B_0}^2}{\mu\rho_0}\bigg)\mathbf{k} - \frac{(\mathbf{k \cdot B_0)}}{\mu\rho_0}\mathbf{B_0}\bigg](\mathbf{k\cdot v_1}) - \frac{(\mathbf{k \cdot B_0})(v_1\cdot B_0)}{\mu\rho_0}\mathbf{k}
+\begin{equation} \label{eq:linearised_mhd_5}
+	\bigg(\omega^2 - \frac{(\mathbf{k \cdot B_0)^2}}{\mu\rho_0}\bigg)\mathbf{v_1} = \bigg[\bigg(\frac{\gamma p_0}{\rho_0}- \frac{\mathbf{B_0}^2}{\mu\rho_0}\bigg)\mathbf{k} - \frac{(\mathbf{k \cdot B_0)}}{\mu\rho_0}\mathbf{B_0}\bigg](\mathbf{k\cdot v_1}) - \frac{(\mathbf{k \cdot B_0})(\mathbf {v_1}\cdot \mathbf{B_0})}{\mu\rho_0}\mathbf{k}
 \end{equation}
-To simplify further notation, $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ will be used to represent the sound speed, and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ will be used to represent the ``Alfv\'en speed''. Under the assumption that the magnetic field lies in the $x$-direction, and the wave front vector $k$ lies in the $x,y$-plane this can be rewritten as follows, where $\theta$ represents the angle between $\mathbf{B_0}$ and $\mathbf{k}$.
-\begin{equation*}
-\begin{pmatrix}
-\omega^2 - \mathbf{k}^2c_s^2 - \mathbf{k}^2v_A^2 & - \mathbf{k}^2c_s^2& 0\\
-? & ? & 0\\
-0 & 0 & ?
-\end{pmatrix}
-\begin{pmatrix}
-v_x \\
-v_y \\
-v_z
-\end{pmatrix}
-=
-\begin{pmatrix}
-0\\
-0\\
-0
-\end{pmatrix}
-\end{equation*}
+To simplify further notation, $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ will be used to represent the sound speed, and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ will be used to represent the ``Alfv\'en speed''. Let $\theta$ be the angle between $\mathbf{B_0}$ and $\mathbf k$. \Cref{eq:linearised_mhd_5} then becomes
+\begin{equation}
+	\left( \omega^2 - v_A^2 \cos^2\theta \right)k^2 \mathbf{v_1}  
+	- \left[ (c_s^2 - v_a^2) \mathbf k - v_a^2\cos\theta \frac{k}{B_0}\mathbf{B_0} \right](\mathbf k \cdot \mathbf{v_1}) 
+	+ v_a^2\cos\theta \frac{k}{B_0}(\mathbf{v_1}\cdot \mathbf{B_0}) \mathbf k
+	=0
+\end{equation}
+Under the assumption that the magnetic field lies in the $x$-direction, and the wave front vector $k$ lies in the $x,y$-plane this can be rewritten as follows, where $\theta$ represents the angle between $\mathbf{B_0}$ and $\mathbf{k}$, i.e. $k_x = k\cos\theta , k_y = k \sin\theta, k_z = 0$.
+\begin{align*}
+	&\left( \omega^2 - k^2v_A^2\cos^2\theta \right) \mathbf I_3 \begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix} \\
+	- &k^2\left[ (c_s^2 - v_A^2) \begin{pmatrix} \cos \theta \\ \sin\theta \\ 0 \end{pmatrix} - v_A^2\cos\theta  \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}  \right] \begin{pmatrix} \cos \theta & \sin \theta & 0 \end{pmatrix} \begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix} \\
+	+ &k^2v_A^2 \cos\theta \begin{pmatrix} \cos\theta \\ \sin \theta \\ 0  \end{pmatrix} \begin{pmatrix} 1 & 0 & 0 \end{pmatrix} \begin{pmatrix} v_x \\ v_y \\ v_z  \end{pmatrix}  \\
+	&=  \mathbf 0
+\end{align*}
+
+Simplifying this yields:
+\begin{align*}
+	&\begin{pmatrix}
+		\omega^2  - k^2 v_A^2 \cos\theta^2    & 0 & 0 \\
+		0 & \omega^2 - k^2v_A^2\cos^2\theta & 0 \\
+		0 & 0 & \omega^2 - k^2v_A^2\cos^2\theta
+	\end{pmatrix} \\
+	 & + \begin{pmatrix} 
+		 -k^2 (c_s^2 - 2v_a^2) \cos^2 \theta & - k^2 (c_s^2 - 2v_a^2) \cos\theta \sin \theta  & 0 \\
+		 -k^2(c_s^2 - v_a^2) \cos\theta \sin \theta & -k^2(c_s^2 - v_a^2) \sin^2\theta & 0 \\
+		 0 & 0 & 0
+	 \end{pmatrix} \\  
+	 &  + \begin{pmatrix} 
+		 k^2 v_a^2 \cos^2\theta & 0 & 0  \\
+		 k^2 v_a^2 \cos \theta \sin \theta & 0 & 0 \\
+		 0 & 0 & 0
+	 \end{pmatrix} 
+\end{align*}
+
+
+
+\begin{equation}
+	\begin{pmatrix}
+		\omega^2  - k^2 v_A^2 \cos\theta^2    & 0 & 0 \\
+		0 & \omega^2 - k^2v_A^2\cos^2\theta & 0 \\
+		0 & 0 & \omega^2 - k^2v_A^2\cos^2\theta
+	\end{pmatrix} 
+	\begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix} 
+	 = \begin{pmatrix} 0 \\ 0 \\0  \end{pmatrix} 
+\end{equation}
 \subsection{Alfv\'en Waves}
 The previous derivation led to two different types of waves, namely, Alfv\'en waves and sound waves. An Alfv\'en wave is a magnetic tension wave caused by a restoring force. 
 This force follows from Lenz's law, which states that the electrical currents caused by the motion of a conducting fluid in a magnetic field give rise to a force countering this motion, and Newton's second law for fluids \cite{Finlay2007}. 
