@@ -231,6 +231,42 @@ The eigenvector linked to the sound waves is in the $x,y$-plane, as can be seen 
 .\] 
 In this case $\mathbf{k\cdot v_2}$ and $\mathbf{v_2 \cdot B_0}$ do not vanish implying that the waves cause perturbations in the density and the pressure of the plasma.
 \todo{Wat hier nog toevoegen?}
+\subsection{Friedrich Diagrams}
+\begin{center}
+\begin{tikzpicture}
+  \draw[thick,->,>=latex] (-0.5,0)--(4,0) node[above] {$k_y$};
+  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
+  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={cos(\x r)});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*(2+sqrt(4-4*cos(\x r)^2)))});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*(2-sqrt(4-4*cos(\x r)^2)))});
+  \node at (1,1.2) {A};
+  \node at (0.9, 0.45) {S};
+  \node at (1.6, 2.5) {F};
+  \node at (3.5,3.2) {\large $v_A/c_s = 1$};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \draw[thick,->,>=latex] (-0.5,0)--(4,0) node[above] {$k_y$};
+  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
+  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={0.8*cos(\x r)});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((1.64)+sqrt((2.6896)-4*0.64*cos(\x r)^2)))});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((1.64)-sqrt((2.6896)-4*0.64*cos(\x r)^2)))});
+  \node at (0.8,1) {A};
+  \node at (0.7, 0.35) {S};
+  \node at (1.6, 2.2) {F};
+  \node at (3.5,3.2) {\large $v_A/c_s = 0.8$};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \draw[thick,->,>=latex] (-0.5,0)--(4,0) node[above] {$k_y$};
+  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
+  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={1.2*cos(\x r)});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((2.44)+sqrt((5.9536)-4*1.44*cos(\x r)^2)))});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((2.44)-sqrt((5.9536)-4*1.44*cos(\x r)^2)))});
+  \node at (1.2,1.4) {A};
+  \node at (0.95, 0.5) {S};
+  \node at (1.9, 2.55) {F};
+  \node at (3.5,3.2) {\large $v_A/c_s = 1.2$};
+\end{tikzpicture}
+\end{center}
 
 \section{Pluto Code} \label{sec:pluto_code}
 
