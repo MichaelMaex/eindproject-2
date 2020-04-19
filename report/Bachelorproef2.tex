@@ -94,7 +94,7 @@ The system of PDE's/conservations laws is the following:
     &\frac{\partial \mathbf m}{\partial t} &&+  \nabla \cdot \bigg[\mathbf{mv - BB+ I}\bigg(p + \frac{\mathbf B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi \tag{moment}\label{cauchymoment}\\
     &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faraday}\\
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= 0 \tag{energy}\label{energy}.
-\end{alignat} \todo{Maybe start with the same system of equations as in \cite{FitzpatricknoteS}}.
+\end{alignat} \todo{Maybe start with the same system of equations as in \cite{Fitzpatricknotes}}.
 Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
 E_t, = \rho e \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\]  
@@ -197,13 +197,13 @@ For this to be satisfied, the determinant of the matrix on the left hand side mu
 .\] 
 Simplifying this results in the dispersion relation for plasma waves
 \begin{equation}\label{eq:disperion}
-	(\omega^2 - k^2 v_A^2 \cos \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
+	(\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
 .\end{equation} 
 This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:
 \begin{align*}
-	\omega^2 &=  k^2v_a^2 \tag{Alv\'en Waves} \\
-	\omega^2 &= \frac{k}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast accoustic waves}\\
-	\omega^2 &= \frac{k}{2}\left( v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Slow accoustic waves}
+	\omega^2 &=  k^2v_a^2\cos\theta \tag{Alv\'en Waves} \\
+	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast acoustic waves}\\
+	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Slow acoustic waves}
 .\end{align*}
 \subsection{Alfv\'en Waves}
 The previous derivation led to two different types of waves, namely, Alfv\'en waves and sound waves. An Alfv\'en wave is a magnetic tension wave caused by a restoring force. 
@@ -212,22 +212,27 @@ Properties of Alfv\'en waves are that they travel along the magnetic field lines
 
 
 Alven waves occur when \[
-\omega^2 = k^2v_a^2
+\omega^2 = k^2v_a^2\cos^2 \theta
 .\] 
 As can be seen from \cref{eq:MHD_linear_matrix} the corresponding eigenvector is in the $z$-direction \[
 	\mathbf{v_1} = v \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} 
 .\] 
+\todo{Moet dit niet in de x richting zijn?}
 As a result $\mathbf k \cdot \mathbf{v_1} = 0$ and \cref{eq:MHD_linear_wave_mass} implies that the perturbation in density, $\rho_1  = 0$. \Cref{eq:MHD_linear_wave_enery} states that $p_1$ vanishes as well. 
 As $\mathbf{B_0}$  and $\mathbf{V_1}$ lie in the $x$ and $z$-direction respectively, $\cref{eq:cauchymomentlin}$ and $\cref{eq:faradaylin}$ simplify to
 \begin{align*}
 	\rho_0 \frac{\partial v_z}{\partial t} - \frac{B_1}{\mu} \frac{\partial B_0}{\partial x} &= 0 \\
 	\frac{\partial B_x}{\partial t}  + B_0\frac{\partial v_z}{\partial t} 
 .\end{align*}
-Substituting one equation into the other yields the wave equation
-\[
-\frac{\partial^2 v_z}{\partial t^2} - v_A^2 \frac{\partial ^2B_x}{\partial t^2}  = 0
-.\] 
-Alv\'en waves traval at the Alv\'en speed $v_A$. 
+The phase velocity of an Alfv\'en wave is equal to $\omega/k$ or,
+\begin{equation*}
+    v_{\text{ph}} = \omega/k = v_A \cos\theta.
+\end{equation*}
+The group velocity is equal to a constant, namely the Alfv\'en speed.
+\begin{equation*}
+    v_{\text{gr}} = v_A
+\end{equation*}
+The comparison of this kind of wave with the fast and slow acoustic waves is made in \cref{sec:Friedrich}.
 \subsection{Sound Waves}
 The second type of wave found in the dispersion relation are sound waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast acoustic wave and the slow acoustic wave.\\
 
@@ -236,8 +241,47 @@ The eigenvector linked to the sound waves is in the $x,y$-plane, as can be seen 
 	\mathbf{v_2} = v \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} 
 .\] 
 In this case $\mathbf{k\cdot v_2}$ and $\mathbf{v_2 \cdot B_0}$ do not vanish implying that the waves cause perturbations in the density and the pressure of the plasma.
+
+The phase velocity can again be calculated by dividing $\omega$ by $k$, this results in,
+\begin{align*}
+    v_{\text{phF}} &= \omega/k = \sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\
+    v_{\text{phS}} &= \omega/k = \sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}
+\end{align*}\\
+
+The derivation for the group velocity takes more steps. For any wave it is defined as 
+\begin{equation*}
+    v_{\text{gr}} = \frac{d\omega}{d\mathbf{k}} = \hat{k}\frac{\partial\omega}{\partial k} + \hat{\theta} \frac{1}{k}\frac{\partial\omega}{\partial\theta}
+\end{equation*}
+The $k$-component can be calculated as follows,
+\begin{align*}
+    \frac{\partial \omega}{\partial k} &= \frac{\partial}{\partial k}\left(kv_{\text{ph}}\right)\\
+    &= v_{\text{ph}}
+\end{align*}
+Which is a function of $\theta$.\\
+The $\theta$-component can be calculated by rewriting the term,
+\begin{align*}
+    \frac{1}{k}\frac{\partial \omega}{\partial \theta} &= \frac{\partial}{\partial \theta}\left(\frac{\omega}{k}\right)
+    = \frac{\partial}{\partial \theta}(v_{\text{ph}}) = \frac{1}{2v_{\text{ph}}} \frac{\partial}{\partial \theta}(v^2_{\text{ph}})
+\end{align*}
+The remainder of the calculations will be done for the fast wave, the slow wave case is analogous. The partial derivative of the phase speed of the fast wave squared becomes,
+\begin{align*}
+     \frac{\partial}{\partial \theta}(v^2_{\text{phF}})&= \frac{1}{2}\frac{\partial}{\partial \theta} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\\
+     &= \frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
+\end{align*}
+Substituting this back in to the equation gives,
+\begin{align*}
+     \frac{1}{k}\frac{\partial \omega}{\partial \theta} &= \frac{1}{2v_{\text{phF}}}  \frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
+     &= \frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
+\end{align*}
+Combining this with the $k$-component gives the group velocity,
+\begin{align*}
+    v_\text{grF} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &+ \hat{\theta}\frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
+    v_\text{grS} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &- \hat{\theta}\frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
+\end{align*}
 \todo{Wat hier nog toevoegen?}
-\subsection{Friedrich Diagrams}
+
+\subsection{Friedrich Diagrams}\label{sec:Friedrich}
+The following diagrams represent the phase speed of the different types of magnetohydrodynamic waves plotted as radial distance. The angle between $k$ and $B_0$ is the angle away from the $k_y$ axis.
 \begin{center}
 \begin{tikzpicture}
   \draw[thick,->,>=latex] (-0.5,0)--(4,0) node[above] {$k_y$};
@@ -273,7 +317,7 @@ In this case $\mathbf{k\cdot v_2}$ and $\mathbf{v_2 \cdot B_0}$ do not vanish im
   \node at (3.5,3.2) {\large $v_A/c_s = 1.2$};
 \end{tikzpicture}
 \end{center}
-
+FOR GROUP VELOCITY
 \section{Pluto Code} \label{sec:pluto_code}
 
 \todo{Hier zou ik iets schrijven over hoe pluto werkt}
