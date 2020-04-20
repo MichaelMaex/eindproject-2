@@ -169,17 +169,18 @@ Writing every term as a matrix yields:
 		\omega^2  - k^2 v_A^2 \cos\theta^2    & 0 & 0 \\
 		0 & \omega^2 - k^2v_A^2\cos^2\theta & 0 \\
 		0 & 0 & \omega^2 - k^2v_A^2\cos^2\theta
-	\end{pmatrix} \\
+	\end{pmatrix} 
+	\begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix} \\
 	 & + \begin{pmatrix} 
 		 -k^2 c_s^2 \cos^2 \theta & - k^2 c_s^2 \cos\theta \sin \theta  & 0 \\
 		 -k^2(c_s^2 + v_A^2) \cos\theta \sin \theta & -k^2(c_s^2 + v_a^2) \sin^2\theta & 0 \\
 		 0 & 0 & 0
-	 \end{pmatrix} \\  
+	 \end{pmatrix} \begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix} \\  
 	 &  + \begin{pmatrix} 
 		 k^2 v_a^2 \cos^2\theta & 0 & 0  \\
 		 k^2 v_a^2 \cos \theta \sin \theta & 0 & 0 \\
 		 0 & 0 & 0
-	 \end{pmatrix} 
+	 \end{pmatrix} \begin{pmatrix} v_x \\ v_y \\ v_z \end{pmatrix} 
 \end{align*}
 This yields:
 \begin{equation}\label{eq:MHD_linear_matrix}
@@ -199,9 +200,9 @@ Simplifying this results in the dispersion relation for plasma waves
 \begin{equation}\label{eq:disperion}
 	(\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
 .\end{equation} 
-This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:
+This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:\todo{refactor acoustic to magneto-sonic}
 \begin{align*}
-	\omega^2 &=  k^2v_a^2\cos\theta \tag{Alv\'en Waves} \\
+	\omega^2 &=  k^2v_a^2\cos^2\theta \tag{Alv\'en Waves} \\
 	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast acoustic waves}\\
 	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Slow acoustic waves}
 .\end{align*}
@@ -217,7 +218,6 @@ Alven waves occur when \[
 As can be seen from \cref{eq:MHD_linear_matrix} the corresponding eigenvector is in the $z$-direction \[
 	\mathbf{v_1} = v \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} 
 .\] 
-\todo{Moet dit niet in de x richting zijn?}
 As a result $\mathbf k \cdot \mathbf{v_1} = 0$ and \cref{eq:MHD_linear_wave_mass} implies that the perturbation in density, $\rho_1  = 0$. \Cref{eq:MHD_linear_wave_enery} states that $p_1$ vanishes as well. 
 As $\mathbf{B_0}$  and $\mathbf{V_1}$ lie in the $x$ and $z$-direction respectively, $\cref{eq:cauchymomentlin}$ and $\cref{eq:faradaylin}$ simplify to
 \begin{align*}
@@ -278,7 +278,7 @@ Combining this with the $k$-component gives the group velocity,
     v_\text{grF} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &+ \hat{\theta}\frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
     v_\text{grS} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &- \hat{\theta}\frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
 \end{align*}
-\todo{Wat hier nog toevoegen?}
+\todo{Diagrammen toevoegen onder Friederich Diagrammen?}
 
 \subsection{Friedrich Diagrams}\label{sec:Friedrich}
 The following diagrams represent the phase speed of the different types of magnetohydrodynamic waves plotted as radial distance. The angle between $k$ and $B_0$ is the angle away from the $k_y$ axis.
@@ -394,7 +394,7 @@ Like in the previous setup the radius of the blast over time was compared to the
 \Cref{fig:non_linear_effects} shows concave radius/time relation against the linear theoretically predicted relation. 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{figures/non_linear_effects.pdf}
+	%\includegraphics[width=0.6\textwidth]{figures/non_linear_effects.pdf}
 	\caption{A comparison of the theoretically predicted radius of the blast wave (using a linear approximation) versus the simulated result}
 	\label{fig:non_linear_effects}
 \end{figure}
@@ -422,7 +422,6 @@ When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en \todo{This is 
 	\caption{}
 	\label{fig:Alfven_wave}
 \end{figure}
-\todo{Derivation of sound wave speed and Alfven Wave speed}
 
 In the simulation above \cref{fig:Alfven_wave}, the magnetic field lies in the $x$-direction, hence the Alfv\'en wave is a one-dimensional wave, also in the $x$-direction. 
 The theoretical speed of this wave is $v_A = \frac{B_0}{\sqrt{\rho_0}} = \sqrt{\frac{\beta p_0}{\rho_0}} = 8.94$ in code units. 
