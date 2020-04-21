@@ -85,21 +85,16 @@ The classic Navier-Stokes equations do not suffice to describe the movement in t
 
 The use of the magnetohydrodynamic model to describe the plasma depends on three main assumptions, namely, high collisionality, large scales and the assumption of ideal fluids. The last assumption implies that the dissipation of large scale variables is neglected \cite{goedbloed2004principles}. This model also does not take relativity into account, as opposed to the relativistic magnetohydrodynamic model, which will not be discussed further \footnote{More information about the relativistic MHD model can be found in \cite{karas2005introduction}}.
 
-Magnetohydrodynamics can be described by a system of partial differential equations. 
-Just like ordinary fluid dynamics, these are derived from conservation laws. 
-In this report we will only consider the non-relativistic approximation. \todo{remove redundant information} 
+\todo{Afleiding vanuit conservatiewetten nodig?}
+\todo{Wanneer mogen deze vergelijkingen}
 The system of PDE's/conservations laws is the following:
 \begin{alignat}{3}
-    &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho \mathbf v) &&= 0 \tag{mass}\label{masscont}\\
-    &\frac{\partial \mathbf m}{\partial t} &&+  \nabla \cdot \bigg[\mathbf{mv - BB+ I}\bigg(p + \frac{\mathbf B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi \tag{moment}\label{cauchymoment}\\
-    &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faraday}\\
-    &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= 0 \tag{energy}\label{energy}.
-\end{alignat} \todo{Maybe start with the same system of equations as in \cite{Fitzpatricknotes}}.
-Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
-E_t, = \rho e \frac{m^2}{2\rho} + \frac{B^2}{2}
-.\]  
-The constants  $e, c$ are the elementary charge and the speed of light respectively.
-
+    &\frac{\partial \rho}{\partial t} &&+ \rho \nabla  \cdot (\mathbf v) &&= 0 \tag{mass}\label{eq:mass}\\
+    \rho&\frac{\partial \mathbf v}{\partial t} &&+  \nabla p - \frac{(\nabla \times \mathbf{B}) \times \mathbf{B}}{\mu} &&= 0 \tag{moment}\label{eq:cauchymoment}\\
+    &-\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (\mathbf{v} \times \mathbf{B}) &&= 0 \tag{charge}\label{eq:faraday}\\
+    &\frac{\partial}{\partial t}(\frac{p}{\rho^\gamma}) && &&= 0 \tag{energy}\label{eq:energy}.
+\end{alignat} 
+Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $p$ is the thermal pressure.
 If the environment is one where the thermal pressure and density are small deviations of some constant background pressure and density, $p_0, \rho_0$. Then the speed of sound is given by \[
 c_s^2 = \gamma \frac{p_0}{\rho_0}
 ,\]
@@ -110,9 +105,9 @@ where $\gamma = \frac{f + 2}{f}, $ with $f$ the degrees of freedom of a particle
 To analyse small amplitude waves in the plasma, a linearised version of the magnetohydrodynamic equations is considered as in \cite{Fitzpatricknotes}, namely
 
 \begin{alignat}{3}
-    &\frac{\partial \rho_1}{\partial t} &&+ \nabla \rho_0 \cdot (\mathbf v_1) &&= 0 \tag{mass}\label{eq:masslin}\\
+    &\frac{\partial \rho_1}{\partial t} &&+ \rho_0 \nabla  \cdot (\mathbf v_1) &&= 0 \tag{mass}\label{eq:masslin}\\
     \rho_0&\frac{\partial \mathbf v_1}{\partial t} &&+  \nabla p_1 - \frac{(\nabla \times \mathbf{B_1}) \times \mathbf{B_0}}{\mu} &&= 0 \tag{moment}\label{eq:cauchymomentlin}\\
-    &\frac{\partial \mathbf B_1}{\partial t} &&+ \nabla \times (\mathbf{v_1} \times \mathbf{B_0}) &&= 0 \tag{charge}\label{eq:faradaylin}\\
+    &-\frac{\partial \mathbf B_1}{\partial t} &&+ \nabla \times (\mathbf{v_1} \times \mathbf{B_0}) &&= 0 \tag{charge}\label{eq:faradaylin}\\
     &\frac{\partial}{\partial t}(\frac{p_1}{p_0} - \frac{\gamma\rho_1}{\rho_0}) && &&= 0 \tag{energy}\label{eq:energylin}.
 \end{alignat}
 
@@ -370,7 +365,7 @@ These can be derived from the standard Euler equations by changing the total der
 \end{figure}
 
 \Cref{fig:blastwave} shows pressure of the simulated fluid at multiple points in time. 
-The speed at which the wave front moves is the group speed. 
+The speed at which the wave front moves is the group speed. \todo{Moet dit niet phase speed zijn?}
 According to \cref{sec:magnetohydrodynamics_and_the_solar_corona} this is given by $c_s = \sqrt{\frac{5}{3} \frac{p_0}{\rho_0}} $. Hence the speed (in code units) is $\sqrt{\frac{5}{3}8} = 3.61$, which corresponds to \SI{3.61e5}{\centi\metre\per\second}.
 A comparison of the theoretical radius against the simulated radius can be found in \cref{fig:wave_front_speed}. 
 Note that the curve of the simulation is jagged because the grid on which the simulation is run is discreet. 
@@ -400,6 +395,18 @@ Like in the previous setup the radius of the blast over time was compared to the
 \end{figure}
 
 \section{Waves in magnetohydrodynamic fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
+To simulate magnetohydrodynamic waves, PLUTO solves the following system of differential equations, which is slightly different from the one defined in \cref{sec:(m)hd_theory}.
+\begin{alignat}{3}
+    &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho \mathbf v) &&= 0 \tag{mass}\label{masscontpluto}\\
+    &\frac{\partial \mathbf m}{\partial t} &&+  \nabla \cdot \bigg[\mathbf{mv - BB+ I}\bigg(p + \frac{\mathbf B^2}{2}\bigg)\bigg]^T &&= -\rho \nabla \Phi + \rho\cdot g \tag{moment}\label{cauchymomentpluto}\\
+    &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faradaypluto}\\
+    &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= m\cdot g \tag{energy}\label{energypluto}.
+\end{alignat} 
+Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
+E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
+.\]  
+The constants  $e, c$ are the elementary charge and the speed of light respectively, and $\mathbf{E}$ is the electric field.\cite{plutouserguide}\\
+
 In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added.
 The parameter $\beta = \frac{2p}{B^2}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
 If $\beta = \infty$ the magnetic field is $0$. 
@@ -419,7 +426,7 @@ When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en \todo{This is 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figures/slow_wave.pdf}
-	\caption{The propagation of a slowe wave. Axes are in \si{cm}}.
+	\caption{The propagation of a slow wave. Axes are in \si{cm}}.
 	\label{fig:Alfven_wave}
 \end{figure}
 
@@ -479,6 +486,16 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
 	\label{fig:figures-hole}
 \end{figure}
 \subsection{Coronal Plume Model} 
+To contrast the coronal hole model, the plume model is considered. It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed. This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes.\\
+
+The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
+
+\begin{align*}
+    n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
+    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]\\
+     p^t &= p_{\text{gas}} + \frac{B^2}{8\pi} = \text{constant}.
+\end{align*}
+However, this time other values will be used for the parameters, alongside a smaller characteristic size ($d = 100$ Mm).
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
