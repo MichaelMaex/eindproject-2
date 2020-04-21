@@ -445,7 +445,7 @@ A coronal hole, is a region of lower temperature and density compared to the sur
 
 To simulate a coronal hole, the following initial conditions are used,
 \begin{align*}
-    n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]\\
+    n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
     T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]
 \end{align*}
 Here $n$ denotes the plasma number density, $T$ denotes the temperature, and $r$ is the distance from the center. The parameter $d$ is used to describe the characteristic size of the non-uniformity and can hence be used to adjust the simulation to the correct order of magnitude. In this simulation $d$ will be equal to $150$ Mm (see also \cref{tab:coronal_hole}).\\
@@ -472,7 +472,19 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
     $B_\text{out}$                              & 4.0                                               & G                          \\ \hline
 \end{tabular}
 \end{table}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/hole_time.pdf}
+	\caption{}
+	\label{fig:figures-hole}
+\end{figure}
 \subsection{Coronal Plume Model} 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
+	\caption{}
+	\label{fig:figures-plume_time-pdf}
+\end{figure}
 \section{Optional: MHD waves in slab geometry}
 Task 4
 \printbibliography

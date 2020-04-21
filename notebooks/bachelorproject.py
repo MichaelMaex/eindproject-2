@@ -27,13 +27,21 @@ CONST_Rsun = 6.96e10
 CONST_sigma = 5.67051e-5
 CONST_sigmaT = 6.6524e-25
 
-def plot(ax, im, frame, L0 = 14959789200000.0, code_units = False, *args, norm = None, cmap = cm.plasma):
-    trans = mtransforms.Affine2D().rotate_deg(30)
-    x_max = frame.x1[-1] + frame.dx1[-1]/2
-    x_min = frame.x1[0] -frame.dx1[0]/2
-    y_max = frame.x2[-1] + frame.dx2[-1]/2
-    y_min = frame.x2[0] -frame.dx2[0]/2
-    extent = (x_min, x_max, y_min, y_max)
+def plot(ax, im, frame, L0 = 14959789200000.0, code_units = False, *args, norm = None, cmap = cm.plasma, x_min = 0, x_max = -1, y_min = 0, y_max = -1):
+    if(x_max == -1):
+        x_max = len(frame.x1)
+    if(y_max == -1):
+        y_max = len(frame.x2)
+    im = im[x_min:x_max, y_min:y_max]
+    frame.x1 = frame.x1[x_min:x_max]
+    frame.x2 = frame.x2[y_min:y_max]
+    frame.dx1 = frame.dx1[x_min:x_max]
+    frame.dx2 = frame.dx2[y_min:y_max]
+    X_max = frame.x1[-1] + frame.dx1[-1]/2
+    X_min = frame.x1[0] -frame.dx1[0]/2
+    Y_max = frame.x2[-1] + frame.dx2[-1]/2
+    Y_min = frame.x2[0] -frame.dx2[0]/2
+    extent = (X_min, X_max, Y_min, Y_max)
     if (not code_units):
         extent = L0*np.array(extent)
     im = np.rot90(im, k = 1, axes = (1,0))
