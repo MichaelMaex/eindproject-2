@@ -486,6 +486,16 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
 	\label{fig:figures-hole}
 \end{figure}
 \subsection{Coronal Plume Model} 
+To contrast the coronal hole model, the plume model is considered. It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed. This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes.\\
+
+The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
+
+\begin{align*}
+    n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
+    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]\\
+     p^t &= p_{\text{gas}} + \frac{B^2}{8\pi} = \text{constant}.
+\end{align*}
+However, this time other values will be used for the parameters, alongside a smaller characteristic size ($d = 100$ Mm).
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
