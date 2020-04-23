@@ -261,17 +261,17 @@ The $\theta$-component can be calculated by rewriting the term,
 The remainder of the calculations will be done for the fast wave, the slow wave case is analogous. The partial derivative of the phase speed of the fast wave squared becomes,
 \begin{align*}
      \frac{\partial}{\partial \theta}(v^2_{\text{phF}})&= \frac{1}{2}\frac{\partial}{\partial \theta} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\\
-     &= \frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
+     &= \frac{2v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
 \end{align*}
 Substituting this back in to the equation gives,
 \begin{align*}
-     \frac{1}{k}\frac{\partial \omega}{\partial \theta} &= \frac{1}{2v_{\text{phF}}}  \frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
-     &= \frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
+     \frac{1}{k}\frac{\partial \omega}{\partial \theta} &= \frac{1}{v_{\text{phF}}}  \frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
+     &= \frac{1}{\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
 \end{align*}
 Combining this with the $k$-component gives the group velocity,
 \begin{align*}
-    v_\text{grF} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &+ \hat{\theta}\frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
-    v_\text{grS} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &- \hat{\theta}\frac{1}{2\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
+    v_\text{grF} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &+ \hat{\theta}\frac{1}{\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}\\
+    v_\text{grS} = &\hat{k}\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}\\ &- \hat{\theta}\frac{1}{\sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}}\frac{v_A^2c_s^2\cos\theta\sin\theta}{\sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}}
 \end{align*}
 \todo{Diagrammen toevoegen onder Friederich Diagrammen?}
 
