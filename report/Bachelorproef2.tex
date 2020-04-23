@@ -24,6 +24,8 @@
 \usepackage{todonotes}
 \usepackage{verbatim}
 
+\usepackage{minted} % Code highlighting
+
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
 %\lhead{Rune Buckinx}
@@ -344,9 +346,52 @@ The first problem that will be analysed is a simple hydrodynamic blastwave gener
 The viscosity, heat conduction and dissipation of the fluid will be neglected. 
 This problem is meant to be an initial example of how to set up a non-predefined simulation and is a modified version of the initial example described in section 0.4 of PLUTO's User Guide \cite{plutouserguide}. 
 The blastwave is simulated in two dimensions and uses three user-defined parameters, namely, the ambient pressure, the pressure in the high-pressure region, and $\gamma$ which in this report will always be $5/3$. 
-The domain is a rectangle goin from -10 to 10 (code units), in both the $x$ and the $y$ direction, wich is represented by a $1024\times 1024$ grid. 
+The domain is a rectangle going from -10 to 10 (code units), in both the $x$ and the $y$ direction, which is represented by a $1024\times 1024$ grid. 
 
 The following initial condition is used, a high-pressure region inside a circle of radius 0.3 is surrounded by an ambient pressure region. The simulation is run for X units of time, and every Y units, a double-precision file is saved.\\
+
+The problem can be set up in PLUTO by making the following adjustments to the \texttt{pluto.ini} file.
+\begin{minted}
+[frame=lines]
+{c}
+[Grid]
+
+X1-grid    1    -10.0    1024    u    10.0
+X2-grid    1    -10.0    1024    u    10.0
+
+[Static grid output]
+
+dbl        0.01  -1   multiple_files
+
+[Parameters]
+
+P_IN                        15.0  
+P_OUT                       8.0  
+GAMMA                       1.66666666666666667  
+\end{minted}
+
+To define the problem the following adjustments have to be made to the \texttt{init.c} file.
+\begin{minted}
+[frame=lines]
+{c}
+{
+  double r;
+  g_gamma = g_inputParam[GAMMA];
+  r = x1*x1 + x2*x2;
+  r = sqrt(r);
+
+  v[RHO] = 1.0;
+  v[VX1] = 0.0;
+  v[VX2] = 0.0;
+  v[VX3] = 0.0;
+  #if HAVE_ENERGY
+  v[PRS] = g_inputParam[P_OUT];
+  #endif
+  if (r <= 0.3) v[PRS] = g_inputParam[P_IN];
+  v[TRC] = 0.0;
+}
+\end{minted}
+\vspace{1cm}
 
 PLUTO's hydrodynamics module solves the following system of equations
 
@@ -407,7 +452,20 @@ E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\]  
 The constants  $e, c$ are the elementary charge and the speed of light respectively, and $\mathbf{E}$ is the electric field.\cite{plutouserguide}\\
 
-In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added.
+In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added. This can be done by adding a parameter $\beta$, and adjusting the \texttt{init.c} file as follows,
+\begin{minted}
+[frame=lines]
+{c}
+{
+  #if PHYSICS == MHD || PHYSICS == RMHD
+  double g_beta = g_inputParam[BETA];
+  v[BX1] = sqrt(g_inputParam[P_OUT]*2.0/g_beta);
+  v[BX2] = 0.0;
+  v[BX3] = 0.0;
+  #endif
+}
+\end{minted}
+
 The parameter $\beta = \frac{2p}{B^2}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
 If $\beta = \infty$ the magnetic field is $0$. 
 If $\beta \ll 1$ the magnetic pressure dominates. 
@@ -486,7 +544,9 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
 	\label{fig:figures-hole}
 \end{figure}
 \subsection{Coronal Plume Model} 
-To contrast the coronal hole model, the plume model is considered. It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed. This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes.\\
+To contrast the coronal hole model, the plume model is considered. 
+It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
+This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes.\\
 
 The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
 
