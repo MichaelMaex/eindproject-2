@@ -45,9 +45,6 @@
 \usepackage{pdfpages}
 \usepackage{transparent}
 
-%slimmer captions for figures
-\let\oldcap\caption
-\renewcommand{\caption}[1]{\parbox{.9\linewidth}{\oldcap{#1}}}
 
 \newcommand{\incfig}[1]{
     \def\svgwidth{\columnwidth}
@@ -305,7 +302,7 @@ This can be simplified with \cref{eq:phase_velocity}:
 	v_{\text{grS}} &= v_\text{phF}  \hat{k} + \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phF} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 \end{align*}
 \todo{Diagrammen toevoegen onder Friederich Diagrammen?}
-
+\Cref{fig:friedrich_diagrams} shows the fase speed of the slow, fast and alven waves for different ratios of $v_A / c_s$. \Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and alv\'en waves for different values of the plasma-$$
 \begin{figure}[h]
 	\centering
 \begin{tikzpicture}
