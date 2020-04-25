@@ -26,3 +26,4 @@ report/.tex
 *.mp4
 *DS_Store
 *.tdo
+*_minted*
