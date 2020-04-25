@@ -107,7 +107,6 @@ The classic Navier-Stokes equations do not suffice to describe the movement in t
 The use of the magnetohydrodynamic model to describe the plasma depends on three main assumptions, namely, high collisionality, large scales and the assumption of ideal fluids. The last assumption implies that the dissipation of large scale variables is neglected \cite{goedbloed2004principles}. This model also does not take relativity into account, as opposed to the relativistic magnetohydrodynamic model, which will not be discussed further\footnote{More information about the relativistic MHD model can be found in \cite{karas2005introduction}}. The non-relativistic approximation is valid when the speeds considered are much smaller than the speed of light, which will be the case throughout this report.
 
 \todo{Afleiding vanuit conservatiewetten nodig? Enkel als we echt paginas te kort komen}
-\todo{Wanneer mogen deze vergelijkingen}
 The system of PDE's/conservations laws is the following:
 \begin{alignat}{3}
     &\frac{\partial \rho}{\partial t} &&+ \rho \nabla  \cdot (\mathbf v) &&= 0 \tag{mass}\label{eq:mass}\\
@@ -118,8 +117,13 @@ The system of PDE's/conservations laws is the following:
 Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $p$ is the thermal pressure. The constant $\mu$ is the magnetic permeability. 
 
 There are similarities to Euler equations (\cref{sec:ordinary_hydrodynamics}).
-As magnetic fields can carry momentum \cite[section 8.2]{GriffithsDavidJeffery2017Ite} a term has to be added to the momentum equation. 
 The third equation models the interaction between the currents in the plasma and the magnetic field and orginates in the Maxwell equations.
+As magnetic fields can carry momentum \cite[section 8.2]{GriffithsDavidJeffery2017Ite} a term has to be added to the momentum equation. 
+This term incorporates the effect of magnetic pressure the size of which is given by $P_B = \frac{B^2}{2\mu}$. 
+A very important quantity often used in plasma physics is the plasma-$\beta$ which gives the ratio between ordinary/thermal pressure and magnetic pressure. It is defined as \[
+\beta = \frac{p}{P_B} = \frac{2 \mu p}{B^2}
+.\] 
+If $\beta \gg 1$ the pressure dominates and the magnetic effects can be ignored. If $\beta \ll 1$ the magnetic pressure dominates.
 
 \section{Linear Approximations} \label{sec:linear_approximations}
 
@@ -339,7 +343,6 @@ This can be simplified with \cref{eq:phase_velocity}:
 	v_{\text{grF}} &= v_\text{phF}  \hat{k} + \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phF} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 	v_{\text{grS}} &= v_\text{phS}  \hat{k} - \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phS} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 \end{align*}
-\todo{Diagrammen toevoegen onder Friederich Diagrammen?}
 \Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and alv\'en waves for different values of the plasma-$\beta$
 
 \begin{figure}[h]
