@@ -337,7 +337,7 @@ Combining this with the $k$-component gives the group velocity,
 This can be simplified with \cref{eq:phase_velocity}:
 \begin{align*}
 	v_{\text{grF}} &= v_\text{phF}  \hat{k} + \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phF} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
-	v_{\text{grS}} &= v_\text{phF}  \hat{k} + \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phF} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
+	v_{\text{grS}} &= v_\text{phS}  \hat{k} - \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phS} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 \end{align*}
 \todo{Diagrammen toevoegen onder Friederich Diagrammen?}
 \Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and alv\'en waves for different values of the plasma-$\beta$
@@ -383,7 +383,7 @@ The domain is a rectangle going from -10 to 10 (code units), in both the $x$ and
 
 The following initial condition is used, a high-pressure region inside a circle of radius 0.3 is surrounded by an ambient pressure region. The simulation is run for X units of time, and every Y units, a double-precision file is saved.\\
 
-The problem can be set up in PLUTO by making the following adjustments to the \texttt{pluto.ini} file.
+The file \texttt{pluto.ini} stores paramters for the simulation, including grid size, grid resolution, simulation time, output format and user defined parameters. In this case can be set up in PLUTO by making the following adjustments to the \texttt{pluto.ini} file.
 \begin{minted}
 [frame=lines]
 {c}
@@ -403,10 +403,12 @@ P_OUT                       8.0
 GAMMA                       1.66666666666666667  
 \end{minted}
 
-To define the problem the following adjustments have to be made to the \texttt{init.c} file.
+The file \texttt{init.c} contains the code to generate the initial and boundary conditions. 
+To define the problem the following adjustments have to be made to the \texttt{void init(\ldots)} function, which generates the initial conditions for a given point on the grid. 
 \begin{minted}
 [frame=lines]
 {c}
+void Init (double *v, double x1, double x2, double x3)
 {
   double r;
   g_gamma = g_inputParam[GAMMA];
@@ -455,7 +457,7 @@ However for the remainder of the simulation the wave front matches the theoretic
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/wavefront_position.pdf}
+	\includegraphics[width=0.5\textwidth]{figures/wavefront_position.pdf}
 	\caption{The position of the simulated wave front compared to the theoretical speed}
 	\label{fig:wave_front_speed}
 \end{figure}
@@ -468,7 +470,7 @@ Like in the previous setup the radius of the blast over time was compared to the
 \Cref{fig:non_linear_effects} shows concave radius/time relation against the linear theoretically predicted relation. 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{figures/non_linear_effects.pdf}
+	\includegraphics[width=0.5\textwidth]{figures/non_linear_effects.pdf}
 	\caption{A comparison of the theoretically predicted radius of the blast wave (using a linear approximation) versus the simulated result}
 	\label{fig:non_linear_effects}
 \end{figure}
