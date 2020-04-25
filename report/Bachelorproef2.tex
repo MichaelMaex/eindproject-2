@@ -5,6 +5,8 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{eufrak}
+\usepackage{xcolor}
+\definecolor{mygray}{gray}{0.95}
 
 \usepackage{float}
 
@@ -126,7 +128,6 @@ A very important quantity often used in plasma physics is the plasma-$\beta$ whi
 \beta = \frac{p}{P_B} = \frac{2 \mu p}{B^2}
 .\] 
 If $\beta \gg 1$ the pressure dominates and the magnetic effects can be ignored. If $\beta \ll 1$ the magnetic pressure dominates.
-
 \section{Linear Approximations} \label{sec:linear_approximations}
 
 To analyse small amplitude waves in the plasma, a linearised version of the magnetohydrodynamic equations is considered as in \cite{Fitzpatricknotes}, namely
@@ -224,7 +225,7 @@ Simplifying this results in the dispersion relation for plasma waves
 .\end{equation} 
 This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:\todo{refactor acoustic to magneto-sonic}
 \begin{align*}
-	\omega^2 &=  k^2v_a^2\cos^2\theta \tag{Alv\'en Waves} \\
+	\omega^2 &=  k^2v_a^2\cos^2\theta \tag{Alfv\'en Waves} \\
 	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast magnetosonic waves}\\
 	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Slow magnetosonic waves}
 .\end{align*}
@@ -234,7 +235,7 @@ This force follows from Lenz's law, which states that the electrical currents ca
 Properties of Alfv\'en waves are that they travel along the magnetic field lines and hence cannot propagate across field lines and that they do not perturb density \cite{mhdppt}.\\
 
 
-Alven waves occur when \[
+Alfv\'en waves occur when \[
 \omega^2 = k^2v_a^2\cos^2 \theta
 .\] 
 As can be seen from \cref{eq:MHD_linear_matrix} the corresponding eigenvector is in the $z$-direction \[
@@ -271,7 +272,7 @@ The phase velocity can again be calculated by dividing $\omega$ by $k$, this res
     v_{\text{phS}} &= \omega/k = \sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}
 \end{split}
 \end{equation}
-\Cref{fig:friedrich_diagrams} shows the fase speed of the slow, fast and alven waves for different ratios of $v_A / c_s$. 
+\Cref{fig:friedrich_diagrams} shows the phase speed of the slow, fast and Alfv\'en waves for different ratios of $v_A / c_s$. 
 \begin{figure}[h]
 	\centering
 \begin{tikzpicture}
@@ -345,12 +346,12 @@ This can be simplified with \cref{eq:phase_velocity}:
 	v_{\text{grF}} &= v_\text{phF}  \hat{k} + \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phF} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 	v_{\text{grS}} &= v_\text{phS}  \hat{k} - \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phS} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 \end{align*}
-\Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and alv\'en waves for different values of the plasma-$\beta$
+\Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and Alfv\'en waves for different values of the plasma-$\beta$
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width =\textwidth]{figures/groupspeed_beta.pdf}
-	\caption{The possible group speeds for fast, slow and alven waves for different values of $\beta$. The magnetic field lines are horizontal.}
+	\caption{The possible group speeds for fast, slow and Alfv\'n waves for different values of $\beta$. The magnetic field lines are horizontal.}
 	\label{fig:groupspeed_beta}
 \end{figure}
 \section{Pluto Code} \label{sec:pluto_code}
@@ -390,7 +391,7 @@ The following initial condition is used, a high-pressure region inside a circle 
 
 The file \texttt{pluto.ini} stores paramters for the simulation, including grid size, grid resolution, simulation time, output format and user defined parameters. In this case can be set up in PLUTO by making the following adjustments to the \texttt{pluto.ini} file.
 \begin{minted}
-[frame=lines]
+[frame=lines, bgcolor=mygray]
 {c}
 [Grid]
 
@@ -411,7 +412,7 @@ GAMMA                       1.66666666666666667
 The file \texttt{init.c} contains the code to generate the initial and boundary conditions. 
 To define the problem the following adjustments have to be made to the \texttt{void init(\ldots)} function, which generates the initial conditions for a given point on the grid. 
 \begin{minted}
-[frame=lines]
+[frame=lines, bgcolor=mygray]
 {c}
 void Init (double *v, double x1, double x2, double x3)
 {
@@ -493,9 +494,9 @@ E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\]  
 The constants  $e, c$ are the elementary charge and the speed of light respectively, and $\mathbf{E}$ is the electric field.\cite{plutouserguide}\\
 
-In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added. This can be done by adding a parameter $\beta$, and adjusting the \texttt{init.c} file as follows,
+In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added. This can be done by adding a parameter $\beta$, and adjusting the \texttt{void init(...)} function in the \texttt{init.c} file as follows,
 \begin{minted}
-[frame=lines]
+[frame=lines, bgcolor=mygray]
 {c}
 {
   #if PHYSICS == MHD || PHYSICS == RMHD
@@ -584,6 +585,87 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
     $B_\text{out}$                              & 4.0                                               & G                          \\ \hline
 \end{tabular}
 \end{table}
+To define these initial conditions the following adjustments have to be made to the \texttt{void init(...)} function in the \texttt{init.c} file. This code is an modified version of code kindly provided by Mijie Shi.
+\begin{minted}
+[frame=lines, breaklines, bgcolor=mygray]
+{c}
+void Init (double *v, double x1, double x2, double x3)
+{ double rho_out, rho_ins, rho_all, T_out, T_ins, T_all, B_out, p_out, p_all;  //define some variables
+  double d;
+  double r;    
+
+  d = g_inputParam[DIAM];
+  rho_out = g_inputParam[RHO_OUT];
+  rho_ins = g_inputParam[RHO_INS];
+  T_out = g_inputParam[T_OUT];   //Physical value (Kelvin)
+  T_ins = g_inputParam[T_INS];   //Physical value (Kelvin)
+  
+  r = sqrt(x1*x1 + x2*x2);    
+  rho_all = rho_out - (rho_out - rho_ins)*exp(-(pow(r/d,8))); //density profile
+  T_all = T_out - (T_out - T_ins)*exp(-(pow(r/d,8)));         //temperature profile
+
+  p_out = rho_out*T_out/(KELVIN*0.5);                        //converitng from density and temperature to pressure 
+  p_all = rho_all*T_all/(KELVIN*0.5);                        //KELVIN is defined by PLUTO 
+
+  B_out = g_inputParam[B_OUT]/sqrt(4.0*CONST_PI*UNIT_DENSITY)/UNIT_VELOCITY;  //normalized magnetic field outside of the structure (physical value is 4 Gauss)
+							      
+
+  v[RHO] = rho_all;
+  v[VX1] = 0.0;
+  v[VX2] = 0.0;
+  v[VX3] = 0.0;
+  #if HAVE_ENERGY
+  v[PRS] = p_all;
+  #endif
+  v[TRC] = 0.0;
+
+  #if PHYSICS == MHD || PHYSICS == RMHD
+  v[BX1] = 0.0;
+  v[BX2] = 0.0;
+  v[BX3] = sqrt(B_out*B_out + 2*(p_out - p_all));            //deriving the magnetic field from pressure balance, i.e., p + B^2/2 = const 
+
+  v[AX1] = 0.0;
+  v[AX2] = 0.0;
+  v[AX3] = 0.0;
+  #endif
+}
+\end{minted}
+TEXT ABOUT BOUNDARY CONDITIONS HERE\\
+To initialise these boundary conditions in PLUTO, the following code is added to the \texttt{void UserDefBoundary(...)} in the \texttt{init.c} file, again a modified version of the code by Mijie Shi.
+\begin{minted}
+[frame=lines,bgcolor=mygray,breaklines]
+{c}
+  double v0, v1, v2, height, duration;
+  height = g_inputParam[WAVE_HEIGHT];
+  duration = g_inputParam[WAVE_DURATION];
+  v0 = -50.0*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
+  v1 = -v0;
+  v2 = 0.0;
+  
+  if (side == X1_BEG){  /* -- X1_BEG boundary -- */
+    if (box->vpos == CENTER) {
+      BOX_LOOP(box,k,j,i){ 
+       d->Vc[RHO][k][j][i] = d->Vc[RHO][k][j][2*IBEG - i -1];
+       d->Vc[PRS][k][j][i] = d->Vc[PRS][k][j][2*IBEG - i -1];
+       
+       d->Vc[BX1][k][j][i] = d->Vc[BX1][k][j][2*IBEG - i -1];
+       d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
+       
+       d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
+       //if (g_time < 200) 
+      
+       d->Vc[VX2][k][j][i] = 0.0;
+       
+       }
+    }else if (box->vpos == X1FACE){
+      BOX_LOOP(box,k,j,i){  }
+    }else if (box->vpos == X2FACE){
+      BOX_LOOP(box,k,j,i){  }
+    }else if (box->vpos == X3FACE){
+      BOX_LOOP(box,k,j,i){  }
+    }
+  }
+\end{minted}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/hole_time.pdf}
