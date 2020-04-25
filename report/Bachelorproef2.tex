@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc} %Input encoding
 
 \usepackage{amsmath} %Extra math symbols and operators
@@ -200,8 +200,8 @@ Simplifying this results in the dispersion relation for plasma waves
 This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:\todo{refactor acoustic to magneto-sonic}
 \begin{align*}
 	\omega^2 &=  k^2v_a^2\cos^2\theta \tag{Alv\'en Waves} \\
-	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast acoustic waves}\\
-	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Slow acoustic waves}
+	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast magnetosonic waves}\\
+	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Slow magnetosonic waves}
 .\end{align*}
 \subsection{Alfv\'en Waves}
 The previous derivation led to two different types of waves, namely, Alfv\'en waves and sound waves. An Alfv\'en wave is a magnetic tension wave caused by a restoring force. 
@@ -231,7 +231,7 @@ The group velocity is equal to a constant, namely the Alfv\'en speed.
 \end{equation*}
 The comparison of this kind of wave with the fast and slow acoustic waves is made in \cref{sec:Friedrich}.
 \subsection{Sound Waves}
-The second type of wave found in the dispersion relation are sound waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast acoustic wave and the slow acoustic wave.\\
+The second type of wave found in the dispersion relation are sound waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast magnetosonic wave and the slow magnetosonic wave.\\
 
 The eigenvector linked to the sound waves is in the $x,y$-plane, as can be seen from \cref{eq:MHD_linear_matrix}.
 \[
@@ -410,8 +410,9 @@ These can be derived from the standard Euler equations by changing the total der
 \end{figure}
 
 \Cref{fig:blastwave} shows pressure of the simulated fluid at multiple points in time. 
-The speed at which the wave front moves is the group speed. \todo{Moet dit niet phase speed zijn?}
-According to \cref{sec:magnetohydrodynamics_and_the_solar_corona} this is given by $c_s = \sqrt{\frac{5}{3} \frac{p_0}{\rho_0}} $. Hence the speed (in code units) is $\sqrt{\frac{5}{3}8} = 3.61$, which corresponds to \SI{3.61e5}{\centi\metre\per\second}.
+The speed at which the wave front moves is the group speed. 
+According to \cref{sec:magnetohydrodynamics_and_the_solar_corona} this is given by $c_s = \sqrt{\frac{5}{3} \frac{p_0}{\rho_0}} $.
+Hence the speed (in code units) is $\sqrt{\frac{5}{3}8} = 3.61$, which corresponds to \SI{3.61e5}{\centi\metre\per\second}.
 A comparison of the theoretical radius against the simulated radius can be found in \cref{fig:wave_front_speed}. 
 Note that the curve of the simulation is jagged because the grid on which the simulation is run is discreet. 
 Initially the simulated wave moves faster than the theoretical group speed. 
@@ -469,8 +470,7 @@ In order to study the effects of a constant magnetic background field, the same 
 The parameter $\beta = \frac{2p}{B^2}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
 If $\beta = \infty$ the magnetic field is $0$. 
 If $\beta \ll 1$ the magnetic pressure dominates. 
-\Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave.
-\todo{Add what is plotted to figures (pressure)}
+\Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave. When $\beta$ is high, the blastwave resembles the one in \cref{fig:blastwave}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = \linewidth]{figures/influence_beta.pdf}
@@ -478,29 +478,32 @@ If $\beta \ll 1$ the magnetic pressure dominates.
 \label{fig:blastwave_shape_beta}
 \end{figure}
 
-When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en \todo{This is not an alv\'en wave} waves are clearly visible.
+% When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en \todo{This is not an alv\'en wave} waves are clearly visible.
 
 \todo{comparison sound speed theoretical vs simulation}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figures/slow_wave.pdf}
-	\caption{The propagation of a slow wave. Axes are in \si{cm}}.
+	\caption{The propagation of a slow wave. Axes are in \si{cm}.}
 	\label{fig:Alfven_wave}
 \end{figure}
 
-In the simulation above \cref{fig:Alfven_wave}, the magnetic field lies in the $x$-direction, hence the Alfv\'en wave is a one-dimensional wave, also in the $x$-direction. 
-The theoretical speed of this wave is $v_A = \frac{B_0}{\sqrt{\rho_0}} = \sqrt{\frac{\beta p_0}{\rho_0}} = 8.94$ in code units. 
-This corresponds to a physical speed of \SI{8.94e5}{\centi\meter\per\second}.
-\Cref{fig:alven_wave_speed} compares this to the propagation of the waves tops in the simulation.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.6\textwidth]{figures/alven_wave_position.pdf}
-	\caption{The position of the wave top of the Alfv\'en wave compared to the theoretical speed.}
-	\label{fig:alven_wave_speed}
-\end{figure}
-\todo{Change text in figure experiment -> theoretical}
-\todo{Compare Alfven wave speed theoretical and empirical}
+% In the simulation above \cref{fig:Alfven_wave}, the magnetic field lies in the $x$-direction, hence the Alfv\'en wave is a one-dimensional wave, also in the $x$-direction. 
+% The theoretical speed of this wave is $v_A = \frac{B_0}{\sqrt{\rho_0}} = \sqrt{\frac{\beta p_0}{\rho_0}} = 8.94$ in code units. 
+% This corresponds to a physical speed of \SI{8.94e5}{\centi\meter\per\second}.
+% \Cref{fig:alven_wave_speed} compares this to the propagation of the waves tops in the simulation.
+% \begin{figure}[H]
+% 	\centering
+% 	\includegraphics[width=.6\textwidth]{figures/alven_wave_position.pdf}
+% 	\caption{The position of the wave top of the Alfv\'en wave compared to the theoretical speed.}
+% 	\label{fig:alven_wave_speed}
+% \end{figure}
+% \todo{Change text in figure experiment -> theoretical}
+% \todo{Compare Alfven wave speed theoretical and empirical}
+\todo{Bijzetten welke beta hier gebruikt wordt}
+
 \subsection{Sound Waves}
+In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1?????$ are plotted, for different points in time. 
 \section{Interaction of MHD waves with large scale structures}
 This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov.  \cite{afanasyev2018propagation}\\
 
@@ -562,7 +565,6 @@ However, this time other values will be used for the parameters, alongside a sma
 	\caption{}
 	\label{fig:figures-plume_time-pdf}
 \end{figure}
-\section{Optional: MHD waves in slab geometry}
-Task 4
+
 \printbibliography
 \end{document}
