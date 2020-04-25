@@ -265,6 +265,44 @@ The phase velocity can again be calculated by dividing $\omega$ by $k$, this res
     v_{\text{phS}} &= \omega/k = \sqrt{\frac{1}{2}\left(v_A^2 + c_s^2 - \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}\right)}
 \end{split}
 \end{equation}
+\Cref{fig:friedrich_diagrams} shows the fase speed of the slow, fast and alven waves for different ratios of $v_A / c_s$. 
+\begin{figure}[h]
+	\centering
+\begin{tikzpicture}
+  \draw[thick,->,>=latex] (-0.5,0)--(3,0) node[above] {$k_y$};
+  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
+  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={cos(\x r)});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*(2+sqrt(4-4*cos(\x r)^2)))});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*(2-sqrt(4-4*cos(\x r)^2)))});
+  \node at (1,1.2) {A};
+  \node at (0.9, 0.45) {S};
+  \node at (1.6, 2.5) {F};
+  \node at (2.5,4) {\large $v_A/c_s = 1$};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \draw[thick,->,>=latex] (-0.5,0)--(3,0) node[above] {$k_y$};
+  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
+  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={0.8*cos(\x r)});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((1.64)+sqrt((2.6896)-4*0.64*cos(\x r)^2)))});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((1.64)-sqrt((2.6896)-4*0.64*cos(\x r)^2)))});
+  \node at (0.8,1) {A};
+  \node at (0.7, 0.35) {S};
+  \node at (1.6, 2.2) {F};
+  \node at (2.5,4) {\large $v_A/c_s = 0.8$};
+\end{tikzpicture}
+\begin{tikzpicture}
+  \draw[thick,->,>=latex] (-0.5,0)--(3,0) node[above] {$k_y$};
+  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
+  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={1.2*cos(\x r)});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((2.44)+sqrt((5.9536)-4*1.44*cos(\x r)^2)))});
+  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((2.44)-sqrt((5.9536)-4*1.44*cos(\x r)^2)))});
+  \node at (1.2,1.4) {A};
+  \node at (0.95, 0.5) {S};
+  \node at (1.9, 2.55) {F};
+  \node at (2.5,4) {\large $v_A/c_s = 1.2$};
+\end{tikzpicture}
+	\caption{The following diagrams represent the phase speed of the different types of magnetohydrodynamic waves plotted as radial distance. The angle between $k$ and $B_0$ is the angle away from the $k_y$ axis.}\label{fig:friedrich_diagrams}
+\end{figure}
 
 The derivation for the group velocity takes more steps, and is based on the derivation in \cite{Lyu2014}. For any wave it is defined as 
 \begin{equation*}
@@ -302,45 +340,7 @@ This can be simplified with \cref{eq:phase_velocity}:
 	v_{\text{grS}} &= v_\text{phF}  \hat{k} + \frac{v_A^2c_s^2 \cos \theta \sin \theta}{v_\text{phF} \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2 \cos^2 \theta}} \hat{\theta}\\
 \end{align*}
 \todo{Diagrammen toevoegen onder Friederich Diagrammen?}
-\Cref{fig:friedrich_diagrams} shows the fase speed of the slow, fast and alven waves for different ratios of $v_A / c_s$. \Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and alv\'en waves for different values of the plasma-$$
-\begin{figure}[h]
-	\centering
-\begin{tikzpicture}
-  \draw[thick,->,>=latex] (-0.5,0)--(3,0) node[above] {$k_y$};
-  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
-  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={cos(\x r)});
-  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*(2+sqrt(4-4*cos(\x r)^2)))});
-  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*(2-sqrt(4-4*cos(\x r)^2)))});
-  \node at (1,1.2) {A};
-  \node at (0.9, 0.45) {S};
-  \node at (1.6, 2.5) {F};
-  \node at (2.5,4) {\large $v_A/c_s = 1$};
-\end{tikzpicture}
-\begin{tikzpicture}
-  \draw[thick,->,>=latex] (-0.5,0)--(3,0) node[above] {$k_y$};
-  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
-  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={0.8*cos(\x r)});
-  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((1.64)+sqrt((2.6896)-4*0.64*cos(\x r)^2)))});
-  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((1.64)-sqrt((2.6896)-4*0.64*cos(\x r)^2)))});
-  \node at (0.8,1) {A};
-  \node at (0.7, 0.35) {S};
-  \node at (1.6, 2.2) {F};
-  \node at (2.5,4) {\large $v_A/c_s = 0.8$};
-\end{tikzpicture}
-\begin{tikzpicture}
-  \draw[thick,->,>=latex] (-0.5,0)--(3,0) node[above] {$k_y$};
-  \draw[thick,->,>=latex] (0,-0.5)--(0,4) node[left] {$k_x$};
-  \draw[domain=0:1/2*pi,scale=2,samples=500] plot (xy polar cs:angle=\x r, radius={1.2*cos(\x r)});
-  \draw[domain=0:1/2*pi,scale=2,samples=500, densely dotted, very thick] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((2.44)+sqrt((5.9536)-4*1.44*cos(\x r)^2)))});
-  \draw[domain=0:1/2*pi,scale=2,samples=500, dashed] plot (xy polar cs:angle=\x r, radius={sqrt((1/2)*((2.44)-sqrt((5.9536)-4*1.44*cos(\x r)^2)))});
-  \node at (1.2,1.4) {A};
-  \node at (0.95, 0.5) {S};
-  \node at (1.9, 2.55) {F};
-  \node at (2.5,4) {\large $v_A/c_s = 1.2$};
-\end{tikzpicture}
-	\caption{The following diagrams represent the phase speed of the different types of magnetohydrodynamic waves plotted as radial distance. The angle between $k$ and $B_0$ is the angle away from the $k_y$ axis.}
-	\label{fig:friedrich_diagrams}
-\end{figure}
+\Cref{fig:groupspeed_beta} shows the group speed of the slow, fast and alv\'en waves for different values of the plasma-$\beta$
 
 \begin{figure}[h]
 	\centering
