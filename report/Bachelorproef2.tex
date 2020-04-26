@@ -569,7 +569,7 @@ The experimental results are slightly ahead of the theoretical wavefront. The au
 
 In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1$ are plotted, for different points in time. 
 The simulation does not resemble that of a hydrodynamic blastwave, because $\beta$ is relatively small, which implies that the magnetic pressure dominates over the mechanical pressure.
-In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. \todo{ik heb mijn twijfels bij deze uitleg.}
+In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. \todo{ik heb mijn twijfels bij deze uitleg}
 Hence this simulation can be used to compare the theoretical and 
 experimental group speed of the slow wave.
 
@@ -664,15 +664,16 @@ void Init (double *v, double x1, double x2, double x3)
   #endif
 }
 \end{minted}
-To generate a plane wave, the following time-dependent boundary condition is used at the left boundary of the simulation box. Firstly, two parameters are defined that make up the general shape of the wave namely, \texttt{WAVE\_HEIGHT}, which specifies the top speed of the wave, in km/s\todo{is dit juist?}, and \texttt{WAVE\_DURATION}, which specifies the length of the wave. To avoid shocks, a hyperbolic tangent function is used to simulate the increase and decrease of the velocity\\
-To initialise these boundary conditions in PLUTO, the following code is added to the \texttt{void UserDefBoundary(...)} in the \texttt{init.c} file, again a modified version of the code by Mijie Shi.
+To generate a plane wave, the following time-dependent boundary condition is used at the right boundary of the simulation box. Firstly, two parameters are defined that make up the general shape of the wave namely, \texttt{WAVE\_HEIGHT}, which specifies the top speed of the wave, in km/s\todo{is dit juist?}, and \texttt{WAVE\_DURATION}, which specifies the length of the wave. To avoid shocks, a hyperbolic tangent function is used to simulate the increase and decrease of the velocity. Different slopes are used for these functions to simulate a fast rise followed by a slower descent.\\
+
+To initialise these boundary conditions in PLUTO, the following code is added to the \texttt{void UserDefBoundary(...)} function in the \texttt{init.c} file, again a modified version of the code by Mijie Shi.
 \begin{minted}
 [frame=lines,bgcolor=mygray,breaklines]
 {c}
   double v0, v1, v2, height, duration;
   height = g_inputParam[WAVE_HEIGHT];
   duration = g_inputParam[WAVE_DURATION];
-  v0 = -height*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
+  v0 = -height*1.e5/UNIT_VELOCITY;   
   v1 = -v0;
   v2 = 0.0;
   
@@ -686,7 +687,6 @@ To initialise these boundary conditions in PLUTO, the following code is added to
       d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
        
       d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
-      //if (g_time < 200) 
       
       d->Vc[VX2][k][j][i] = 0.0;
        
@@ -700,6 +700,7 @@ To initialise these boundary conditions in PLUTO, the following code is added to
     }
   }
 \end{minted}
+The user defined parameters, the gridsize and resolution, output file type and timescale for the problem, can be defined in the \texttt{pluto.ini} file, similarly as in \cref{sec:initial_example}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/hole_time.pdf}
@@ -719,6 +720,21 @@ The simulation of the coronal plume consists of the same initial conditions as i
      p^t &= p_{\text{gas}} + \frac{B^2}{8\pi} = \text{constant}.
 \end{align*}
 However, this time other values will be used for the parameters, alongside a smaller characteristic size ($d = 100$ Mm).
+\begin{table}[H]
+    \centering
+    \caption{Parameters used to simulate the coronal plume model}
+    \label{tab:coronal_plume}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Parameter}             & \textbf{Value}                                  & \textbf{Unit}              \\ \hline
+    d                              & 100                                             & Mm                         \\ \hline
+    $n_\text{out}$ & $1.0 \times 10^8$ & $\text{cm}^{-3}$ \\ \hline
+    $n_\text{in}$                              & $1.0 \times 10^9$                                               & $\text{cm}^{-3}$                          \\ \hline
+    $T_\text{out}$                              & 1.5                                               & MK                          \\ \hline
+    $T_\text{in}$                              & 1.0                                               & MK                          \\ \hline
+    $B_\text{out}$                              & 3.0                                               & G                          \\ \hline
+\end{tabular}
+\end{table}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
