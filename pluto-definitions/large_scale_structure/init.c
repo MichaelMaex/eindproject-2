@@ -153,7 +153,7 @@ void UserDefBoundary (const Data *d, RBox *box, int side, Grid *grid)
   double v0, v1, v2, height, duration;
   height = g_inputParam[WAVE_HEIGHT];
   duration = g_inputParam[WAVE_DURATION];
-  v0 = -50.0*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
+  v0 = -height*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
   v1 = -v0;
   v2 = 0.0;
 
