@@ -617,6 +617,20 @@ The magnetic field in the simulation is directed in the $z$-direction while the 
 \end{equation*}
 Here $p^t$ represents the total pressure, which is the sum of the gas pressure and the magnetic pressure. \\
 
+A alven wave is induced by modifying the velocity in the $x$-direction in the boundary condition at the left boundary edge.
+The velocity at the edge is given by \[
+	v_x = v_\text{max}\tanh\left( \frac{t}{a_0} \right) - \frac{v_\text{max} }{2} \left(\tanh\left( \frac{t-d}{a_1} \right) + 1\right) 
+,\]
+where $t$ is the elapsed time,  $v_max$ the maximum speed obtained,  $d$ the duration of the wave. To avoid shocks, a hyperbolic tangent function is used to smoothly interpolate from 0 to $v_\text{max} $ and back. The values $a_0, a_1$ determine how fast it $v_x$ moves in between $0$ and $v_\text{max}$. 
+In this report $a_0$ and $a_1$ will always be $\SI{20}{s}$ and $\SI{60}{s}$ respectively.
+\Cref{fig:wave_drive} shows the velocity profile for these curves for both the coronal hole model and the coronal plume model (see \cref{sec:coronal_plume_model}).
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/wave_drive}
+	\caption{The velocity profile of the wave generated at the boundary of the coronal hole and coronal plume model.}
+	\label{fig:wave_drive}
+\end{figure}
+
 The values that are used for the parameters are summarised in \cref{tab:coronal_hole}.
 \begin{table}[H]
     \centering
@@ -628,9 +642,11 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
     d                              & 150                                             & Mm                         \\ \hline
     $n_\text{out}$ & $1.0 \times 10^9$ & $\text{cm}^{-3}$ \\ \hline
     $n_\text{in}$                              & $1.0 \times 10^8$                                               & $\text{cm}^{-3}$                          \\ \hline
-    $T_\text{out}$                              & 1.5                                               & MK                          \\ \hline
-    $T_\text{in}$                              & 1.0                                               & MK                          \\ \hline
+    $T_\text{out}$                              & 1.5                                               & \si{\mega\kelvin}                          \\ \hline
+    $T_\text{in}$                              & 1.0                                               & \si{\mega\kelvin}                          \\ \hline
     $B_\text{out}$                              & 4.0                                               & G                          \\ \hline
+    $v_\text{max}$ 			 	& 50						& \si{\kilo\metre \per \second}  \\ \hline
+    $d$						& 600						& \si{\second} \\ \hline
 \end{tabular}
 \end{table}
 To define these initial conditions the following adjustments have to be made to the \texttt{void init(...)} function in the \texttt{init.c} file. This code is an modified version of code kindly provided by Mijie Shi.
@@ -678,12 +694,14 @@ void Init (double *v, double x1, double x2, double x3)
   #endif
 }
 \end{minted}
-To generate a plane wave, the following time-dependent boundary condition is used at the right boundary of the simulation box. Firstly, two parameters are defined that make up the general shape of the wave namely, \texttt{WAVE\_HEIGHT}, which specifies the top speed of the wave, in km/s\todo{is dit juist?}, and \texttt{WAVE\_DURATION}, which specifies the length of the wave. To avoid shocks, a hyperbolic tangent function is used to simulate the increase and decrease of the velocity. Different slopes are used for these functions to simulate a fast rise followed by a slower descent.\\
+To generate a plane wave, the following time-dependent boundary condition is used at the right boundary of the simulation box. Firstly, two parameters are defined that make up the general shape of the wave namely, \texttt{WAVE\_HEIGHT}, which specifies the top speed of the wave, in km/s, and \texttt{WAVE\_DURATION}, which specifies the length of the wave. 
 
 To initialise these boundary conditions in PLUTO, the following code is added to the \texttt{void UserDefBoundary(...)} function in the \texttt{init.c} file, again a modified version of the code by Mijie Shi.
 \begin{minted}
 [frame=lines,bgcolor=mygray,breaklines]
 {c}
+void UserDefBoundary (const Data *d, RBox *box, int side, Grid *grid){
+  ...
   double v0, v1, v2, height, duration;
   height = g_inputParam[WAVE_HEIGHT];
   duration = g_inputParam[WAVE_DURATION];
@@ -713,6 +731,8 @@ To initialise these boundary conditions in PLUTO, the following code is added to
       BOX_LOOP(box,k,j,i){  }
     }
   }
+  ...
+}
 \end{minted}
 The user defined parameters, the gridsize and resolution, output file type and timescale for the problem, can be defined in the \texttt{pluto.ini} file, similarly as in \cref{sec:initial_example}.
 \begin{figure}[h]
@@ -721,7 +741,7 @@ The user defined parameters, the gridsize and resolution, output file type and t
 	\caption{}
 	\label{fig:figures-hole}
 \end{figure}
-\subsection{Coronal Plume Model} 
+\subsection{Coronal Plume Model}\label{sec:coronal_plume_model} 
 To contrast the coronal hole model, the plume model is considered. 
 It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
 This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes.\\
@@ -747,6 +767,8 @@ However, this time other values will be used for the parameters, alongside a sma
     $T_\text{out}$                              & 1.5                                               & MK                          \\ \hline
     $T_\text{in}$                              & 1.0                                               & MK                          \\ \hline
     $B_\text{out}$                              & 3.0                                               & G                          \\ \hline
+    $v_\text{max}$ 			 	& 150						& \si{\kilo\metre \per \second}  \\ \hline
+    $d$						& 300						& \si{\second} \\ \hline
 \end{tabular}
 \end{table}
 \begin{figure}[h]
