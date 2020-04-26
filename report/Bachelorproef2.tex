@@ -56,6 +56,10 @@
 \usepackage[backend=biber, style = alphabetic]{biblatex}
 \addbibresource{references.bib}
 %\tikzset{component/.style={draw,thick,circle,fill=white,minimum size =0.75cm,inner sep=0pt}}
+%\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\numberwithin{figure}{section}
+\let\oldcap\caption
+\renewcommand{\caption}[1]{\parbox{.9\linewidth}{\oldcap{#1}}\addtocounter{figure}{-1}\refstepcounter{figure}}
 
 \title{Modeling of MHD waves in the solar corona}
 \author{Micha\"el Maex \and Rune Buckinx}
@@ -69,6 +73,10 @@
     This paper presents a summary of research for a bachelor's thesis on the modelling of magnetohydrodynamic waves in the solar corona using numerical simulations via the open source code PLUTO. 
 \end{abstract}
 \tableofcontents
+
+\pagebreak
+
+\listoffigures
 
 \listoftodos
 
@@ -498,57 +506,80 @@ In order to study the effects of a constant magnetic background field, the same 
 \begin{minted}
 [frame=lines, bgcolor=mygray]
 {c}
-{
+void Init (double *v, double x1, double x2, double x3){
+  ...
   #if PHYSICS == MHD || PHYSICS == RMHD
   double g_beta = g_inputParam[BETA];
   v[BX1] = sqrt(g_inputParam[P_OUT]*2.0/g_beta);
   v[BX2] = 0.0;
   v[BX3] = 0.0;
   #endif
+  ...
 }
 \end{minted}
 
 The parameter $\beta = \frac{2p}{B^2}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
 If $\beta = \infty$ the magnetic field is $0$. 
 If $\beta \ll 1$ the magnetic pressure dominates. 
+
+The simulation was run for 
+\begin{itemize}
+	\item 6 values for $\beta$ : $0.1, 0.3, 0.5, 1, 5, 10$
+	\item 2 values for the high pressure region (in code units): $15, 100$ 
+\end{itemize}
+the background pressure was always $8$ code units.
+
 \Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave. When $\beta$ is high, the blastwave resembles in ordinary non-magnetic hydrodynamics(\cref{fig:blastwave}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = \linewidth]{figures/influence_beta.pdf}
-	\caption{The shape of the blast wave for different plasma beta's.}
+	\caption{The shape of the blast wave for different plasma beta's. Pressure is shown. The value for $\beta$ is modified with the thermal pressure held constant at $\SI{2995}{Ba}$ (8 code units) and constant density of 1 proton mass per  $\si{cm\cubed}$ (1 code unit). All figures are the simulation after $\SI{149597892}{s}$ (1 code units).}
 \label{fig:blastwave_shape_beta}
 \end{figure}
 
-% When $\beta  = 10$ the magnetic pressure is dominant the alfv\'en \todo{This is not an alv\'en wave} waves are clearly visible.
+\Cref{fig:blastwave_shape_beta} very closely resembles the shape of the group speeds diagrams in \cref{fig:groupspeed_beta}. 
+One can multiply the theoretical group speeds with the elapsed time to find the position of the high pressure region at that time. 
+Overlaying \cref{fig:groupspeed_beta} with \cref{fig:blastwave_shape_beta} in this way results in \cref{fig:comparison_groupspeed}. One can see that they match very well. 
+The experimental results are slightly ahead of the theoretical wavefront. The authors suspect that this is due two reasons:
+\begin{enumerate}
+	\item the theoretical position determines the movement of the centre of the initial high pressure region. But this has a non-zero radius. 
+	\item the initial pressure difference (15 over 8 code units) is slightly to high for linear approximations. As a result the real group speed is higher than the linear theory would suggest.
+\end{enumerate}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{figures/comparison_groupspeed.pdf}
+	\caption{The group speed diagrams (\cref{fig:groupspeed_beta}) overlayed on the simulations (\cref{fig:blastwave_shape_beta}). The white lines are the theoretical positions of the slow and fast magnetosonic wavefronts.}
+	\label{fig:comparison_groupspeed}
+\end{figure}
 \todo{comparison sound speed theoretical vs simulation}
+
+
+\subsection{Sound Waves}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{figures/slow_wave.pdf}
-	\caption{The propagation of a slow wave. Axes are in \si{cm}.}
+	\caption{The propagation of a slow wave. In this example $\beta = 0.1$ Axes are in \si{cm}.}
 	\label{fig:Alfven_wave}
 \end{figure}
 
-% In the simulation above \cref{fig:Alfven_wave}, the magnetic field lies in the $x$-direction, hence the Alfv\'en wave is a one-dimensional wave, also in the $x$-direction. 
-% The theoretical speed of this wave is $v_A = \frac{B_0}{\sqrt{\rho_0}} = \sqrt{\frac{\beta p_0}{\rho_0}} = 8.94$ in code units. 
-% This corresponds to a physical speed of \SI{8.94e5}{\centi\meter\per\second}.
-% \Cref{fig:alven_wave_speed} compares this to the propagation of the waves tops in the simulation.
-% \begin{figure}[H]
-% 	\centering
-% 	\includegraphics[width=.6\textwidth]{figures/alven_wave_position.pdf}
-% 	\caption{The position of the wave top of the Alfv\'en wave compared to the theoretical speed.}
-% 	\label{fig:alven_wave_speed}
-% \end{figure}
-% \todo{Change text in figure experiment -> theoretical}
-% \todo{Compare Alfven wave speed theoretical and empirical}
-\todo{Bijzetten welke beta hier gebruikt wordt}
 
-\subsection{Sound Waves}
-In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1?????$ are plotted, for different points in time. 
+In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1$ are plotted, for different points in time. 
 The simulation does not resemble that of a hydrodynamic blastwave, because $\beta$ is relatively small, which implies that the magnetic pressure dominates over the mechanical pressure.
-In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. 
+In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. \todo{ik heb mijn twijfels bij deze uitleg.}
 Hence this simulation can be used to compare the theoretical and 
 experimental group speed of the slow wave.
+
+Taking the right half of a horizontal slice and plotting over time is a good way of visualizing the propagation of the slow magnetosonic waves. This is visualised \cref{fig:slowwave_time} along with the theoretical boundary of the wave packet determined using the theoretical speed of the slow wave.  
+Again the wave is slightly ahead of what theory predicts in the low pressure case. This is even more so for the high pressure blast. Again the authors think this discrepancy is due to non-linear effects.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1.1\textwidth]{figures/slowwave_time.pdf}
+	\caption{The pressure of the a horizontal slice plotted over time of the HMD blastwave simulation with $\beta = 0.1$ for both the low and high pressure difference case. The white lines represent the theoretical bounds of the wave packet. The possible group speeds of a slow wave form a triangle as can be seen in \cref{fig:groupspeed_beta}. Taking let $v_m, v_M$ be the minimum and maximum speed in the $x$-direction of such a triangle. Let $r$ be the initial radius of the high pressure region. Then $x = v_m \cdot t - r, x = v_M \cdot t + r$ represent are the white boundaries.}
+	\label{fig:slowwave_time}
+\end{figure}
+
 \section{Interaction of MHD waves with large scale structures}
 This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov.  \cite{afanasyev2018propagation}\\
 
