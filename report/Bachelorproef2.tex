@@ -26,6 +26,8 @@
 \usepackage[textsize=tiny]{todonotes}
 \usepackage{verbatim}
 
+\usepackage[margin=20pt]{caption} %Smaller captions
+
 \usepackage{minted} % Code highlighting
 
 \usepackage{fancyhdr}
@@ -62,8 +64,7 @@
 %\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
 \numberwithin{figure}{section}
 \numberwithin{equation}{section}
-\let\oldcap\caption
-\renewcommand{\caption}[1]{\parbox{.9\linewidth}{\oldcap{#1}}\addtocounter{figure}{-1}\refstepcounter{figure}}
+
 
 \title{Modeling of MHD waves in the solar corona}
 \author{Micha\"el Maex \and Rune Buckinx}
