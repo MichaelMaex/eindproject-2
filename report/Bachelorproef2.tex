@@ -18,15 +18,18 @@
 
 \usepackage{enumitem} %Enumerate Labels
 
-\usepackage[margin=1.5in]{geometry} %Adjust Margins
+\usepackage[margin=1.4in]{geometry} %Adjust Margins
 
 \usepackage{siunitx} % easily format numbers with dimensions
 \usepackage{hyperref}
 \usepackage{cleveref}
-\usepackage{todonotes}
+\usepackage[textsize=tiny]{todonotes}
 \usepackage{verbatim}
 
 \usepackage{minted} % Code highlighting
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
@@ -81,9 +84,9 @@ This approach to model the plasma treats it as a single fluid, as opposed to the
 
 The differential/governing equations that make up the MHD model, are difficult to solve analytically. 
 It is therefore often favourable to use numerical computer modelling to study the equations, which is the main focus of this bachelor's project. 
-The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}. 
+The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}.\\
 
-The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations.
+The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations. Concretely, this consists of the following two problems, simulating a magnetohydrodynamic blastwave and simulating the interaction of magnetohydrodynamic waves with large scale structures in the solar corona, such as a coronal hole and plume.
 
 \section{(M)HD Theory} \label{sec:(m)hd_theory}
 
@@ -549,6 +552,13 @@ The simulation does not resemble that of a hydrodynamic blastwave, because $\bet
 In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. 
 Hence this simulation can be used to compare the theoretical and 
 experimental group speed of the slow wave.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{figures/slowwave_time.pdf}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
 \section{Interaction of MHD waves with large scale structures}
 This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov.  \cite{afanasyev2018propagation}\\
 
@@ -630,7 +640,7 @@ void Init (double *v, double x1, double x2, double x3)
   #endif
 }
 \end{minted}
-TEXT ABOUT BOUNDARY CONDITIONS HERE\\
+To generate a plane wave, the following time-dependent boundary condition is used at the left boundary of the simulation box. Firstly, two parameters are defined that make up the general shape of the wave namely, \texttt{WAVE\_HEIGHT}, which specifies the top speed of the wave, in km/s\todo{is dit juist?}, and \texttt{WAVE\_DURATION}, which specifies the length of the wave. To avoid shocks, a hyperbolic tangent function is used to simulate the increase and decrease of the velocity\\
 To initialise these boundary conditions in PLUTO, the following code is added to the \texttt{void UserDefBoundary(...)} in the \texttt{init.c} file, again a modified version of the code by Mijie Shi.
 \begin{minted}
 [frame=lines,bgcolor=mygray,breaklines]
@@ -645,18 +655,18 @@ To initialise these boundary conditions in PLUTO, the following code is added to
   if (side == X1_BEG){  /* -- X1_BEG boundary -- */
     if (box->vpos == CENTER) {
       BOX_LOOP(box,k,j,i){ 
-       d->Vc[RHO][k][j][i] = d->Vc[RHO][k][j][2*IBEG - i -1];
-       d->Vc[PRS][k][j][i] = d->Vc[PRS][k][j][2*IBEG - i -1];
+      d->Vc[RHO][k][j][i] = d->Vc[RHO][k][j][2*IBEG - i -1];
+      d->Vc[PRS][k][j][i] = d->Vc[PRS][k][j][2*IBEG - i -1];
        
-       d->Vc[BX1][k][j][i] = d->Vc[BX1][k][j][2*IBEG - i -1];
-       d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
+      d->Vc[BX1][k][j][i] = d->Vc[BX1][k][j][2*IBEG - i -1];
+      d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
        
-       d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
-       //if (g_time < 200) 
+      d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
+      //if (g_time < 200) 
       
-       d->Vc[VX2][k][j][i] = 0.0;
+      d->Vc[VX2][k][j][i] = 0.0;
        
-       }
+      }
     }else if (box->vpos == X1FACE){
       BOX_LOOP(box,k,j,i){  }
     }else if (box->vpos == X2FACE){
