@@ -87,7 +87,7 @@ The goals of this bachelor's project are to gain familiarity with simulating and
 
 \section{(M)HD Theory} \label{sec:(m)hd_theory}
 
-First a brief introduction to non-magnetic hydrodynamics is given which then will be compared to magnetohydrodynamics.
+First a brief introduction to non-magnetic hydrodynamics is given which will then be compared to magnetohydrodynamics.
 
 \subsection{Ordinary Hydrodynamics} \label{sec:ordinary_hydrodynamics}
 
@@ -255,11 +255,11 @@ The group velocity is equal to a constant, namely the Alfv\'en speed.
 \begin{equation*}
     v_{\text{gr}} = v_A
 \end{equation*}
-The comparison of this kind of wave with the fast and slow acoustic waves is made in \cref{sec:Friedrich}.
-\subsection{Sound Waves}
-The second type of wave found in the dispersion relation are sound waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast magnetosonic wave and the slow magnetosonic wave.\\
+The comparison of this kind of wave with the fast and slow acoustic waves is made in the Friedrich diagrams below.
+\subsection{Magnetosonic Waves}
+The second type of wave found in the dispersion relation are magnetosonic waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast magnetosonic wave and the slow magnetosonic wave.\\
 
-The eigenvector linked to the sound waves is in the $x,y$-plane, as can be seen from \cref{eq:MHD_linear_matrix}.
+The eigenvector linked to the magnetosonic waves is in the $x,y$-plane, as can be seen from \cref{eq:MHD_linear_matrix}.
 \[
 	\mathbf{v_2} = v \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} 
 .\] 
@@ -489,7 +489,7 @@ To simulate magnetohydrodynamic waves, PLUTO solves the following system of diff
     &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faradaypluto}\\
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= m\cdot g \tag{energy}\label{energypluto}.
 \end{alignat} 
-Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
+Here $\rho$ is the plasma density, $\mathbf B$  the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density, $\Phi$ the potential and $p$ is the thermal pressure. $E_t$ is the total energy, which is given by \[
 E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\]  
 The constants  $e, c$ are the elementary charge and the speed of light respectively, and $\mathbf{E}$ is the electric field.\cite{plutouserguide}\\
@@ -511,7 +511,7 @@ In order to study the effects of a constant magnetic background field, the same 
 The parameter $\beta = \frac{2p}{B^2}$ (in code units) gives the ratio of magnetic pressure over mechanical pressure. 
 If $\beta = \infty$ the magnetic field is $0$. 
 If $\beta \ll 1$ the magnetic pressure dominates. 
-\Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave. When $\beta$ is high, the blastwave resembles in ordinary non-magnetic hydrodynamics(\cref{fig:blastwave}).
+\Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave. When $\beta$ is high, the blastwave resembles the one in ordinary non-magnetic hydrodynamics (\cref{fig:blastwave}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = \linewidth]{figures/influence_beta.pdf}
@@ -543,7 +543,7 @@ If $\beta \ll 1$ the magnetic pressure dominates.
 % \todo{Compare Alfven wave speed theoretical and empirical}
 \todo{Bijzetten welke beta hier gebruikt wordt}
 
-\subsection{Sound Waves}
+\subsection{Magnetosonic Waves}
 In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1?????$ are plotted, for different points in time. 
 The simulation does not resemble that of a hydrodynamic blastwave, because $\beta$ is relatively small, which implies that the magnetic pressure dominates over the mechanical pressure.
 In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. 
@@ -638,7 +638,7 @@ To initialise these boundary conditions in PLUTO, the following code is added to
   double v0, v1, v2, height, duration;
   height = g_inputParam[WAVE_HEIGHT];
   duration = g_inputParam[WAVE_DURATION];
-  v0 = -50.0*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
+  v0 = -height*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
   v1 = -v0;
   v2 = 0.0;
   
