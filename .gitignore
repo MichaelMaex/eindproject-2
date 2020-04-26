@@ -15,6 +15,7 @@ Notities literatuur/notities_literatuur.pdf
 *.json
 *.swp
 *.toc
+*.lof
 *.dbl
 *.o
 *__pycache__

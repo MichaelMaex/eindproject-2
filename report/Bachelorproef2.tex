@@ -371,7 +371,16 @@ This can be simplified with \cref{eq:phase_velocity}:
 \end{figure}
 \section{Pluto Code} \label{sec:pluto_code}
 
-\todo{Hier zou ik iets schrijven over hoe pluto werkt}
+The Pluto library consists completely out of uncompiled code. For each problem/simulation a binary needs to be made specific to that problem. This allows Pluto to be run on a large variety of devices, provided that the necessary compilers are available.
+The files specific to a problem are referred to as the definition of the problem. 
+This definition typically consists of three files, \texttt{definitions.h}, \texttt{init.c}, \texttt{pluto.ini}.
+\begin{enumerate}
+	\item \texttt{definitions.h} contains all the information necessary for compiling the right code for the project. This mostly constist of information for the solver: what solver is used (HD, MHD, relativistic MHD), what kind of grid geometry is used (number of dimensions, cartesian, cylidrical, polar), what code units represent (see \cref{sec:units_in_pluto}). It also contains what user definable variables there are.
+	\item \texttt{init.c} contains the C-functions that specify initial and boundary conditions. The function \texttt{void Init (double *v, double x1, double x2, double x3)} sets up stores the initial conditions at the point \texttt{(x1,x2,x3)} and stores them in at the pointer \texttt{*v}.
+		The function \texttt{void UserDefBoundary (const Data *d, RBox *box, int side, Grid *grid)} can be used to define custom boundary conditions when the build in boundary conditions (periodic, passthrough, mirror, \ldots) are not sufficient.
+	\item \texttt{pluto.ini} contains information that the binary reads before starting the computation. This constists of grid size and resolution, simulation time, what output needs to be stored where and the values of the user defined parameters.
+\end{enumerate}
+The compiler uses \texttt{definitions.h} to only compile the right solver and \texttt{init.c}. One binary can use multiple \texttt{pluto.ini}'s which makes it easy to run multiple simulations of the same setup with different input variables. 
 
 \subsection{Units in Pluto} \label{sec:units_in_pluto}
 
