@@ -1,0 +1,30 @@
+  double v0, v1, v2, height, duration;
+  height = g_inputParam[WAVE_HEIGHT];
+  duration = g_inputParam[WAVE_DURATION];
+  v0 = -50.0*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
+  v1 = -v0;
+  v2 = 0.0;
+
+  if (side == X1_BEG){  /* -- X1_BEG boundary -- */
+    if (box->vpos == CENTER) {
+      BOX_LOOP(box,k,j,i){
+       d->Vc[RHO][k][j][i] = d->Vc[RHO][k][j][2*IBEG - i -1];
+       d->Vc[PRS][k][j][i] = d->Vc[PRS][k][j][2*IBEG - i -1];
+
+       d->Vc[BX1][k][j][i] = d->Vc[BX1][k][j][2*IBEG - i -1];
+       d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
+
+       d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
+       //if (g_time < 200)
+
+       d->Vc[VX2][k][j][i] = 0.0;
+
+       }
+    }else if (box->vpos == X1FACE){
+      BOX_LOOP(box,k,j,i){  }
+    }else if (box->vpos == X2FACE){
+      BOX_LOOP(box,k,j,i){  }
+    }else if (box->vpos == X3FACE){
+      BOX_LOOP(box,k,j,i){  }
+    }
+  }

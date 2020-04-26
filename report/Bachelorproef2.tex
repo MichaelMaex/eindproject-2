@@ -18,15 +18,18 @@
 
 \usepackage{enumitem} %Enumerate Labels
 
-\usepackage[margin=1.5in]{geometry} %Adjust Margins
+\usepackage[margin=1.4in]{geometry} %Adjust Margins
 
 \usepackage{siunitx} % easily format numbers with dimensions
 \usepackage{hyperref}
 \usepackage{cleveref}
-\usepackage{todonotes}
+\usepackage[textsize=tiny]{todonotes}
 \usepackage{verbatim}
 
 \usepackage{minted} % Code highlighting
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 
 %\usepackage{fancyhdr} %Name on every page
 %\pagestyle{fancy}
@@ -89,13 +92,13 @@ This approach to model the plasma treats it as a single fluid, as opposed to the
 
 The differential/governing equations that make up the MHD model, are difficult to solve analytically. 
 It is therefore often favourable to use numerical computer modelling to study the equations, which is the main focus of this bachelor's project. 
-The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}. 
+The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}.\\
 
-The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations.
+The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations. Concretely, this consists of the following two problems, simulating a magnetohydrodynamic blastwave and simulating the interaction of magnetohydrodynamic waves with large scale structures in the solar corona, such as a coronal hole and plume.
 
 \section{(M)HD Theory} \label{sec:(m)hd_theory}
 
-First a brief introduction to non-magnetic hydrodynamics is given which then will be compared to magnetohydrodynamics.
+First a brief introduction to non-magnetic hydrodynamics is given which will then be compared to magnetohydrodynamics.
 
 \subsection{Ordinary Hydrodynamics} \label{sec:ordinary_hydrodynamics}
 
@@ -263,11 +266,11 @@ The group velocity is equal to a constant, namely the Alfv\'en speed.
 \begin{equation*}
     v_{\text{gr}} = v_A
 \end{equation*}
-The comparison of this kind of wave with the fast and slow acoustic waves is made in \cref{sec:Friedrich}.
-\subsection{Sound Waves}
-The second type of wave found in the dispersion relation are sound waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast magnetosonic wave and the slow magnetosonic wave.\\
+The comparison of this kind of wave with the fast and slow acoustic waves is made in the Friedrich diagrams below.
+\subsection{Magnetosonic Waves}
+The second type of wave found in the dispersion relation are magnetosonic waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast magnetosonic wave and the slow magnetosonic wave.\\
 
-The eigenvector linked to the sound waves is in the $x,y$-plane, as can be seen from \cref{eq:MHD_linear_matrix}.
+The eigenvector linked to the magnetosonic waves is in the $x,y$-plane, as can be seen from \cref{eq:MHD_linear_matrix}.
 \[
 	\mathbf{v_2} = v \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} 
 .\] 
@@ -497,7 +500,7 @@ To simulate magnetohydrodynamic waves, PLUTO solves the following system of diff
     &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faradaypluto}\\
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= m\cdot g \tag{energy}\label{energypluto}.
 \end{alignat} 
-Here $\rho$ is the plasma density, $\mathbf B$ is the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density,$\Phi$ the potential, $p$ is the thermal pressure, $E_t$ is the total energy, which is given by \[
+Here $\rho$ is the plasma density, $\mathbf B$  the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density, $\Phi$ the potential and $p$ is the thermal pressure. $E_t$ is the total energy, which is given by \[
 E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\]  
 The constants  $e, c$ are the elementary charge and the speed of light respectively, and $\mathbf{E}$ is the electric field.\cite{plutouserguide}\\
@@ -529,7 +532,7 @@ The simulation was run for
 \end{itemize}
 the background pressure was always $8$ code units.
 
-\Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave. When $\beta$ is high, the blastwave resembles in ordinary non-magnetic hydrodynamics(\cref{fig:blastwave}).
+\Cref{fig:blastwave_shape_beta} shows how the value of $\beta$ influences the shape of the blast wave. When $\beta$ is high, the blastwave resembles the ordinary non-magnetic hydrodynamics(\cref{fig:blastwave}).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = \linewidth]{figures/influence_beta.pdf}
@@ -661,7 +664,7 @@ void Init (double *v, double x1, double x2, double x3)
   #endif
 }
 \end{minted}
-TEXT ABOUT BOUNDARY CONDITIONS HERE\\
+To generate a plane wave, the following time-dependent boundary condition is used at the left boundary of the simulation box. Firstly, two parameters are defined that make up the general shape of the wave namely, \texttt{WAVE\_HEIGHT}, which specifies the top speed of the wave, in km/s\todo{is dit juist?}, and \texttt{WAVE\_DURATION}, which specifies the length of the wave. To avoid shocks, a hyperbolic tangent function is used to simulate the increase and decrease of the velocity\\
 To initialise these boundary conditions in PLUTO, the following code is added to the \texttt{void UserDefBoundary(...)} in the \texttt{init.c} file, again a modified version of the code by Mijie Shi.
 \begin{minted}
 [frame=lines,bgcolor=mygray,breaklines]
@@ -669,25 +672,25 @@ To initialise these boundary conditions in PLUTO, the following code is added to
   double v0, v1, v2, height, duration;
   height = g_inputParam[WAVE_HEIGHT];
   duration = g_inputParam[WAVE_DURATION];
-  v0 = -50.0*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
+  v0 = -height*1.e5/UNIT_VELOCITY;   //normalized velocity of 50 km/s
   v1 = -v0;
   v2 = 0.0;
   
   if (side == X1_BEG){  /* -- X1_BEG boundary -- */
     if (box->vpos == CENTER) {
       BOX_LOOP(box,k,j,i){ 
-       d->Vc[RHO][k][j][i] = d->Vc[RHO][k][j][2*IBEG - i -1];
-       d->Vc[PRS][k][j][i] = d->Vc[PRS][k][j][2*IBEG - i -1];
+      d->Vc[RHO][k][j][i] = d->Vc[RHO][k][j][2*IBEG - i -1];
+      d->Vc[PRS][k][j][i] = d->Vc[PRS][k][j][2*IBEG - i -1];
        
-       d->Vc[BX1][k][j][i] = d->Vc[BX1][k][j][2*IBEG - i -1];
-       d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
+      d->Vc[BX1][k][j][i] = d->Vc[BX1][k][j][2*IBEG - i -1];
+      d->Vc[BX2][k][j][i] = d->Vc[BX2][k][j][2*IBEG - i -1];
        
-       d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
-       //if (g_time < 200) 
+      d->Vc[VX1][k][j][i] = v1 + (v0 - v1)*(0.5*(1.-tanh((g_time-0.)/20.))) + (v2 - v1)*(0.5*(1.+tanh((g_time-duration)/60.)));
+      //if (g_time < 200) 
       
-       d->Vc[VX2][k][j][i] = 0.0;
+      d->Vc[VX2][k][j][i] = 0.0;
        
-       }
+      }
     }else if (box->vpos == X1FACE){
       BOX_LOOP(box,k,j,i){  }
     }else if (box->vpos == X2FACE){
