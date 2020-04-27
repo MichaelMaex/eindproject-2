@@ -766,7 +766,20 @@ The user defined parameters, the gridsize and resolution, output file type and t
 	\label{fig:hole}
 \end{figure}
 
-\Cref{eq:energy} shows the  \todo{Put in reflection coefficient calculation}
+\Cref{eq:energy} gives the energy per volume (or area in a 2D simulation). 
+Integrating this a region gives the energy in that region. 
+This can be used to calculate the reflection coeffecient.
+The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the frame is entirely located in that region and at $t_2$ the entirety of the reflection is captured. Then $E_i - E_0$ gives the enery that was added due to the wave at $t_i$. Hence the reflection coeffecient is \[
+	R = \frac{E_2 - E_0}{E_1 - E_0} = 0.17
+.\]\todo{tidy this up!} 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/calculation_reflection.pdf}
+	\caption{}
+	\label{fig:}
+\end{figure}
+\todo{Put in reflection coefficient calculation}
+
 \subsection{Coronal Plume Model}\label{sec:coronal_plume_model} 
 To contrast the coronal hole model, the plume model is considered. 
 It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
