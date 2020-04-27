@@ -30,6 +30,7 @@
 
 \usepackage{minted} % Code highlighting
 
+
 \usepackage{fancyhdr}
 \pagestyle{headings}
 
@@ -661,7 +662,8 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
 To reflect the more typical length/velocity/density scales in the solar corona the code units were redefined to  $\SI{1}{\mega\metre}, \SI{1}{\mega\metre\per\second}$ and $10^{9}$ proton massses per $\si{\centi\meter\cubed}$ respectively.
 This is done by adding the following code to the \texttt{defintions.h} file.
 \begin{minted}
-	[frame=lines, breaklines, bgcolor=mygray]{c}
+[frame=lines, breaklines, bgcolor=mygray]
+{c}
 /* [Beg] user-defined constants (do not change this line) */
 
 #define  UNIT_DENSITY                   (1.e9*CONST_mp)
@@ -765,11 +767,11 @@ The user defined parameters, the gridsize and resolution, output file type and t
 	\caption{The pressure of the coronal hole simulation at multiple points in time. Note that the axis are in \si{\mega\metre}.}
 	\label{fig:hole}
 \end{figure}
-
+\todo{Axis zijn toch niet in megameter hier?  lijkt te groot?}
 \Cref{eq:energy} gives the energy per volume (or area in a 2D simulation). 
 Integrating this a region gives the energy in that region. 
-This can be used to calculate the reflection coeffecient.
-The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the frame is entirely located in that region and at $t_2$ the entirety of the reflection is captured. Then $E_i - E_0$ gives the enery that was added due to the wave at $t_i$. Hence the reflection coeffecient is \[
+This can be used to calculate the reflection coefficient.
+The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the frame is entirely located in that region and at $t_2$ the entirety of the reflection is captured. Then $E_i - E_0$ gives the energy that was added due to the wave at $t_i$. Hence the reflection coefficient is \[
 	R = \frac{E_2 - E_0}{E_1 - E_0} = 0.17
 .\]\todo{tidy this up!} 
 \begin{figure}[ht]
@@ -783,7 +785,7 @@ The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the ver
 \subsection{Coronal Plume Model}\label{sec:coronal_plume_model} 
 To contrast the coronal hole model, the plume model is considered. 
 It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
-This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes.\\
+This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes, but is still considered for completeness.\\
 
 The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
 
@@ -812,21 +814,21 @@ However, this time other values will be used for the parameters, alongside a sma
 \end{table}
 To simulate the coronal plume, the same definition can be used, as the one for the coronal hole, by changing the parameters in the \texttt{definitions.h} file.\\
 
-In \cref{fig:figures-plume_time-pdf} and \cref{fig:figures-plume_reflection-pdf} the simulation results for the interaction of a planar MHD wave with a coronal plume are plotted for different points in time. The pressure in the plots in  \cref{fig:figures-plume_time-pdf} is cut off at ???????? to increase the contrast of the waves outside of the plume. The opposite is done in \cref{fig:figures-plume_reflection-pdf}. \todo{Mss moet dit bij de beschrijving van de figuren? ja dat moet bij de beschrijving van de figuren}.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
-	\caption{}
+	\caption{The pressure of the coronal plume simulation at multiple points in time. Note that the pressure is cut off above at ????? to increase the contrast of the waves outside of the plume}
 	\label{fig:figures-plume_time-pdf}
 \end{figure}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{figures/plume_reflection.pdf}
-    \caption{}
+    \caption{The pressure of the coronal plume simulation at multiple points in time. Note that the pressure is cut off below at ????? to increase the contrast of the waves inside of the plume.}
     \label{fig:figures-plume_reflection-pdf}
 \end{figure}
 When the wave front passes through the plume, it is reflected because of the large difference in density of the plume and its surroundings. This reflection is in turn reflected again on the other side of the plume, causing a resonating effect visible in \cref{fig:figures-plume_reflection-pdf}. This ``captured'' wave, generates secondary wave fronts, visible in \cref{fig:figures-plume_time-pdf}.
 \section{Summary and conclusion}
-In this paper, several different hydrodynamic and magnetohydrodynamic waves were simulated using PLUTO, which were then analysed by comparing the results to theoretical models. This lead to interesting observations about the effects of non-linearity and the interaction between waves and other structures. 
+In this paper, several different hydrodynamic and magnetohydrodynamic waves were simulated using PLUTO, which were then analysed by comparing the results to theoretical models. This lead to interesting observations about the effects of non-linearity and the interaction between waves and other structures.
+\pagebreak
 \printbibliography
 \end{document}
