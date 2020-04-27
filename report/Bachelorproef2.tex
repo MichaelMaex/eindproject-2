@@ -101,6 +101,7 @@ The simulations will be performed in the open source code PLUTO, which is design
 
 The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations. Concretely, this consists of the following two problems, simulating a magnetohydrodynamic blastwave and simulating the interaction of magnetohydrodynamic waves with large scale structures in the solar corona, such as a coronal hole and plume.
 
+\pagebreak
 \section{(M)HD Theory} \label{sec:(m)hd_theory}
 
 First a brief introduction to non-magnetic hydrodynamics is given which will then be compared to magnetohydrodynamics.
@@ -144,7 +145,7 @@ A very important quantity often used in plasma physics is the plasma-$\beta$ whi
 \beta = \frac{p}{P_B} = \frac{2 \mu p}{B^2}
 .\] 
 If $\beta \gg 1$ the pressure dominates and the magnetic effects can be ignored. If $\beta \ll 1$ the magnetic pressure dominates.
-\section{Linear Approximations} \label{sec:linear_approximations}
+\subsection{Linear Approximations} \label{sec:linear_approximations}
 
 To analyse small amplitude waves in the plasma, a linearised version of the magnetohydrodynamic equations is considered as in \cite{Fitzpatricknotes}, namely
 
@@ -370,6 +371,9 @@ This can be simplified with \cref{eq:phase_velocity}:
 	\caption{The possible group speeds for fast, slow and Alfv\'n waves for different values of $\beta$. The magnetic field lines are horizontal.}
 	\label{fig:groupspeed_beta}
 \end{figure}
+
+\pagebreak
+
 \section{Pluto Code} \label{sec:pluto_code}
 
 The Pluto library consists completely out of uncompiled code. For each problem/simulation a binary needs to be made specific to that problem. This allows Pluto to be run on a large variety of devices, provided that the necessary compilers are available.
@@ -506,6 +510,8 @@ Like in the previous setup the radius of the blast over time was compared to the
 	\label{fig:non_linear_effects}
 \end{figure}
 
+\pagebreak
+
 \section{Waves in magnetohydrodynamic fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
 To simulate magnetohydrodynamic waves, PLUTO solves the following system of differential equations, which is slightly different from the one defined in \cref{sec:(m)hd_theory}.
 \begin{alignat}{3}
@@ -596,7 +602,7 @@ Again the wave is slightly ahead of what theory predicts in the low pressure cas
 	\caption{The pressure of the a horizontal slice plotted over time of the HMD blastwave simulation with $\beta = 0.1$ for both the low and high pressure difference case. The white lines represent the theoretical bounds of the wave packet. The possible group speeds of a slow wave form a triangle as can be seen in \cref{fig:groupspeed_beta}. Taking let $v_m, v_M$ be the minimum and maximum speed in the $x$-direction of such a triangle. Let $r$ be the initial radius of the high pressure region. Then $x = v_m \cdot t - r, x = v_M \cdot t + r$ represent are the white boundaries.}
 	\label{fig:slowwave_time}
 \end{figure}
-
+\pagebreak
 \section{Interaction of MHD waves with large scale structures}
 This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov.  \cite{afanasyev2018propagation}\\
 
