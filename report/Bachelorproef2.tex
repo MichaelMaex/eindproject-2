@@ -520,10 +520,10 @@ To simulate magnetohydrodynamic waves, PLUTO solves the following system of diff
     &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faradaypluto}\\
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= m\cdot g \tag{energy}\label{energypluto}.
 \end{alignat} 
-Here $\rho$ is the plasma density, $\mathbf B$  the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density, $\Phi$ the potential and $p$ is the thermal pressure. $E_t$ is the total energy, which is given by \[
+Here $\rho$ is the plasma density, $\mathbf B$  the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density, $\Phi$ the potential and $p$ is the thermal pressure. $E_t$ is the total energy, which is given by \begin{equation}\label{eq:energy}
 E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
-.\]  
-The constants  $e, c$ are the elementary charge and the speed of light respectively, and $\mathbf{E}$ is the electric field.\cite{plutouserguide}\\
+.\end{equation} 
+Here is $c$ the speed of light and $\rho e$ is the internal energy, which for ideal fluids is given by $\frac{p}{\gamma - 1}$ with $\gamma$ the ratio of heat capacities.\cite{plutouserguide}. Only ideal fluids will be discussed.
 
 In order to study the effects of a constant magnetic background field, the same initial conditions as in \cref{sec:initial_example} were used but this time a magnetic field in the $x$ direction was added. This can be done by adding a parameter $\beta$, and adjusting the \texttt{void init(...)} function in the \texttt{init.c} file as follows,
 \begin{minted}
@@ -615,7 +615,9 @@ To simulate a coronal hole, the following initial conditions are used,
     n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
     T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]
 \end{align*}
-Here $n$ denotes the plasma number density, $T$ denotes the temperature, and $r$ is the distance from the center. The parameter $d$ is used to describe the characteristic size of the non-uniformity and can hence be used to adjust the simulation to the correct order of magnitude. In this simulation $d$ will be equal to $150$ Mm (see also \cref{tab:coronal_hole}).\\
+Here $n$ denotes the plasma number density, $T$ denotes the temperature, and $r$ is the distance from the center. 
+The plasma number density counts the number of particles per volume and thus is related to the density by $\rho = m\cdot \eta$, where $m$ is the mass of one particle. In this case $m$ is taken to be the mass of a proton. 
+The parameter $d$ is used to describe the characteristic size of the non-uniformity and can hence be used to adjust the simulation to the correct order of magnitude. In this simulation $d$ will be equal to $150$ Mm (see also \cref{tab:coronal_hole}).\\
 
 The magnetic field in the simulation is directed in the $z$-direction while the simulation takes place in the $x,y$-plane. An initial equilibrium is achieved by keeping the total pressure constant, using the following equation,
 \begin{equation*}
@@ -623,11 +625,11 @@ The magnetic field in the simulation is directed in the $z$-direction while the 
 \end{equation*}
 Here $p^t$ represents the total pressure, which is the sum of the gas pressure and the magnetic pressure. \\
 
-A alven wave is induced by modifying the velocity in the $x$-direction in the boundary condition at the left boundary edge.
+A wave is induced by modifying the velocity in the $x$-direction in the boundary condition at the left boundary edge.
 The velocity at the edge is given by \[
 	v_x = v_\text{max}\tanh\left( \frac{t}{a_0} \right) - \frac{v_\text{max} }{2} \left(\tanh\left( \frac{t-d}{a_1} \right) + 1\right) 
 ,\]
-where $t$ is the elapsed time,  $v_max$ the maximum speed obtained,  $d$ the duration of the wave. To avoid shocks, a hyperbolic tangent function is used to smoothly interpolate from 0 to $v_\text{max} $ and back. The values $a_0, a_1$ determine how fast it $v_x$ moves in between $0$ and $v_\text{max}$. 
+where $t$ is the elapsed time,  $v_\text{max} $ the maximum speed obtained,  $d$ the duration of the wave. To avoid shocks, a hyperbolic tangent function is used to smoothly interpolate from 0 to $v_\text{max} $ and back. The values $a_0, a_1$ determine how fast it $v_x$ moves in between $0$ and $v_\text{max}$. 
 In this report $a_0$ and $a_1$ will always be $\SI{20}{s}$ and $\SI{60}{s}$ respectively.
 \Cref{fig:wave_drive} shows the velocity profile for these curves for both the coronal hole model and the coronal plume model (see \cref{sec:coronal_plume_model}).
 \begin{figure}[h]
@@ -655,6 +657,20 @@ The values that are used for the parameters are summarised in \cref{tab:coronal_
     $d$						& 600						& \si{\second} \\ \hline
 \end{tabular}
 \end{table}
+\subsubsection{Execution in Pluto} \label{sec:execution_in_pluto}
+To reflect the more typical length/velocity/density scales in the solar corona the code units were redefined to  $\SI{1}{\mega\metre}, \SI{1}{\mega\metre\per\second}$ and $10^{9}$ proton massses per $\si{\centi\meter\cubed}$ respectively.
+This is done by adding the following code to the \texttt{defintions.h} file.
+\begin{minted}
+	[frame=lines, breaklines, bgcolor=mygray]{c}
+/* [Beg] user-defined constants (do not change this line) */
+
+#define  UNIT_DENSITY                   (1.e9*CONST_mp)
+#define  UNIT_LENGTH                    1.e8
+#define  UNIT_VELOCITY                  1.e8
+
+/* [End] user-defined constants (do not change this line) *
+\end{minted}
+
 To define these initial conditions the following adjustments have to be made to the \texttt{void init(...)} function in the \texttt{init.c} file. This code is an modified version of code kindly provided by Mijie Shi.
 \begin{minted}
 [frame=lines, breaklines, bgcolor=mygray]
@@ -741,12 +757,16 @@ void UserDefBoundary (const Data *d, RBox *box, int side, Grid *grid){
 }
 \end{minted}
 The user defined parameters, the gridsize and resolution, output file type and timescale for the problem, can be defined in the \texttt{pluto.ini} file, similarly as in \cref{sec:initial_example}.
+\subsubsection{Results and Analysis} \label{sec:results_and_analysis}
+\Cref{fig:hole} shows the pressure at multiple points in time during the simulation.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/hole_time.pdf}
-	\caption{}
-	\label{fig:figures-hole}
+	\caption{The pressure of the coronal hole simulation at multiple points in time. Note that the axis are in \si{\mega\metre}.}
+	\label{fig:hole}
 \end{figure}
+
+\Cref{eq:energy} shows the  \todo{Put in reflection coefficient calculation}
 \subsection{Coronal Plume Model}\label{sec:coronal_plume_model} 
 To contrast the coronal hole model, the plume model is considered. 
 It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
@@ -779,14 +799,14 @@ However, this time other values will be used for the parameters, alongside a sma
 \end{table}
 To simulate the coronal plume, the same definition can be used, as the one for the coronal hole, by changing the parameters in the \texttt{definitions.h} file.\\
 
-In \cref{fig:figures-plume_time-pdf} and \cref{fig:figures-plume_reflection-pdf} the simulation results for the interaction of a planar MHD wave with a coronal plume are plotted for different points in time. The pressure in the plots in  \cref{fig:figures-plume_time-pdf} is cut off at ???????? to increase the contrast of the waves outside of the plume. The opposite is done in \cref{fig:figures-plume_reflection-pdf}. \todo{Mss moet dit bij de beschrijving van de figuren?}.\\
-\begin{figure}[h]
+In \cref{fig:figures-plume_time-pdf} and \cref{fig:figures-plume_reflection-pdf} the simulation results for the interaction of a planar MHD wave with a coronal plume are plotted for different points in time. The pressure in the plots in  \cref{fig:figures-plume_time-pdf} is cut off at ???????? to increase the contrast of the waves outside of the plume. The opposite is done in \cref{fig:figures-plume_reflection-pdf}. \todo{Mss moet dit bij de beschrijving van de figuren? ja dat moet bij de beschrijving van de figuren}.\\
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
 	\caption{}
 	\label{fig:figures-plume_time-pdf}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{figures/plume_reflection.pdf}
     \caption{}
