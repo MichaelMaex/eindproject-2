@@ -68,7 +68,7 @@
 
 
 \title{Modeling of MHD waves in the solar corona}
-\author{Micha\"el Maex \and Rune Buckinx}
+\author/{supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
 \date{March 2020}
 
 \pagenumbering{roman}
@@ -521,7 +521,7 @@ To simulate magnetohydrodynamic waves, PLUTO solves the following system of diff
     &\frac{\partial \mathbf B}{\partial t} &&+ \nabla \times (cE) &&= 0 \tag{charge}\label{Faradaypluto}\\
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot \bigg[\bigg(\frac{\rho \mathbf v^2}{2} + \rho e + p + \rho \Phi\bigg)v + c \mathbf E \times \mathbf B\bigg] &&= m\cdot g \tag{energy}\label{energypluto}.
 \end{alignat} 
-Here $\rho$ is the plasma density, $\mathbf B$  the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density, $\Phi$ the potential and $p$ is the thermal pressure. $E_t$ is the total energy, which is given by \begin{equation}\label{eq:energy}
+Here $\rho$ is the plasma density, $\mathbf B$  the magnetic field,  $\mathbf v$ the velocity, $\mathbf m= \rho \mathbf v$ the momentum density, $\Phi$ the potential and $p$ is the thermal pressure. $E_t$ is the total energy, which is given by \begin{equation}\label{eq:energy_pluto}
 E_t = \rho e + \frac{m^2}{2\rho} + \frac{B^2}{2}
 .\end{equation} 
 Here is $c$ the speed of light and $\rho e$ is the internal energy, which for ideal fluids is given by $\frac{p}{\gamma - 1}$ with $\gamma$ the ratio of heat capacities.\cite{plutouserguide}. Only ideal fluids will be discussed.
@@ -767,25 +767,36 @@ The user defined parameters, the gridsize and resolution, output file type and t
 	\caption{The pressure of the coronal hole simulation at multiple points in time. Note that the axes are in \si{\centi\metre}.}
 	\label{fig:hole}
 \end{figure}
-\Cref{eq:energy} gives the energy per volume (or area in a 2D simulation). 
+\Cref{eq:energy_pluto} gives the energy per volume (or area in a 2D simulation). 
 Integrating this a region gives the energy in that region. 
 This can be used to calculate the reflection coefficient.
 The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the frame is entirely located in that region and at $t_2$ the entirety of the reflection is captured. The specific points in time and integrated area can be found in \cref{fig:reflection_coefficient} Then $E_i - E_0$ gives the energy that was added due to the wave at $t_i$. Hence the reflection coefficient is \[
 	R = \frac{E_2 - E_0}{E_1 - E_0} = 0.17
-.\]\todo{tidy this up!} 
+.\] 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/calculation_reflection.pdf}
 	\caption{The total energy is plotted at the initial state, before the wave hits the hole and after the wave as passed the hole. The white box shows what part was integrated to obtain the total enegry in the wave/reflection.}
 	\label{fig:reflection_coefficient}
 \end{figure}
-\todo{Put in reflection coefficient calculation}
 
 \subsection{Coronal Plume Model}\label{sec:coronal_plume_model} 
 To contrast the coronal hole model, the plume model is considered. 
 It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
 This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes, but is still considered for completeness \cite{afanasyev2018propagation}. 
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
+	\caption{The pressure of the coronal plume simulation at multiple points in time. Note that the pressure is cut off above at \SI{6.7e-2}{Ba} ($0.004$ code units) to increase the contrast of the waves outside of the plume}
+	\label{fig:figures-plume_time-pdf}
+\end{figure}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/plume_reflection.pdf}
+    \caption{The within the coronal plume at multiple points in time. Note that the pressure is cut off below \SI{1.6e-1}{Ba} ($0.01$ code units) to increase the contrast of the waves inside of the plume.}
+    \label{fig:figures-plume_reflection-pdf}
+\end{figure}
 \medskip
 
 The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
@@ -815,18 +826,6 @@ However, this time other values will be used for the parameters, alongside a sma
 \end{table}
 To simulate the coronal plume, the same definition can be used, as the one for the coronal hole, by changing the parameters in the \texttt{definitions.h} file.\\
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
-	\caption{The pressure of the coronal plume simulation at multiple points in time. Note that the pressure is cut off above at \SI{6.7e-2}{Ba} ($0.004$ code units) to increase the contrast of the waves outside of the plume}
-	\label{fig:figures-plume_time-pdf}
-\end{figure}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=1\textwidth]{figures/plume_reflection.pdf}
-    \caption{The within the coronal plume at multiple points in time. Note that the pressure is cut off below \SI{1.6e-1}{Ba} ($0.01$ code units) to increase the contrast of the waves inside of the plume.}
-    \label{fig:figures-plume_reflection-pdf}
-\end{figure}
 When the wave front passes through the plume, it is reflected because of the large difference in density of the plume and its surroundings. This reflection is in turn reflected again on the other side of the plume, causing a resonating effect visible in \cref{fig:figures-plume_reflection-pdf}. This ``captured'' wave, generates secondary wave fronts, visible in \cref{fig:figures-plume_time-pdf}.
 
 \section{Summary and conclusion}
