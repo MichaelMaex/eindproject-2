@@ -4,7 +4,6 @@
 \usepackage{amsmath} %Extra math symbols and operators
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{eufrak}
 \usepackage{xcolor}
 \definecolor{mygray}{gray}{0.95}
 
@@ -29,6 +28,7 @@
 \usepackage[margin=20pt]{caption} %Smaller captions
 
 \usepackage{minted} % Code highlighting
+
 
 
 \usepackage{fancyhdr}
@@ -67,8 +67,8 @@
 \numberwithin{equation}{section}
 
 
-\title{Modeling of MHD waves in the solar corona}
-\author/{supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
+\title{Modelling of MHD waves in the solar corona}
+\author{supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
 \date{March 2020}
 
 \pagenumbering{roman}
@@ -98,10 +98,11 @@ This approach to model the plasma treats it as a single fluid, as opposed to the
 
 The differential/governing equations that make up the MHD model, are difficult to solve analytically. 
 It is therefore often favourable to use numerical computer modelling to study the equations, which is the main focus of this bachelor's project. 
-The simulations will be performed in the open source code PLUTO, which is designed to solve systems of partial differential equations in astrophysical fluid dynamics \cite{mignone2011pluto}.\\
+The simulations will be performed with the open source code PLUTO, which is designed to solve systems of partial differential equations in the context of astrophysical fluid dynamics \cite{mignone2011pluto}.\\
 
 The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations. Concretely, this consists of the following two problems, simulating a magnetohydrodynamic blastwave and simulating the interaction of magnetohydrodynamic waves with large scale structures in the solar corona, such as a coronal hole and plume.
 
+All the code used can be found on GitHub at \url{https://github.com/MichaelMaex/eindproject-2}.
 \pagebreak
 \section{(M)HD Theory} \label{sec:(m)hd_theory}
 
@@ -109,7 +110,7 @@ First a brief introduction to non-magnetic hydrodynamics is given which will the
 
 \subsection{Ordinary Hydrodynamics} \label{sec:ordinary_hydrodynamics}
 
-Fluids are described using the Navier Stokes equations. In the case of an ideal fluid these equations are referred to as the Euler equations and take the form \cite[section 1.3]{acheson1990}:
+Fluids are described using the Navier-Stokes equations. In the case of an ideal fluid these equations are referred to as the Euler equations and take the form \cite[section 1.3]{acheson1990}:
 
 \begin{align*}
 	&\text{conservation of mass:} &\frac{\partial \rho}{\partial t} + \rho \nabla \cdot \mathbf v &=  0 \\
@@ -123,12 +124,11 @@ In a linear approximation ($p, \rho$ are small deviations of some constant backg
 c_s = \sqrt{\gamma \frac{p_0}{\rho_0}} 
 .\] 
 
-\subsection{Magnetohydrodynamics and the solar corona} \label{sec:magnetohydrodynamics_and_the_solar_corona}
+\subsection{Magnetohydrodynamics and the Solar Corona} \label{sec:magnetohydrodynamics_and_the_solar_corona}
 The classic Navier-Stokes equations do not suffice to describe the movement in the solar corona due to the influence of strong magnetic fields on the ionized particles. This magnetic field stems from convection in the photosphere, which is a physical process that helps transport the nuclear energy created in the core of the sun \cite{brun2017magnetism}.\\
 
 The use of the magnetohydrodynamic model to describe the plasma depends on three main assumptions, namely, high collisionality, large scales and the assumption of ideal fluids. The last assumption implies that the dissipation of large scale variables is neglected \cite{goedbloed2004principles}. This model also does not take relativity into account, as opposed to the relativistic magnetohydrodynamic model, which will not be discussed further\footnote{More information about the relativistic MHD model can be found in \cite{karas2005introduction}}. The non-relativistic approximation is valid when the speeds considered are much smaller than the speed of light, which will be the case throughout this report.
 
-\todo{Afleiding vanuit conservatiewetten nodig? Enkel als we echt paginas te kort komen}
 The system of PDE's/conservations laws is the following:
 \begin{alignat}{3}
     &\frac{\partial \rho}{\partial t} &&+ \rho \nabla  \cdot (\mathbf v) &&= 0 \tag{mass}\label{eq:mass}\\
@@ -204,7 +204,7 @@ Under the assumption that the magnetic field lies in the $x$-direction, and the 
 	&=  \mathbf 0
 \end{align*}
 
-Writing every term as a matrix yieldsc:
+Writing every term as a matrix yields:
 \begin{align*}
 	&\begin{pmatrix}
 		\omega^2  - k^2 v_A^2 \cos\theta^2    & 0 & 0 \\
@@ -241,7 +241,7 @@ Simplifying this results in the dispersion relation for plasma waves
 \begin{equation}\label{eq:disperion}
 	(\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
 .\end{equation} 
-This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:\todo{refactor acoustic to magneto-sonic}
+This relation has three roots for $\omega^2$ that correspond to three different kinds of waves:
 \begin{align*}
 	\omega^2 &=  k^2v_a^2\cos^2\theta \tag{Alfv\'en Waves} \\
 	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_A^2 + c_s^2)^2 - 4v_A^2c_s^2\cos^2\theta}  \right) \tag{Fast magnetosonic waves}\\
@@ -263,8 +263,9 @@ As a result $\mathbf k \cdot \mathbf{v_1} = 0$ and \cref{eq:MHD_linear_wave_mass
 As $\mathbf{B_0}$  and $\mathbf{V_1}$ lie in the $x$ and $z$-direction respectively, $\cref{eq:cauchymomentlin}$ and $\cref{eq:faradaylin}$ simplify to
 \begin{align*}
 	\rho_0 \frac{\partial v_z}{\partial t} - \frac{B_1}{\mu} \frac{\partial B_0}{\partial x} &= 0 \\
-	\frac{\partial B_x}{\partial t}  + B_0\frac{\partial v_z}{\partial t} 
+	\frac{\partial B_x}{\partial t}  + B_0\frac{\partial v_z}{\partial t}  = 0
 .\end{align*}
+This gives rise to the ordinary wave equation. 
 The phase velocity of an Alfv\'en wave is equal to $\omega/k$ or,
 \begin{equation*}
     v_{\text{ph}} = \omega/k = v_A \cos\theta.
@@ -273,15 +274,12 @@ The group velocity is equal to a constant, namely the Alfv\'en speed.
 \begin{equation*}
     v_{\text{gr}} = v_A
 \end{equation*}
-The comparison of this kind of wave with the fast and slow acoustic waves is made in the Friedrich diagrams below.
+The comparison of this kind of wave with the fast and slow acoustic waves is made in the Friedrichs diagrams below (see \cref{fig:friedrich_diagrams}).
 \subsection{Magnetosonic Waves}
 The second type of wave found in the dispersion relation are magnetosonic waves. There are two roots corresponding to this type of wave of which one is faster than the other, they correspond to what is called the fast magnetosonic wave and the slow magnetosonic wave.\\
 
 The eigenvector linked to the magnetosonic waves is in the $x,y$-plane, as can be seen from \cref{eq:MHD_linear_matrix}.
-\[
-	\mathbf{v_2} = v \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} 
-.\] 
-In this case $\mathbf{k\cdot v_2}$ and $\mathbf{v_2 \cdot B_0}$ do not vanish implying that the waves cause perturbations in the density and the pressure of the plasma.
+In this case $\mathbf{k\cdot v}$ and $\mathbf{v \cdot B_0}$ do not vanish implying that the waves cause perturbations in the density and the pressure of the plasma.
 
 The phase velocity can again be calculated by dividing $\omega$ by $k$, this results in,
 \begin{equation}\label{eq:phase_velocity}
@@ -369,11 +367,9 @@ This can be simplified with \cref{eq:phase_velocity}:
 \begin{figure}[h]
 	\centering
 	\includegraphics[width =\textwidth]{figures/groupspeed_beta.pdf}
-	\caption{The possible group speeds for fast, slow and Alfv\'n waves for different values of $\beta$. The magnetic field lines are horizontal.}
+	\caption{The possible group speeds for fast, slow and Alfv\'en waves for different values of $\beta$. The magnetic field lines are horizontal.}
 	\label{fig:groupspeed_beta}
 \end{figure}
-
-\pagebreak
 
 \section{Pluto Code} \label{sec:pluto_code}
 
@@ -381,7 +377,7 @@ The Pluto library consists completely out of uncompiled code. For each problem/s
 The files specific to a problem are referred to as the definition of the problem. 
 This definition typically consists of three files, \texttt{definitions.h}, \texttt{init.c}, \texttt{pluto.ini}.
 \begin{enumerate}
-	\item \texttt{definitions.h} contains all the information necessary for compiling the right code for the project. This mostly constist of information for the solver: what solver is used (HD, MHD, relativistic MHD), what kind of grid geometry is used (number of dimensions, cartesian, cylidrical, polar), what code units represent (see \cref{sec:units_in_pluto}). It also contains what user definable variables there are.
+	\item \texttt{definitions.h} contains all the information necessary for compiling the right code for the project. This mostly consists of information for the solver: what solver is used (HD, MHD, relativistic MHD), what kind of grid geometry is used (number of dimensions, cartesian, cylidrical, polar), what code units represent (see \cref{sec:units_in_pluto}). It also contains what user-definable variables there are.
 	\item \texttt{init.c} contains the C-functions that specify initial and boundary conditions. The function \texttt{void Init (double *v, double x1, double x2, double x3)} sets up stores the initial conditions at the point \texttt{(x1,x2,x3)} and stores them in at the pointer \texttt{*v}.
 		The function \texttt{void UserDefBoundary (const Data *d, RBox *box, int side, Grid *grid)} can be used to define custom boundary conditions when the build in boundary conditions (periodic, passthrough, mirror, \ldots) are not sufficient.
 	\item \texttt{pluto.ini} contains information that the binary reads before starting the computation. This constists of grid size and resolution, simulation time, what output needs to be stored where and the values of the user defined parameters.
@@ -393,7 +389,7 @@ The compiler uses \texttt{definitions.h} to only compile the right solver and \t
 Internally Pluto uses dimensionless code units. All units are derived from the constants \texttt{UNIT\_DENSITY} ($\rho_0$), \texttt{UNIT\_LENGTH} ($L_0$), \texttt{UNIT\_VELOCITY} ($v_0$), all of which are denoted in cgs units. All other units are derived from these units.  
 Note that the unit for magnetic field is defined as $B_0 = v_0\sqrt{4\pi \rho_0} $.
 
-\Cref{tab:default_units} shows some important dimensions in (M)HD and what one code unit represents when \texttt{UNIT\_DENSITY}, \texttt{UNIT\_LENGTH} and  \texttt{UNIT\_VELOCITY} have their default values.
+\Cref{tab:default_units} shows some important dimensions in (M)HD and what one code unit (up to three figures) represents when \texttt{UNIT\_DENSITY}, \texttt{UNIT\_LENGTH} and  \texttt{UNIT\_VELOCITY} have their default values.
 \begin{table}[htpb]
 	\centering
 	\caption{Important dimensions and their code units in PLUTO}
@@ -401,25 +397,27 @@ Note that the unit for magnetic field is defined as $B_0 = v_0\sqrt{4\pi \rho_0}
 	\begin{tabular}{c|c}
 		one code unit of & corresponds to\\
 		\hline 
-		density & $m_p$ \si{\per \centi\metre\cubed} = \SI{1.67262171e-24}{\gram \per \centi\metre\cubed}\\
-		lenth &\SI{1}{AU} \\
+		density & $m_p$ \si{\per \centi\metre\cubed} = \SI{1.67e-24}{\gram \per \centi\metre\cubed}\\
+		lenth &\SI{1}{AU} = \SI{1.50e11}{\metre} \\
 		velocity & \SI{1}{\kilo\metre \per \second}\\
-		time & \SI{149597892}{\second} \\
-		magnetic field strength & \SI{4.584624773e-07}{Gs} \\
-		pressure & \SI{1.67262171e-14}{Ba} = \SI{1.6726217e-15}{Pa}
+		time & \SI{1.50e8}{\second} \\
+		magnetic field strength & \SI{4.58e-07}{Gs} \\
+		pressure & \SI{1.67e-14}{Ba} = \SI{1.67e-15}{Pa}
 	\end{tabular}
 \end{table}
 
-\subsection{Initial example} \label{sec:initial_example}
+\subsection{Initial Example} \label{sec:initial_example}
 The first problem that will be analysed is a simple hydrodynamic blastwave generated by a high-pressure region. 
 The viscosity, heat conduction and dissipation of the fluid will be neglected. 
 This problem is meant to be an initial example of how to set up a non-predefined simulation and is a modified version of the initial example described in section 0.4 of PLUTO's User Guide \cite{plutouserguide}. 
 The blastwave is simulated in two dimensions and uses three user-defined parameters, namely, the ambient pressure, the pressure in the high-pressure region, and $\gamma$ which in this report will always be $5/3$. 
 The domain is a rectangle going from -10 to 10 (code units), in both the $x$ and the $y$ direction, which is represented by a $1024\times 1024$ grid. 
 
-The following initial condition is used, a high-pressure region inside a circle of radius 0.3 is surrounded by an ambient pressure region. The simulation is run for X units of time, and every Y units, a double-precision file is saved.\\
+The following initial condition is used, a high-pressure region inside a circle of radius $0.3$ is surrounded by an ambient pressure region. The simulation is run for $2$ code units of time, and every $0.01$ code units, a double-precision file is saved.
 
-The file \texttt{pluto.ini} stores paramters for the simulation, including grid size, grid resolution, simulation time, output format and user defined parameters. In this case can be set up in PLUTO by making the following adjustments to the \texttt{pluto.ini} file.
+\medskip
+
+The file \texttt{pluto.ini} stores parameters for the simulation, including grid size, grid resolution, simulation time, output format and user defined parameters. In this case can be set up in PLUTO by making the following adjustments to the \texttt{pluto.ini} file.
 \begin{minted}
 [frame=lines, bgcolor=mygray]
 {c}
@@ -472,7 +470,7 @@ PLUTO's hydrodynamics module solves the following system of equations
     &\frac{\partial(E_t + \rho \Phi)}{\partial t} &&+ \nabla \cdot ((E_t + p +\rho\mathbf{\Phi})\mathbf{v}) &&= 0 \tag{energy}\label{energy}.
 \end{alignat}
 
-These can be derived from the standard Euler equations by changing the total derivatives to partial derivatives with respect to time. This is necessary because PLUTO uses a static grid to run simulations, and hence uses local change. \todo{Hier nog nodig om die afleiding bij te zetten?}
+These can be derived from the standard Euler equations by changing the total derivatives to partial derivatives with respect to time. This is necessary because PLUTO uses a static grid to run simulations, and hence uses local change. 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{figures/blast_wave.pdf}
@@ -485,7 +483,6 @@ The speed at which the wave front moves is the group speed.
 According to \cref{sec:magnetohydrodynamics_and_the_solar_corona} this is given by $c_s = \sqrt{\frac{5}{3} \frac{p_0}{\rho_0}} $.
 Hence the speed (in code units) is $\sqrt{\frac{5}{3}8} = 3.61$, which corresponds to \SI{3.61e5}{\centi\metre\per\second}.
 A comparison of the theoretical radius against the simulated radius can be found in \cref{fig:wave_front_speed}. 
-Note that the curve of the simulation is jagged because the grid on which the simulation is run is discreet. 
 Initially the simulated wave moves faster than the theoretical group speed. 
 This could be an result of the linear approximation used in determining the group speed.
 However for the remainder of the simulation the wave front matches the theoretical group speed quite well.
@@ -498,9 +495,9 @@ However for the remainder of the simulation the wave front matches the theoretic
 	\label{fig:wave_front_speed}
 \end{figure}
 
-\subsection{Non-linear effects} \label{sec:nonlinear_effects}
+\subsection{Non-linear Effects} \label{sec:nonlinear_effects}
 Due to our current understanding of the (magnetic) navier-stokes equations, linear approximations are necessary for many theoretical results. 
-This is one limitations of the theory that numerical simulations aim to solve.
+This is one limitation of the theory that numerical simulations aim to solve.
 A problem was setup with the same initial conditions as in \cref{sec:initial_example}, except that the initial pressure is 100 (code units) in the centre and 8 elsewhere. 
 Like in the previous setup the radius of the blast over time was compared to the theoretically linear group speed.
 \Cref{fig:non_linear_effects} shows concave radius/time relation against the linear theoretically predicted relation. 
@@ -511,9 +508,8 @@ Like in the previous setup the radius of the blast over time was compared to the
 	\label{fig:non_linear_effects}
 \end{figure}
 
-\pagebreak
 
-\section{Waves in magnetohydrodynamic fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
+\section{Waves in Magnetohydrodynamic Fluids} \label{sec:waves_in_magnetorhydrodynamic_fluids}
 To simulate magnetohydrodynamic waves, PLUTO solves the following system of differential equations, which is slightly different from the one defined in \cref{sec:(m)hd_theory}.
 \begin{alignat}{3}
     &\frac{\partial \rho}{\partial t} &&+ \nabla \cdot (\rho \mathbf v) &&= 0 \tag{mass}\label{masscontpluto}\\
@@ -557,7 +553,7 @@ the background pressure was always $8$ code units.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = \linewidth]{figures/influence_beta.pdf}
-	\caption{The shape of the blast wave for different plasma beta's. Pressure is shown. The value for $\beta$ is modified with the thermal pressure held constant at $\SI{2995}{Ba}$ (8 code units) and constant density of 1 proton mass per  $\si{cm\cubed}$ (1 code unit). All figures are the simulation after $\SI{149597892}{s}$ (1 code units).}
+	\caption{The shape of the blast wave for different plasma beta's, for the low pressure simulations. Pressure is shown. The value for $\beta$ is modified with the thermal pressure held constant at $\SI{2995}{Ba}$ (8 code units) and constant density of 1 proton mass per  $\si{cm\cubed}$ (1 code unit). All figures are the simulation after $\SI{149597892}{s}$ (1 code units).}
 \label{fig:blastwave_shape_beta}
 \end{figure}
 
@@ -567,7 +563,7 @@ Overlaying \cref{fig:groupspeed_beta} with \cref{fig:blastwave_shape_beta} in th
 The experimental results are slightly ahead of the theoretical wavefront. The authors suspect that this is due two reasons:
 \begin{enumerate}
 	\item the theoretical position determines the movement of the centre of the initial high pressure region. But this has a non-zero radius. 
-	\item the initial pressure difference (15 over 8 code units) is slightly to high for linear approximations. As a result the real group speed is higher than the linear theory would suggest.
+	\item the initial pressure difference (15 over 8 code units) is slightly too high for linear approximations. As a result the real group speed is higher than the linear theory would suggest.
 \end{enumerate}
 
 \begin{figure}[h]
@@ -576,7 +572,6 @@ The experimental results are slightly ahead of the theoretical wavefront. The au
 	\caption{The group speed diagrams (\cref{fig:groupspeed_beta}) overlayed on the simulations (\cref{fig:blastwave_shape_beta}). The white lines are the theoretical positions of the slow and fast magnetosonic wavefronts.}
 	\label{fig:comparison_groupspeed}
 \end{figure}
-\todo{comparison sound speed theoretical vs simulation}
 
 
 \subsection{Sound Waves}
@@ -590,7 +585,7 @@ The experimental results are slightly ahead of the theoretical wavefront. The au
 
 In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1$ are plotted, for different points in time. 
 The simulation does not resemble that of a hydrodynamic blastwave, because $\beta$ is relatively small, which implies that the magnetic pressure dominates over the mechanical pressure.
-In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. \todo{ik heb mijn twijfels bij deze uitleg}
+In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. \todo{We are unsure if this explanation for the ratio of energy is actually correct.}
 Hence this simulation can be used to compare the theoretical and 
 experimental group speed of the slow wave.
 
@@ -603,13 +598,12 @@ Again the wave is slightly ahead of what theory predicts in the low pressure cas
 	\caption{The pressure of the a horizontal slice plotted over time of the HMD blastwave simulation with $\beta = 0.1$ for both the low and high pressure difference case. The white lines represent the theoretical bounds of the wave packet. The possible group speeds of a slow wave form a triangle as can be seen in \cref{fig:groupspeed_beta}. Taking let $v_m, v_M$ be the minimum and maximum speed in the $x$-direction of such a triangle. Let $r$ be the initial radius of the high pressure region. Then $x = v_m \cdot t - r, x = v_M \cdot t + r$ represent are the white boundaries.}
 	\label{fig:slowwave_time}
 \end{figure}
-\pagebreak
-\section{Interaction of MHD waves with large scale structures}
+\section{Interaction of MHD Waves with Large Scale Structures}
 This task focuses on the interaction of large scale structures in the solar corona with magnetohydrodynamic waves and is based on the paper titled "Propagation of a global coronal wave and its interaction with large-scale coronal magnetic structures" by Afanasyev and Zhukov.  \cite{afanasyev2018propagation}\\
 
 The shock wave simulated in \cref{sec:waves_in_magnetorhydrodynamic_fluids} is a good description of a wave in a uniform plasma, however it does not account for various large scale non-uniformities, such as coronal holes and plumes. The interaction of coronal waves with these structures results in wave phenomena such as wave transmission and reflection, which have been observed in extreme ultraviolet images of the Sun (see for example \cite{gopalswamy2009euv}).
 \subsection{Coronal Hole Model}
-A coronal hole, is a region of lower temperature and density compared to the surrounding plasma. This results in a region of higher Alfv\'en speed. They occur when a magnetic field does not fall back, and is open to interplanetary space \todo{Degelijke bron nodig}.\\
+A coronal hole, is a region of lower temperature and density compared to the surrounding plasma. This results in a region of higher Alfv\'en speed. They occur when a magnetic field does not fall back, and is open to interplanetary space \todo{We are unable to find a good reference for this. All our references seem to take this as a fact.}.\\
 
 To simulate a coronal hole, the following initial conditions are used,
 \begin{align*}
@@ -767,15 +761,18 @@ The user defined parameters, the gridsize and resolution, output file type and t
 	\caption{The pressure of the coronal hole simulation at multiple points in time. Note that the axes are in \si{\centi\metre}.}
 	\label{fig:hole}
 \end{figure}
+
 \Cref{eq:energy_pluto} gives the energy per volume (or area in a 2D simulation). 
 Integrating this a region gives the energy in that region. 
 This can be used to calculate the reflection coefficient.
-The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the frame is entirely located in that region and at $t_2$ the entirety of the reflection is captured. The specific points in time and integrated area can be found in \cref{fig:reflection_coefficient} Then $E_i - E_0$ gives the energy that was added due to the wave at $t_i$. Hence the reflection coefficient is \[
+The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the waveis entirely located in that region and at $t_2$ the entirety of the reflection is captured. 
+The specific points in time and integrated area can be found in \cref{fig:reflection_coefficient}.
+Then $E_i - E_0$ gives the energy that was added due to the wave at $t_i$. Hence the reflection coefficient is \[
 	R = \frac{E_2 - E_0}{E_1 - E_0} = 0.17
 .\] 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.8\textwidth]{figures/calculation_reflection.pdf}
+	\includegraphics[width=\textwidth]{figures/calculation_reflection.pdf}
 	\caption{The total energy is plotted at the initial state, before the wave hits the hole and after the wave as passed the hole. The white box shows what part was integrated to obtain the total enegry in the wave/reflection.}
 	\label{fig:reflection_coefficient}
 \end{figure}
@@ -800,13 +797,12 @@ This model is less applicable to real plumes, or collections of plumes, as the c
 \medskip
 
 The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
-
 \begin{align*}
     n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
     T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]\\
      p^t &= p_{\text{gas}} + \frac{B^2}{8\pi} = \text{constant}.
 \end{align*}
-However, this time other values will be used for the parameters, alongside a smaller characteristic size ($d = 100$ Mm).
+However, this time other values will be used for the parameters, which can be found in \cref{tab:coronal_plume}. 
 \begin{table}[H]
     \centering
     \caption{Parameters used to simulate the coronal plume model}
@@ -814,7 +810,7 @@ However, this time other values will be used for the parameters, alongside a sma
     \begin{tabular}{|l|l|l|}
     \hline
     \textbf{Parameter}             & \textbf{Value}                                  & \textbf{Unit}              \\ \hline
-    d                              & 100                                             & Mm                         \\ \hline
+    d                              & 150                                             & Mm                         \\ \hline
     $n_\text{out}$ & $1.0 \times 10^8$ & $\text{cm}^{-3}$ \\ \hline
     $n_\text{in}$                              & $1.0 \times 10^9$                                               & $\text{cm}^{-3}$                          \\ \hline
     $T_\text{out}$                              & 1.5                                               & MK                          \\ \hline
@@ -828,7 +824,7 @@ To simulate the coronal plume, the same definition can be used, as the one for t
 
 When the wave front passes through the plume, it is reflected because of the large difference in density of the plume and its surroundings. This reflection is in turn reflected again on the other side of the plume, causing a resonating effect visible in \cref{fig:figures-plume_reflection-pdf}. This ``captured'' wave, generates secondary wave fronts, visible in \cref{fig:figures-plume_time-pdf}.
 
-\section{Summary and conclusion}
+\section{Summary and Conclusion}
 In this paper, several different hydrodynamic and magnetohydrodynamic waves were simulated using PLUTO, which were then analysed by comparing the results to theoretical models. This lead to interesting observations about the effects of non-linearity and the interaction between waves and other structures.
 \pagebreak
 \printbibliography
