@@ -75,7 +75,7 @@
 
 
 \title{Modelling of Magnetohydrodynamic Waves in the Solar Corona}
-\author{supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
+\author{Supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
 \date{March 2020}
 
 \pagenumbering{roman}
@@ -85,6 +85,8 @@
 
 \begin{abstract}
     This paper presents a summary of research for a bachelor's thesis on the modelling of magnetohydrodynamic waves in the solar corona using numerical simulations via the open source code PLUTO. 
+    Several types of magnetohydrodynamic waves are analysed both theoretically and by simulations in the context of a simple blast wave. 
+    Large structures on the solar corona are modelled and their interaction with waves are simulated and discussed.
 \end{abstract}
 \newpage
 \tableofcontents
@@ -630,7 +632,7 @@ A coronal hole, is a region of lower temperature and density compared to the sur
 To simulate a coronal hole, the following initial conditions are used,
 \begin{align*}
     n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
-    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]
+    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]
 \end{align*}
 Here $n$ denotes the plasma number density, $T$ denotes the temperature, and $r$ is the distance from the center. 
 The plasma number density counts the number of particles per volume and thus is related to the density by $\rho = m\cdot \eta$, where $m$ is the mass of one particle. In this case $m$ is taken to be the mass of a proton. 
@@ -808,24 +810,19 @@ To contrast the coronal hole model, the plume model is considered.
 It is defined as a region of high temperature and density, and as a result a lower Alfv\'en speed.
 This model is less applicable to real plumes, or collections of plumes, as the coronal hole model is to real coronal holes, but is still considered for completeness \cite{afanasyev2018propagation}. 
 
-\begin{figure}[ht]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=1\textwidth]{figures/plume_time.pdf}
-	\caption{The pressure of the coronal plume simulation at multiple points in time. Note that the pressure is cut off above at \SI{6.7e-2}{Ba} ($0.004$ code units) to increase the contrast of the waves outside of the plume}
+	\caption{The pressure of the coronal plume simulation at multiple points in time. Note that the pressure is cut off above at \SI{6.7e-3}{Pa} ($0.004$ code units) to increase the contrast of the waves outside of the plume}
 	\label{fig:figures-plume_time-pdf}
 \end{figure}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=1\textwidth]{figures/plume_reflection.pdf}
-    \caption{The within the coronal plume at multiple points in time. Note that the pressure is cut off below \SI{1.6e-1}{Ba} ($0.01$ code units) to increase the contrast of the waves inside of the plume.}
-    \label{fig:figures-plume_reflection-pdf}
-\end{figure}
+
 \medskip
 
 The simulation of the coronal plume consists of the same initial conditions as in the coronal hole simulation, namely,
 \begin{align*}
     n &= n_{\text{out}} - (n_{\text{out}}-n_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
-    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\bigg[-\bigg(\frac{r}{d}\bigg)^8\bigg]\\
+    T &= T_{\text{out}} - (T_{\text{out}}-T_{\text{in}})\exp\left[-\bigg(\frac{r}{d}\bigg)^8\right]\\
      p^t &= p_{\text{gas}} + \frac{B^2}{8\pi} = \text{constant}.
 \end{align*}
 However, this time other values will be used for the parameters, which can be found in \cref{tab:coronal_plume}. 
@@ -846,12 +843,25 @@ However, this time other values will be used for the parameters, which can be fo
     $t_0$						& 300						& \si{\second} \\ \hline
 \end{tabular}
 \end{table}
-To simulate the coronal plume, the same definition can be used, as the one for the coronal hole, by changing the parameters in the \texttt{definitions.h} file.\\
+To simulate the coronal plume, the same definition can be used as the one for the coronal hole by changing the parameters in the \texttt{definitions.h} file.
+
+\medskip
 
 When the wave front passes through the plume, it is reflected because of the large difference in density of the plume and its surroundings. This reflection is in turn reflected again on the other side of the plume, causing a resonating effect visible in \cref{fig:figures-plume_reflection-pdf}. This ``captured'' wave, generates secondary wave fronts, visible in \cref{fig:figures-plume_time-pdf}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/plume_reflection.pdf}
+    \caption{The within the coronal plume at multiple points in time. Note that the pressure is cut off below \SI{1.6e-2}{Pa} ($0.01$ code units) to increase the contrast of the waves inside of the plume.}
+    \label{fig:figures-plume_reflection-pdf}
+\end{figure}
+
 \section{Summary and Conclusion}
-In this paper, several different hydrodynamic and magnetohydrodynamic waves were simulated using PLUTO, which were then analysed by comparing the results to theoretical models. This lead to interesting observations about the effects of non-linearity and the interaction between waves and other structures.
+In this paper, several different hydrodynamic and magnetohydrodynamic waves were simulated using PLUTO, which were then analysed by comparing the results to theoretical models.
+Propagation of the three main kinds of waves was studied in a uniform environment both with various magnetic fields and in the absence of magnetic fields.
+The interaction of waves with models of large scale structures, hole and plumes, commonly found on the solar corona were modelled and the simulations discussed. 
 \pagebreak
+
 \printbibliography
+
 \end{document}
