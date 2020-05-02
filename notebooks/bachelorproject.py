@@ -43,7 +43,7 @@ def plot(ax, im, frame, L0 = 14959789200000.0, code_units = False, *args, norm =
     Y_min = frame.x2[0] -frame.dx2[0]/2
     extent = (X_min, X_max, Y_min, Y_max)
     if (not code_units):
-        extent = L0*np.array(extent)
+        extent = L0*np.array(extent)*0.01
     im = np.rot90(im, k = 1, axes = (0,1))
     if norm:
         image = ax.imshow(im, extent = extent, cmap = cmap, norm = norm)
