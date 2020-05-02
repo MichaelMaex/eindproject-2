@@ -21,8 +21,15 @@
 
 \usepackage{siunitx} % easily format numbers with dimensions
 \usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={green!35!black},
+    urlcolor={blue!80!black}
+}
 \usepackage{cleveref}
-\usepackage[textsize=tiny]{todonotes}
+\usepackage[textsize=tiny, disable]{todonotes}
 \usepackage{verbatim}
 
 \usepackage[margin=20pt]{caption} %Smaller captions
@@ -67,7 +74,7 @@
 \numberwithin{equation}{section}
 
 
-\title{Modelling of MHD waves in the solar corona}
+\title{Modelling of Magnetohydrodynamic Waves in the Solar Corona}
 \author{supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
 \date{March 2020}
 
@@ -92,7 +99,7 @@
 \pagenumbering{arabic}
 \section{Introduction} \label{sec:introduction}
 The Sun's corona, or solar corona, is the outer layer of the Sun's atmosphere, which consists of fully ionized material due to it having very high temperatures compared to the surface of the sun. 
-As the particles of this fluid are charged the fluid interact with the magnetic field and electric currents in the fluid have to be taken into account.  
+As the particles of this fluid are charged, the fluid interact with the magnetic field and electric currents in the fluid have to be taken into account.  
 The plasma in the solar corona can be described using magnetohydrodynamic (MHD) equations, which combine the Navier-Stokes equations from fluid dynamics with the Maxwell equations from electromagnetism. 
 This approach to model the plasma treats it as a single fluid, as opposed to the two-fluid model, which describes the positive and negative charges separately. \\
 
@@ -100,7 +107,7 @@ The differential/governing equations that make up the MHD model, are difficult t
 It is therefore often favourable to use numerical computer modelling to study the equations, which is the main focus of this bachelor's project. 
 The simulations will be performed with the open source code PLUTO, which is designed to solve systems of partial differential equations in the context of astrophysical fluid dynamics \cite{mignone2011pluto}.\\
 
-The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, and in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations. Concretely, this consists of the following two problems, simulating a magnetohydrodynamic blastwave and simulating the interaction of magnetohydrodynamic waves with large scale structures in the solar corona, such as a coronal hole and plume.
+The goals of this bachelor's project are to gain familiarity with simulating and modelling phenomena, in particular MHD waves, using numerical models and code such as PLUTO, and to gain some basic knowledge on MHD waves by analysing simulations. Concretely, this consists of the following two problems, simulating a magnetohydrodynamic blastwave and simulating the interaction of magnetohydrodynamic waves with large scale structures in the solar corona, such as a coronal hole and plume.
 
 All the code used can be found on GitHub at \url{https://github.com/MichaelMaex/eindproject-2}.
 \pagebreak
@@ -392,9 +399,9 @@ Note that the unit for magnetic field is defined as $B_0 = v_0\sqrt{4\pi \rho_0}
 \Cref{tab:default_units} shows some important dimensions in (M)HD and what one code unit (up to three figures) represents when \texttt{UNIT\_DENSITY}, \texttt{UNIT\_LENGTH} and  \texttt{UNIT\_VELOCITY} have their default values.
 \begin{table}[htpb]
 	\centering
-	\caption{Important dimensions and their code units in PLUTO}
+	\caption{Important dimensions and their default code units in PLUTO}
 	\label{tab:default_units}
-	\begin{tabular}{c|c}
+	\begin{tabular}{l|l}
 		one code unit of & corresponds to\\
 		\hline 
 		density & $m_p$ \si{\per \centi\metre\cubed} = \SI{1.67e-24}{\gram \per \centi\metre\cubed}\\
@@ -585,8 +592,7 @@ The experimental results are slightly ahead of the theoretical wavefront. The au
 
 In \cref{fig:Alfven_wave} the simulation results for the pressure of a magnetohydrodynamic blastwave with $\beta = 0.1$ are plotted, for different points in time. 
 The simulation does not resemble that of a hydrodynamic blastwave, because $\beta$ is relatively small, which implies that the magnetic pressure dominates over the mechanical pressure.
-In this simulation the fast magnetosonic wave is barely visible because it is faster and therefore a lot more dissipation takes place. \todo{We are unsure if this explanation for the ratio of energy is actually correct.}
-Hence this simulation can be used to compare the theoretical and 
+In this simulation the fast magnetosonic wave is barely visible. Hence this simulation can be used to compare the theoretical and 
 experimental group speed of the slow wave.
 
 Taking the right half of a horizontal slice and plotting over time is a good way of visualizing the propagation of the slow magnetosonic waves. This is visualised \cref{fig:slowwave_time} along with the theoretical boundary of the wave packet determined using the theoretical speed of the slow wave.  
