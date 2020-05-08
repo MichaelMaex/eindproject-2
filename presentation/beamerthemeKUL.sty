@@ -1,0 +1,157 @@
+% Created Januari 23, 2019
+% Author: Arthur Depicker
+% Version 2
+
+\mode
+<presentation>
+\def\Put(#1,#2)#3{\leavevmode\makebox(0,0){\put(#1,#2){#3}}}
+
+\definecolor{KUL_blue}{rgb}{0.11,0.55,0.69}
+\definecolor{KUL_dark_blue}{rgb}{0.067, 0.431, 0.541}
+\definecolor{KUL_light_blue}{rgb}{0.86, 0.91, 0.94}
+\setbeamercolor{title1}{fg=white,bg=KUL_blue}
+\setbeamercolor{title2}{fg=KUL_dark_blue,bg=KUL_light_blue}
+\setbeamercolor{White}{fg=white,bg=white}
+
+
+\setbeamercolor{block}{bg=red, fg=white}
+
+%----------------------------------
+% title page
+%----------------------------------
+
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  % Put title in blue box
+  \setbeamerfont{title1}{size=\Large, series=\bf}
+  \setbeamerfont{title2}{size=\large, series=\it}
+  \setbeamerfont{institute1}{size=\small, series=\it}
+  \setbeamerfont{Author}{size=\normalsize, series=\bf}
+  \setbeamerfont{Date}{size=\normalsize}%, series=\rm}
+% FIRST BOX
+  \begin{beamercolorbox}[sep=0em,colsep*=5pt,wd=\paperwidth,ht=0.01\paperheight,dp=0.1cm]{White}
+  \end{beamercolorbox}
+  
+% SECOND BOX
+\begin{beamercolorbox}[sep=0em,colsep*=5pt,wd=1\paperwidth,ht=0.45\paperheight,dp=1cm]{title1}
+ \hspace{0.5cm}
+  \begin{minipage}[t]{0.70\linewidth}
+  \begin{flushleft}
+\usebeamerfont{title1}\inserttitle \\ \vspace{0.1cm}
+ 	\usebeamerfont{title2}\insertsubtitle
+\end{flushleft}
+\end{minipage}
+\end{beamercolorbox}
+  
+% BOX 3
+  \nointerlineskip
+   \begin{beamercolorbox}[sep=0em,colsep*=5pt,wd=\paperwidth,ht=0.32\paperheight,dp=2.5cm]{title2}
+  \hspace{0.5cm}
+  \begin{minipage}[t]{1.05\linewidth}
+  \usebeamerfont{Author}\insertauthor \\
+  \vfill
+ \usebeamerfont{institute1}\insertinstitute 
+ \hfill \usebeamerfont{Date}\normalfont{\insertdate}
+  \end{minipage}
+  \end{beamercolorbox}
+% logos
+  \Put(-10,642){\includegraphics[width=3cm]{Pictures/logo.jpg}}
+  \Put(230,476){\includegraphics[width=2.35cm]{Pictures/sleutel.png}}
+  \par
+}
+
+%----------------------------------
+% Footer
+%----------------------------------
+
+\setbeamertemplate{footline}
+{
+\footnotesize	
+	\setbeamercolor{Footer}{fg=white,bg=KUL_blue}
+	\setbeamerfont{Footer_Font}{size=\footnotesize}
+	\leavevmode%
+	\hbox{%
+	\begin{beamercolorbox}[wd=\paperwidth,ht=0.40cm,dp=0.15cm,center]{Footer}%
+	\usebeamerfont{Footer_Font}
+	\begin{minipage}[t]{0.15\textwidth}
+			\insertframenumber{}/\inserttotalframenumber{}
+	\end{minipage}
+	\begin{minipage}[t]{0.60\textwidth}
+			\centering
+			\insertshorttitle
+	\end{minipage}
+	\begin{minipage}[t]{0.15\textwidth}
+
+		\flushright	\includegraphics[width=1.7cm]{Pictures/logo.jpg}
+	\end{minipage}
+	\end{beamercolorbox}}%
+	}
+
+%----------------------------------
+% Headline
+%----------------------------------
+
+\setbeamertemplate{headline}{
+	\footnotesize
+	\setbeamercolor{Headline1}{fg=white,bg=KUL_blue}
+		\begin{beamercolorbox}[wd=\paperwidth,ht=0.40cm,dp=0.15cm]{Headline1}%
+			\centering
+			\textbf{\insertsection}
+			%\insertsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt plus1filll}
+		\end{beamercolorbox}
+		\nointerlineskip
+}
+
+% Create a new box type
+\usepackage{tcolorbox}
+\newtcolorbox{kulblock}[1]{
+    before=\par\smallskip\centering,
+	colback=KUL_light_blue,
+	colbacktitle=KUL_blue,
+	coltitle=white,
+	coltext=KUL_dark_blue,
+	colframe=KUL_blue,
+	boxrule=1pt,
+	%titlerule=0pt,
+	arc=2pt,
+	fonttitle=\bfseries,
+	title={\strut#1}
+}
+\newtcolorbox{cbox}[1][]{
+   before=\par\smallskip,
+   #1
+}
+%----------------------------------
+% Adapting frame layouts:
+%----------------------------------
+
+% DEFINE KUL COLOR
+\definecolor{KUL_dark_blue}{rgb}{0.067, 0.431, 0.541}
+
+% ADAPT SIZE AND COLOR FRAMETITLE
+\setbeamercolor{frametitle}{fg=KUL_dark_blue,bg=white}
+\setbeamerfont{frametitle}{size=\LARGE}
+\setbeamertemplate{frametitle}{%
+	\nointerlineskip
+	\begin{beamercolorbox}[sep=0.5em,wd=\paperwidth]{title2}%
+	 \insertframetitle\strut
+	\end{beamercolorbox}%
+}
+
+% BULLET POINTS FOR ITEMIZE
+\setbeamertemplate{itemize item}{\color{KUL_dark_blue}\normalsize\raise1.25pt\hbox{$\bullet$}}
+\setbeamertemplate{itemize subitem}{\color{KUL_dark_blue}\normalsize\raise1.5pt\hbox{$\bullet$}}
+\setbeamertemplate{itemize subsubitem}{\color{KUL_dark_blue}\normalsize\raise1.5pt\hbox{$\bullet$}}
+
+% COLORS FOR ENUMERATION
+\setbeamercolor*{enumerate item}{fg=KUL_dark_blue}
+\setbeamercolor*{enumerate subitem}{fg=KUL_dark_blue}
+\setbeamercolor*{enumerate subsubitem}{fg=KUL_dark_blue}
+
+% SIZE FOR ITEMIZE AND ENUMERATION ITEMS
+\setbeamertemplate{itemize/enumerate body begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subbody begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subsubbody begin}{\normalsize}
+
+\setbeamertemplate{navigation symbols}{}
