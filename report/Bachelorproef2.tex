@@ -78,17 +78,22 @@
 \author{Supervisor: Mijie Shi \and Micha\"el Maex \and Rune Buckinx }
 \date{March 2020}
 
-\pagenumbering{roman}
 \begin{document}
 
+\pagenumbering{gobble}
+
 \maketitle
+
+\bigskip
 
 \begin{abstract}
     This paper presents a summary of research for a bachelor's thesis on the modelling of magnetohydrodynamic waves in the solar corona using numerical simulations via the open source code PLUTO. 
     Several types of magnetohydrodynamic waves are analysed both theoretically and by simulations in the context of a simple blast wave. 
     Large structures on the solar corona are modelled and their interaction with waves are simulated and discussed.
 \end{abstract}
-\newpage
+\clearpage\mbox{}\clearpage
+
+\pagenumbering{roman}
 \tableofcontents
 
 \pagebreak
@@ -627,7 +632,9 @@ This task focuses on the interaction of large scale structures in the solar coro
 
 The shock wave simulated in \cref{sec:waves_in_magnetorhydrodynamic_fluids} is a good description of a wave in a uniform plasma, however it does not account for various large scale non-uniformities, such as coronal holes and plumes. The interaction of coronal waves with these structures results in wave phenomena such as wave transmission and reflection, which have been observed in extreme ultraviolet images of the Sun (see for example \cite{gopalswamy2009euv}).
 \subsection{Coronal Hole Model}
-A coronal hole, is a region of lower temperature and density compared to the surrounding plasma. This results in a region of higher Alfv\'en speed. They occur when a magnetic field does not fall back, and is open to interplanetary space \todo{We are unable to find a good reference for this. All our references seem to take this as a fact.}.\\
+A coronal hole, is a region of lower temperature and density compared to the surrounding plasma. This results in a region of higher Alfv\'en speed. They occur when a magnetic field does not fall back, and is open to interplanetary space. \todo{We are unable to find a good reference for this. All our references seem to take this as a fact.}
+
+\medskip
 
 To simulate a coronal hole, the following initial conditions are used,
 \begin{align*}
@@ -695,7 +702,7 @@ This is done by adding the following code to the \texttt{defintions.h} file.
 /* [End] user-defined constants (do not change this line) *
 \end{minted}
 
-To define these initial conditions the following adjustments have to be made to the \texttt{void init(...)} function in the \texttt{init.c} file. This code is an modified version of code kindly provided by Mijie Shi.
+To define these initial conditions the following adjustments have to be made to the \texttt{void init(...)} function in the \texttt{init.c} file. This code is a modified version of code kindly provided by Mijie Shi.
 \begin{minted}
 [frame=lines, breaklines, bgcolor=mygray]
 {c}
@@ -791,7 +798,7 @@ The user defined parameters, the gridsize and resolution, output file type and t
 \end{figure}
 
 \Cref{eq:energy_pluto} gives the energy per volume (or area in a 2D simulation). 
-Integrating this a region gives the energy in that region. 
+Integrating this on a region gives the energy in that region. 
 This can be used to calculate the reflection coefficient.
 The energy of the left half, $E_0, E_1, E_2$ (excluding the slim line at the very left which appears to be an artefact) was calculated at three points in time $t_0 = 0, t_1, t_2$ such that at $t_1$ the wave is entirely located in that region and at $t_2$ the entirety of the reflection is captured. 
 The specific points in time and integrated area can be found in \cref{fig:reflection_coefficient}.
