@@ -8,59 +8,13 @@
 \usepackage{xcolor}
 \definecolor{mygray}{gray}{0.95}
 
-\usepackage{float}
-
 \usepackage{bm} %Bold symbols
 
 \usepackage{graphicx} %Images
 
-\usepackage{tikz-cd} %Diagrams
-
-\usepackage{enumitem} %Enumerate Labels
-
-\usepackage{siunitx} % easily format numbers with dimensions
-\usepackage{hyperref}
-\usepackage{xcolor}
-\hypersetup{
-    colorlinks,
-    linkcolor={red!50!black},
-    citecolor={green!50!black},
-    urlcolor={blue!80!black}
-}
-\usepackage{cleveref}
-\usepackage[textsize=tiny, disable]{todonotes}
-\usepackage{verbatim}
-
-\usepackage[margin=20pt]{caption} %Smaller captions
-
-\usepackage{minted} % Code highlighting
-
-
-
-\usepackage{fancyhdr}
-
-%\usepackage{fancyhdr} %Name on every page
-%\pagestyle{fancy}
-%\lhead{Rune Buckinx}
-
-
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
-
-
-\newcommand{\incfig}[1]{
-    \def\svgwidth{\columnwidth}
-    \import{./figures/}{#1.pdf_tex}
-}
-
-\usepackage[backend=biber, style = alphabetic]{biblatex}
-\addbibresource{references.bib}
+%\addbibresource{../report/references.bib}
 %\tikzset{component/.style={draw,thick,circle,fill=white,minimum size =0.75cm,inner sep=0pt}}
 %\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
-\numberwithin{figure}{section}
-\numberwithin{equation}{section}
 
 
 \title{Modelling of Magnetohydrodynamic Waves in the Solar Corona}
@@ -70,7 +24,38 @@
 \begin{document}
 \maketitle
 \begin{frame}
-Hola
+	\begin{enumerate}
+		\item theorie
+			\begin{enumerate}
+				\item Niet wiskundige inleiding tot probleem
+				\item bespreking vlg van HD en MHD
+				\item afleiding dispersie relatie (heel kort)
+				\item bespreking verschillende soorten golven
+					\begin{itemize}
+						\item Alv\'en
+						\item accoustic
+					\end{itemize}
+				\item fase en groepssnelheden (diagrammen)
+			\end{enumerate}
+		\item Pluto
+			\begin{itemize}
+				\item general info
+				\item blastwave
+			\end{itemize}
+		\item MHD blastwave
+		\item large scale structures
+			\begin{itemize}
+				\item hole
+					\begin{itemize}
+						\item reflectie coefficient
+						\item vergelijking met observatie
+					\end{itemize}
+				\item plume
+					\begin{itemize}
+						\item reflectie in plume 
+					\end{itemize}
+			\end{itemize}
+	\end{enumerate}
 \end{frame}
 
 \end{document}
