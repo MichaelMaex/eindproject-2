@@ -37,7 +37,7 @@
 				\item afleiding dispersie relatie (heel kort)
 				\item bespreking verschillende soorten golven
 					\begin{itemize}
-						\item Alv\'en
+						\item Alfv\'en
 						\item accoustic
 					\end{itemize}
 				\item fase en groepssnelheden (diagrammen)
@@ -80,7 +80,7 @@ Euler equations for ideal fluids
 \begin{alignat*}{4}
 	&\text{Mass:} &\quad\quad &\frac{\partial \rho}{\partial t} & &+ \rho \nabla \cdot \mathbf v & &=  0 \\
 	&\text{Momentum:} & \rho& \frac{\partial \mathbf v}{\partial t} & &+ \nabla p & &= 0\\
-	&\text{Enery/adiabatic equation:} & &\frac{\partial }{\partial t} \left( \frac{p}{\rho^{\gamma}} \right)  & & & &= 0
+	&\text{Energy/adiabatic equation:} & &\frac{\partial }{\partial t} \left( \frac{p}{\rho^{\gamma}} \right)  & & & &= 0
 \end{alignat*}
 \end{frame}
 \begin{frame}{MHD Equations}
@@ -91,6 +91,28 @@ Euler equations for ideal fluids
 	&\text{Energy:} & &\frac{\partial }{\partial t} \left( \frac{p}{\rho^{\gamma}} \right)  & & & &= 0 
 \end{alignat*}
 
+\end{frame}
+
+\begin{frame}{Dispersion Relation}
+    Linearisation:
+        \begin{equation*}
+            f(\mathbf{x},t) = f_0(\mathbf{x}) + f_1(\mathbf{x},t)
+        \end{equation*}
+    Perturbations:
+        \begin{equation*}
+            \exp(i(\mathbf{kx} + \omega t))
+        \end{equation*}
+    Dispersion relation:
+        \begin{equation*}
+	        (\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
+        \end{equation*}
+        Where $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$.
+\end{frame}
+\begin{frame}{Alfv\'en Waves}
+    
+\end{frame}
+\begin{frame}{Magnetosonic Waves}
+    
 \end{frame}
 \section{PLUTO}
 \begin{frame}{Frame Title}
