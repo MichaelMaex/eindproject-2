@@ -90,7 +90,7 @@ Euler equations for ideal fluids
 	&\text{Faraday's law:} & -&\frac{\partial \mathbf B}{\partial t} & &+ \nabla \times (\mathbf v \times \mathbf B)& &= 0 \\
 	&\text{Energy:} & &\frac{\partial }{\partial t} \left( \frac{p}{\rho^{\gamma}} \right)  & & & &= 0 
 \end{alignat*}
-
+Magnetic pressure: $P_B = \frac{B^2}{2\mu}$. \\Plasma-$\beta$ : $\beta = \frac{p}{P_B} = \frac{2\mu}{B^2}$
 \end{frame}
 
 \begin{frame}{Dispersion Relation}
@@ -106,17 +106,72 @@ Euler equations for ideal fluids
         \begin{equation*}
 	        (\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
         \end{equation*}
-        Where $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$.
+        Where $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ and $\theta$
+\end{frame}
+\begin{frame}
+    Dispersion relation:
+        \begin{equation*}
+	        (\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
+        \end{equation*}
+Three roots, three types of waves
+\begin{align*}
+&\text{1. Alv\'en waves:}	& \omega^2 &= k^2 v_a^2 \cos^2 \theta\\
+&\text{Magneto accoustic waves:}\hspace{-4cm}\\
+&\text{2. fast} 
+& \omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_a^2 + c_s^2) - 4 v_A^2 c_s^2 \cos^2\theta}  \right) \\
+& \text{3. slow} & 
+	\omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_a^2 + c_s^2) - 4 v_A^2 c_s^2 \cos^2\theta}  \right) 
+.\end{align*}
 \end{frame}
 \begin{frame}{Alfv\'en Waves}
-    
+	Assumptions: $\mathbf B_0 = B_0 \hat{x}$. 
+	\begin{align*}
+		\rho_0 \frac{\partial v_x}{\partial t}  - \frac{B_0}{\mu}\frac{\partial B_{1, x}}{\partial x}  &= 0 \\
+		\frac{\partial B_{1,x}}{\partial t}  + B_0 \frac{\partial v_x}{\partial x} &= 0 
+	.\end{align*}
+	Interation between $B_x$ and $v_z$. 
+	\begin{align*}
+		\text{phase speed: } & \cos\theta \cdot v_A & \text{group speed: } & \pm v_A \cdot \hat{x}
+	.\end{align*}
+	\begin{itemize}
+		\item Only move along magnetic field lines.
+		\item Do not perturb density and pressure
+	\end{itemize}
 \end{frame}
 \begin{frame}{Magnetosonic Waves}
-    
+	Interaction between density/pressure, velocity and magnetic field. 
+	\begin{enumerate}
+		\item slow waves:
+			\begin{itemize}
+				\item Move mostly among among field lines
+				\item Predominantly visible when $\beta \gg 1$.
+			\end{itemize}
+		\item Fast waves:
+			\begin{itemize}
+				\item Move roughly isotropically 
+				\item Predominantly visible when $\beta \ll 1$.
+				\item Ordinary soundwaves when $\mathbf B = 0$
+			\end{itemize}
+	\end{enumerate}
 \end{frame}
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\textwidth]{../report/figures/fasespeed_beta.pdf}
+		\caption{Phase speed for different $\beta$}	
+	\end{figure}
+\end{frame}
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=.9\textwidth]{../report/figures/groupspeed_beta.pdf}
+		\caption{Group speed for different $\beta$}
+	\end{figure}	
+\end{frame}
+
 \section{PLUTO}
-\begin{frame}{Frame Title}
-    
+\begin{frame}{PLUTO}
+   Code for running Hydrodanymics simulations. 
 \end{frame}
 \section{MHD Blastwave}
 \begin{frame}{Frame Title}
