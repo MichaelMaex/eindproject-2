@@ -7,11 +7,12 @@
 \usepackage{amsthm}
 \usepackage{xcolor}
 \definecolor{mygray}{gray}{0.95}
-
+\usefonttheme[onlymath]{serif}
 \usepackage{bm} %Bold symbols
+\usepackage{siunitx}
 
 \usepackage{graphicx} %Images
-\usepackage{times}
+%\usepackage{times}
 %\addbibresource{../report/references.bib}
 %\tikzset{component/.style={draw,thick,circle,fill=white,minimum size =0.75cm,inner sep=0pt}}
 %\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
@@ -129,7 +130,7 @@ Three roots, three types of waves
 		\rho_0 \frac{\partial v_x}{\partial t}  - \frac{B_0}{\mu}\frac{\partial B_{1, x}}{\partial x}  &= 0 \\
 		\frac{\partial B_{1,x}}{\partial t}  + B_0 \frac{\partial v_x}{\partial x} &= 0 
 	.\end{align*}
-	Interation between $B_x$ and $v_z$. 
+	Interation between $B_x$ and $v_x$. 
 	\begin{align*}
 		\text{phase speed: } & \cos\theta \cdot v_A & \text{group speed: } & \pm v_A \cdot \hat{x}
 	.\end{align*}
@@ -146,7 +147,7 @@ Three roots, three types of waves
 				\item Move mostly among among field lines
 				\item Predominantly visible when $\beta \gg 1$.
 			\end{itemize}
-		\item Fast waves:
+		\item fast waves:
 			\begin{itemize}
 				\item Move roughly isotropically 
 				\item Predominantly visible when $\beta \ll 1$.
@@ -177,22 +178,133 @@ Three roots, three types of waves
 			\begin{itemize}
 				\item initial/boundary conditions needs to programmed in C.
 				\item binary needs to be made for specific problem
-			\end{itemize} 		\item Solvers for many equations (HD, MHD, relativisctic MHD, \ldots)
+			\end{itemize} 		
+		\item Solvers for many equations (HD, MHD, relativisctic MHD, \ldots)
 		\item Supports many types of geometry. 
 	\end{itemize}
 \end{frame}
 \begin{frame}{Simple blastwave}
+Initial conditions:
+\begin{align*}
+	p &= \begin{cases}
+		p_\text{in} & \text{if } r < 0.3\\
+		p_\text{out} & \text{if } r > 0.3
+	\end{cases} \\
+	\rho &= 0 \\
+	\mathbf v &=  \mathbf 0 \\
+	p_\text{out}  &= 8, \quad p_\text{in}  = 15
+.\end{align*}
+Domain: Square from $-10$ to $10$ in $ X, Y$-direction covered by $1024\times 1024$ grid.
 
+Boundary conditions: Outflow
+
+
+\end{frame}
+
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.75\textwidth]{figures/output.pdf}
+	\end{figure}	
+\end{frame}
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.8\textwidth]{../report/figures/non_linear_effects.pdf}
+	\end{figure}
 \end{frame}
 \section{MHD Blastwave}
-\begin{frame}{Frame Title}
-    
+\begin{frame}{MHD Blastwave}
+
+Initial conditions:
+\begin{align*}
+	p &= \begin{cases}
+		p_\text{in} & \text{if } r < 0.3\\
+		p_\text{out} & \text{if } r > 0.3
+	\end{cases} \\
+	\rho &= 0 \\
+	\mathbf v &=  \mathbf 0 \\
+	\mathbf B &= \sqrt{\frac{2 p_\text{out} }{\beta}} \hat{x}\\
+	p_\text{out}  &= 8, \quad p_\text{in}  = 15
+.\end{align*}
+Domain: Square from $-10$ to $10$ in $ X, Y$-direction covered by $1024\times 1024$ grid.
+
+Boundary conditions: Outflow
 \end{frame}
-\section{Large Scale Structures}
-\begin{frame}{Frame Title}
-    
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=1.1\textwidth]{figures/influence_beta.pdf}
+	\end{figure}
+\end{frame}
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=1.1\textwidth]{figures/comparison_groupspeed.pdf}
+	\end{figure}
+\end{frame}
+\begin{frame}
+	When $\beta = 0.1$ slow waves are predominant. Ideal for analysis. 
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{figures/slowwave_time.pdf}
+	\end{figure}
+\end{frame}
+\section{Modelling the Solar Corona}
+\begin{frame}{Coronal Holes}
+   The goal is to reproduce the results of a paper by A. N. Afanasyev and A. N. Zhukov. 
+
+   \bigskip 
+   Coronal hole:
+   \begin{itemize}
+   	\item Low density/temperature region on the solar corona. 
+	\item Typical size: \SI{150}{Mm}
+   \end{itemize}
+   
 \end{frame}
 
+\begin{frame}{Model}
+	Domain: square from $\SI{-1000}{\mega \metre}$ to $\SI{1000}{\mega\metre}$, covered by $1024 \times  1024$ grid. 
+
+\medskip
+
+	Initial conditions:
+	\begin{align*}
+		\rho &= \rho _\text{out} -(\rho_\text{out}  - \rho_\text{in} )\exp\left[ -\left( \frac{r}{d} \right) ^{8} \right]  \\
+		T &= T_\text{out}  - (T_\text{out}  - T_\text{in} )\exp\left[ -\left( \frac{r}{d} \right)^{8}  \right] \\
+		p^{t} &= p_\text{gas} + \frac{B^2}{8 \pi} = \text{constant}
+	.\end{align*}
+	Here $d = \SI{150}{\mega\metre},\; \rho_\text{out}  = 10^{9}m_p \si{\per \centi\metre\cubed},\; \rho_\text{in}  = 10^{8}m_p \si{\per \centi\metre\cubed},\; T_\text{out}  = \SI{1.5}{\mega\kelvin},\; T_\text{in}  = \SI{100}{\mega\kelvin}, B_\text{out}  = \SI{4}{G}$.
+\end{frame}
+\begin{frame}{Model}
+	Boundary conditions: Top and bottom are periodic. Right is an outflow. Left drives $v_x$ using \[
+		v_x = v_\text{max} \tanh\left( \frac{t}{\SI{20}{s}} \right) - \frac{v_\text{max} }{2}\left( \tanh\left( \frac{t - t_0}{\SI{60}{s}} \right) + 1 \right) 
+	\] 
+	to induce a wave. 
+	Here $v_\text{max}  = \SI{50}{\kilo\metre\per\second}$ and $t_0 = \SI{600}{s}$.\\
+	\centering
+		\includegraphics[width=0.5\textwidth]{figures/wave_drive.pdf}
+\end{frame}
+\begin{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.88\textwidth]{../report/figures/hole_time.pdf}
+	\end{figure}
+\end{frame}
+\begin{frame}{Analysis}
+	Calculation of reflection coefficient.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{figures/reflection_coefficient.pdf}
+	\end{figure}	
+	\[
+	R = \frac{E_2 - E_0}{E_1 - E_0} = 0.17
+	.\] 
+\end{frame}
+\section{Conclusions}
+\begin{frame}
+
+\end{frame}
 \begin{frame}{References}
     \begin{itemize}\footnotesize{
         \item JP Hans Goedbloed and Stefaan Poedts. \textit{Principles of magnetohydrodynamics:with applications to laboratory and astrophysical plasmas.} Cambridge university press, 2004.

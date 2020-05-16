@@ -28,3 +28,5 @@ report/.tex
 *DS_Store
 *.tdo
 *_minted*
+*.nav
+*.snm
