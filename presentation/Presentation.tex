@@ -26,56 +26,47 @@
 \maketitle
 \begin{frame}{Introduction} %Bij deze slide gewoon korte intro geven over het project
     \huge{Modelling of Magnetohydrodynamic Waves in the Solar Corona}\\
-    \Large{Ondertitel indien nodig}
 \end{frame}
 
-\begin{frame}
-	\begin{enumerate}
-		\item theorie
-			\begin{enumerate}
-				\item Niet wiskundige inleiding tot probleem
-				\item bespreking vlg van HD en MHD
-				\item afleiding dispersie relatie (heel kort)
-				\item bespreking verschillende soorten golven
-					\begin{itemize}
-						\item Alfv\'en
-						\item accoustic
-					\end{itemize}
-				\item fase en groepssnelheden (diagrammen)
-			\end{enumerate}
-		\item Pluto
-			\begin{itemize}
-				\item general info
-				\item blastwave
-			\end{itemize}
-		\item MHD blastwave
-		\item large scale structures
-			\begin{itemize}
-				\item hole
-					\begin{itemize}
-						\item reflectie coefficient
-						\item vergelijking met observatie
-					\end{itemize}
-				\item plume
-					\begin{itemize}
-						\item reflectie in plume 
-					\end{itemize}
-			\end{itemize}
-	\end{enumerate}
-\end{frame}
+% \begin{frame}
+% 	\begin{enumerate}
+% 		\item theorie
+% 			\begin{enumerate}
+% 				\item Niet wiskundige inleiding tot probleem
+% 				\item bespreking vlg van HD en MHD
+% 				\item afleiding dispersie relatie (heel kort)
+% 				\item bespreking verschillende soorten golven
+% 					\begin{itemize}
+% 						\item Alfv\'en
+% 						\item accoustic
+% 					\end{itemize}
+% 				\item fase en groepssnelheden (diagrammen)
+% 			\end{enumerate}
+% 		\item Pluto
+% 			\begin{itemize}
+% 				\item general info
+% 				\item blastwave
+% 			\end{itemize}
+% 		\item MHD blastwave
+% 		\item large scale structures
+% 			\begin{itemize}
+% 				\item hole
+% 					\begin{itemize}
+% 						\item reflectie coefficient
+% 						\item vergelijking met observatie
+% 					\end{itemize}
+% 				\item plume
+% 					\begin{itemize}
+% 						\item reflectie in plume 
+% 					\end{itemize}
+% 			\end{itemize}
+% 	\end{enumerate}
+% \end{frame}
 \begin{frame}{Table of contents}
     \tableofcontents
 \end{frame}
 \section{Theory of MHD waves}
-\begin{frame}{MHD Description of the Solar Corona}
-    \centering
-    Assumptions
-    \begin{itemize}
-        \item High collisionality
-        \item Large Scale
-        \item Ideal Fluid
-    \end{itemize}
-\end{frame}
+
 \begin{frame}{HD Equations}
 Euler equations for ideal fluids
 \begin{alignat*}{4}
@@ -87,13 +78,21 @@ Euler equations for ideal fluids
 \begin{frame}{MHD Equations}
     \begin{alignat*}{4}
 	&\text{Mass:} &\quad\quad &\frac{\partial \rho}{\partial t} & & +\rho \nabla \cdot \mathbf v& &= 0 \\ 	
-	&\text{Moment:} & \rho& \frac{\partial \mathbf v}{\partial t} & &+ \nabla p - \frac{(\nabla \times \mathbf B) \times \mathbf B}{\mu}& &=  0  \\
+	&\text{Momentum:} & \rho& \frac{\partial \mathbf v}{\partial t} & &+ \nabla p - \frac{(\nabla \times \mathbf B) \times \mathbf B}{\mu}& &=  0  \\
 	&\text{Faraday's law:} & -&\frac{\partial \mathbf B}{\partial t} & &+ \nabla \times (\mathbf v \times \mathbf B)& &= 0 \\
 	&\text{Energy:} & &\frac{\partial }{\partial t} \left( \frac{p}{\rho^{\gamma}} \right)  & & & &= 0 
 \end{alignat*}
 Magnetic pressure: $P_B = \frac{B^2}{2\mu}$. \\Plasma-$\beta$ : $\beta = \frac{p}{P_B} = \frac{2\mu}{B^2}$
 \end{frame}
-
+\begin{frame}{MHD Description of the Solar Corona}
+    \centering
+    Assumptions
+    \begin{itemize}
+        \item High collisionality
+        \item Large Scale
+        \item Ideal Fluid
+    \end{itemize}
+\end{frame}
 \begin{frame}{Dispersion Relation}
     Linearisation:
         \begin{equation*}
@@ -107,7 +106,7 @@ Magnetic pressure: $P_B = \frac{B^2}{2\mu}$. \\Plasma-$\beta$ : $\beta = \frac{p
         \begin{equation*}
 	        (\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
         \end{equation*}
-        Where $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ and $\theta$
+        Where $c_s = \sqrt{\frac{\gamma p_0}{\rho_0}}$ and $v_A = \sqrt{\frac{\mathbf{B_0}^2}{\mu\rho_0}}$ and $\theta$ is the angle between $\mathbf{B_0}$ and $\mathbf{k}$.
 \end{frame}
 \begin{frame}
     Dispersion relation:
@@ -190,7 +189,7 @@ Initial conditions:
 		p_\text{in} & \text{if } r < 0.3\\
 		p_\text{out} & \text{if } r > 0.3
 	\end{cases} \\
-	\rho &= 0 \\
+	\rho &= 1 \\
 	\mathbf v &=  \mathbf 0 \\
 	p_\text{out}  &= 8, \quad p_\text{in}  = 15
 .\end{align*}
