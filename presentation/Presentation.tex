@@ -19,7 +19,7 @@
 
 
 \title{Presentation Bachelor Project}
-\author{\phantom{=}Micha\"el Maex \and Rune Buckinx }
+\author{\phantom{=}  Micha\"el Maex \and Rune Buckinx \and superivor: Mijie Shi }
 \date{March 2020}
 
 \begin{document}
@@ -115,7 +115,7 @@ Magnetic pressure: $P_B = \frac{B^2}{2\mu}$. \\Plasma-$\beta$ : $\beta = \frac{p
         \end{equation*}
 Three roots, three types of waves
 \begin{align*}
-&\text{1. Alv\'en waves:}	& \omega^2 &= k^2 v_a^2 \cos^2 \theta\\
+&\text{1. Alfv\'en waves:}	& \omega^2 &= k^2 v_a^2 \cos^2 \theta\\
 &\text{Magneto accoustic waves:}\hspace{-4cm}\\
 &\text{2. fast} 
 & \omega^2 &= \frac{k^2}{2}\left( v_A^2 + c_s^2 + \sqrt{(v_a^2 + c_s^2) - 4 v_A^2 c_s^2 \cos^2\theta}  \right) \\
@@ -183,7 +183,8 @@ Three roots, three types of waves
 	\end{itemize}
 \end{frame}
 \begin{frame}{Simple blastwave}
-Initial conditions:
+Initial conditions:\\
+\begin{minipage}{.49\linewidth}
 \begin{align*}
 	p &= \begin{cases}
 		p_\text{in} & \text{if } r < 0.3\\
@@ -193,6 +194,10 @@ Initial conditions:
 	\mathbf v &=  \mathbf 0 \\
 	p_\text{out}  &= 8, \quad p_\text{in}  = 15
 .\end{align*}
+\end{minipage}
+\begin{minipage}{.49\linewidth}
+	\includegraphics[width=\textwidth]{figures/initial.pdf}	
+\end{minipage}
 Domain: Square from $-10$ to $10$ in $ X, Y$-direction covered by $1024\times 1024$ grid.
 
 Boundary conditions: Outflow
@@ -209,23 +214,28 @@ Boundary conditions: Outflow
 \begin{frame}
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.8\textwidth]{../report/figures/non_linear_effects.pdf}
+		\includegraphics[width=0.8\textwidth]{figures/non_linear_effects.pdf}
 	\end{figure}
 \end{frame}
 \section{MHD Blastwave}
 \begin{frame}{MHD Blastwave}
 
-Initial conditions:
-\begin{align*}
+Initial conditions:\\
+\begin{minipage}{.49\linewidth}
+	\begin{align*}
 	p &= \begin{cases}
 		p_\text{in} & \text{if } r < 0.3\\
 		p_\text{out} & \text{if } r > 0.3
 	\end{cases} \\
-	\rho &= 0 \\
+	\rho &= 1 \\
 	\mathbf v &=  \mathbf 0 \\
 	\mathbf B &= \sqrt{\frac{2 p_\text{out} }{\beta}} \hat{x}\\
 	p_\text{out}  &= 8, \quad p_\text{in}  = 15
 .\end{align*}
+\end{minipage}
+\begin{minipage}{.49\linewidth}
+	\includegraphics[width=\textwidth]{figures/initial_MHD.pdf}	
+\end{minipage}
 Domain: Square from $-10$ to $10$ in $ X, Y$-direction covered by $1024\times 1024$ grid.
 
 Boundary conditions: Outflow
@@ -258,7 +268,7 @@ Boundary conditions: Outflow
    \begin{itemize}
    	\item Low density/temperature region on the solar corona. 
 	\item Typical size: \SI{150}{Mm}
-	\item Region of high Alv\'en speed. 
+	\item Region of high Alfv\'en speed. 
    \end{itemize}
    
 \end{frame}
@@ -303,7 +313,11 @@ Boundary conditions: Outflow
 \end{frame}
 \section{Conclusions}
 \begin{frame}
+Thanks to our supervisor: Mijie Shi
 
+\bigskip
+
+Are there questions?
 \end{frame}
 \begin{frame}{References}
     \begin{itemize}\footnotesize{
