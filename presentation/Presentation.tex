@@ -10,16 +10,17 @@
 \usefonttheme[onlymath]{serif}
 \usepackage{bm} %Bold symbols
 \usepackage{siunitx}
-
 \usepackage{graphicx} %Images
-%\usepackage{times}
+\usepackage[backend=biber, style = alphabetic]{biblatex}
+\addbibresource{../report/references.bib}%\usepackage{times}
 %\addbibresource{../report/references.bib}
 %\tikzset{component/.style={draw,thick,circle,fill=white,minimum size =0.75cm,inner sep=0pt}}
 %\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\usepackage{hyperref}
 
 
 \title{Presentation Bachelor Project}
-\author{\phantom{=}  Micha\"el Maex \and Rune Buckinx \and superivor: Mijie Shi }
+\author{\phantom{=}  Micha\"el Maex \and Rune Buckinx \and supervisor: Mijie Shi }
 \date{March 2020}
 
 \begin{document}
@@ -102,7 +103,7 @@ Magnetic pressure: $P_B = \frac{B^2}{2\mu}$. \\Plasma-$\beta$ : $\beta = \frac{p
         \begin{equation*}
             \exp(i(\mathbf{kx} + \omega t))
         \end{equation*}
-    Dispersion relation:
+	Dispersion relation \cite{Fitzpatricknotes}:
         \begin{equation*}
 	        (\omega^2 - k^2 v_A^2 \cos^2 \theta)\left[ \omega^{4} - \omega^2k^2(v_A^2 + c_s^2) + k^{4}v_A^2c_s^2\cos^2\theta \right]  = 0
         \end{equation*}
@@ -126,10 +127,10 @@ Three roots, three types of waves
 \begin{frame}{Alfv\'en Waves}
 	Assumptions: $\mathbf B_0 = B_0 \hat{x}$. 
 	\begin{align*}
-		\rho_0 \frac{\partial v_x}{\partial t}  - \frac{B_0}{\mu}\frac{\partial B_{1, x}}{\partial x}  &= 0 \\
-		\frac{\partial B_{1,x}}{\partial t}  + B_0 \frac{\partial v_x}{\partial x} &= 0 
+		\rho_0 \frac{\partial v_z}{\partial t}  - \frac{B_0}{\mu}\frac{\partial B_{1, x}}{\partial x}  &= 0 \\
+		\frac{\partial B_{1,x}}{\partial t}  + B_0 \frac{\partial v_z}{\partial x} &= 0 
 	.\end{align*}
-	Interation between $B_x$ and $v_x$. 
+	Interation between $B_x$ and $v_z$. 
 	\begin{align*}
 		\text{phase speed: } & \cos\theta \cdot v_A & \text{group speed: } & \pm v_A \cdot \hat{x}
 	.\end{align*}
@@ -143,7 +144,7 @@ Three roots, three types of waves
 	\begin{enumerate}
 		\item slow waves:
 			\begin{itemize}
-				\item Move mostly among among field lines
+				\item Move mostly among field lines
 				\item Predominantly visible when $\beta \ll 1$.
 			\end{itemize}
 		\item fast waves:
@@ -171,7 +172,7 @@ Three roots, three types of waves
 
 \section{PLUTO}
 \begin{frame}{PLUTO}	
-	The PLUTO Code for Astrophysical GasDynamics
+	The PLUTO Code for Astrophysical GasDynamics \cite{plutouserguide}
 	\begin{itemize}
 		\item Uncompiled
 			\begin{itemize}
@@ -261,7 +262,7 @@ Boundary conditions: Outflow
 \end{frame}
 \section{Modelling the Solar Corona}
 \begin{frame}{Coronal Holes}
-   The goal is to reproduce the results of a paper by A. N. Afanasyev and A. N. Zhukov. 
+	The goal is to reproduce the results of a paper by A. N. Afanasyev and A. N. Zhukov\cite{afanasyev2018propagation}.
 
    \bigskip 
    Coronal hole:
@@ -324,6 +325,7 @@ Are there questions?
         \item JP Hans Goedbloed and Stefaan Poedts. \textit{Principles of magnetohydrodynamics:with applications to laboratory and astrophysical plasmas.} Cambridge university press, 2004.
     }
     \end{itemize}
+    \printbibliography
 \end{frame}
 \end{document}
 
